@@ -1,0 +1,98 @@
+name: jolup-roadmap
+
+services:
+  # Agent API is the HTTP boundary used by Streamlit chat.
+  api:
+    build: .
+    image: jolup-roadmap:local
+    command: ["python", "-m", "uvicorn", "jolup.study_api:app", "--host", "0.0.0.0", "--port", "8001"]
+    ports:
+      - "127.0.0.1:${JOLUP_API_PORT:-8001}:8001"
+    environment:
+      MCP_URL: http://mcp:8000/mcp
+    depends_on:
+      mcp:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=3).read()"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  app:
+    build: .
+    image: jolup-roadmap:local
+    ports:
+      - "127.0.0.1:${JOLUP_PORT:-8501}:8501"
+    environment:
+      JOLUP_AGENT_API_URL: http://api:8001
+      MCP_URL: http://mcp:8000/mcp
+      CHROMA_HOST: chroma
+      CHROMA_PORT: "8000"
+      JOLUP_RAG_MODE: vector
+      JOLUP_API_KEY: ${JOLUP_API_KEY:-}
+      JOLUP_LLM_PROVIDER: ${JOLUP_LLM_PROVIDER:-auto}
+      JOLUP_LLM_MODEL: ${JOLUP_LLM_MODEL:-}
+      ANTHROPIC_WORKSPACE_ID: ${ANTHROPIC_WORKSPACE_ID:-}
+    volumes:
+      - public-index:/app/data/index
+      - public-models:/app/data/models
+    tmpfs:
+      - /tmp
+    depends_on:
+      api:
+        condition: service_healthy
+      mcp:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3).read()"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  mcp:
+    build: .
+    image: jolup-roadmap:local
+    command: ["python", "-m", "jolup.mcp_server", "--transport", "streamable-http"]
+    environment:
+      MCP_HOST: 0.0.0.0
+      MCP_PORT: "8000"
+      CHROMA_HOST: chroma
+      CHROMA_PORT: "8000"
+      JOLUP_RAG_MODE: vector
+    expose:
+      - "8000"
+    volumes:
+      - public-index:/app/data/index
+      - public-models:/app/data/models
+    tmpfs:
+      - /tmp
+    depends_on:
+      chroma:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket, urllib.request; socket.create_connection(('127.0.0.1', 8000), timeout=2).close(); urllib.request.urlopen('http://chroma:8000/api/v2/heartbeat', timeout=3).read()"]
+      interval: 10s
+      timeout: 6s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
+
+  chroma:
+    image: chromadb/chroma:1.5.9
+    expose:
+      - "8000"
+    volumes:
+      - public-chroma:/data
+    restart: unless-stopped
+
+# Public school documents, embeddings, and the embedding model only.
+# Uploaded transcripts and API keys are never mounted or written here.
+volumes:
+  public-index:
+  public-models:
+  public-chroma:
