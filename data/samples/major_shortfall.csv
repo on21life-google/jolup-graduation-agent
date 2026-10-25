@@ -1,0 +1,39 @@
+﻿이름,학번,row_id,course_id,course_name,term,category,credits,grade,status,retake_of,retake_approved
+김가온 (가상),DUMMY-2024-001,GE001,GE001,기독교로의초대,2024-1,교필,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE002,GE002,신앙으로의초대,2024-1,교필,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE003,GE003,영어커뮤니케이션(1),2026-1,교필,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE004,GE004,영어커뮤니케이션(2),2026-1,교필,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE005,GE005,기초글쓰기,2026-1,교필,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE006,GE006,대학생활과진로,2026-1,교필,1,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE007,GE007,사회봉사,2026-1,교필,1,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS001,DUMMY_OTHER_CS001,가상 타전공 과목 CS001,2024-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS002,DUMMY_OTHER_CS002,가상 타전공 과목 CS002,2024-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS003,DUMMY_OTHER_CS003,가상 타전공 과목 CS003,2024-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS004,DUMMY_OTHER_CS004,가상 타전공 과목 CS004,2024-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS005,DUMMY_OTHER_CS005,가상 타전공 과목 CS005,2024-2,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS006,DUMMY_OTHER_CS006,가상 타전공 과목 CS006,2024-2,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS007,DUMMY_OTHER_CS007,가상 타전공 과목 CS007,2024-2,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS008,DUMMY_OTHER_CS008,가상 타전공 과목 CS008,2024-2,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS009,DUMMY_OTHER_CS009,가상 타전공 과목 CS009,2024-2,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS010,DUMMY_OTHER_CS010,가상 타전공 과목 CS010,2024-2,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS011,DUMMY_OTHER_CS011,가상 타전공 과목 CS011,2025-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS012,DUMMY_OTHER_CS012,가상 타전공 과목 CS012,2025-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS013,CS013,컴퓨터네트워크,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS014,CS014,데이터베이스,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS015,CS015,웹 표준기술,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E01,GE_E01,건강한자아찾기,2025-1,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E02,GE_E02,과학과종교의대화,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E03,GE_E03,범죄심리와교정교화,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E04,GE_E04,생성형AI이해와윤리,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E05,GE_E05,성과인간심리,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E06,GE_E06,생태환경과윤리,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E07,GE_E07,현대사회와범죄,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,DUMMY_O1,DUMMY_O1,가상 자유선택 과목 1,2026-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,DUMMY_O2,DUMMY_O2,가상 자유선택 과목 2,2026-1,일선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,DUMMY_O3,DUMMY_O3,가상 자유선택 과목 3,2026-1,일선,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,DUMMY_O4,DUMMY_O4,가상 자유선택 과목 4,2026-1,일선,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS_CAP1,CS_CAP1,전공종합설계(1),2026-2,전필,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS023,CS023,컴퓨터구조,2026-2,전선,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS024,CS024,운영체제,2026-2,전선,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS025,CS025,임베디드시스템,2026-2,전선,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS027,CS027,머신러닝,2026-2,전선,3,,in_progress,,False

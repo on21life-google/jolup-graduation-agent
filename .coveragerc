@@ -1,0 +1,52 @@
+[run]
+# Keep the project root as the origin so XML names match SonarScanner paths.
+source = .
+branch = True
+relative_files = True
+core = ctrace
+data_file = reports/quality/.coverage
+# MCP tests start real Python servers. Collect each process, then combine.
+patch = subprocess
+parallel = True
+sigterm = True
+omit =
+    tests/*
+    learning/*
+    .venv/*
+    venv/*
+    .git/*
+    .codex/*
+    .agents/*
+    .pytest_cache/*
+    .cache/*
+    .build/*
+    .quality/*
+    .scannerwork/*
+    data/*
+    reports/*
+    docs/*
+    output/*
+    **/__pycache__/*
+
+[report]
+# scripts/ has no __init__.py; still count scripts not exercised by tests.
+include_namespace_packages = True
+include =
+    app.py
+    jolup/*
+    scripts/*
+show_missing = True
+precision = 2
+skip_empty = True
+# No arbitrary pass threshold: establish and review the baseline first.
+
+[html]
+directory = reports/quality/html
+title = Graduation roadmap — line and branch coverage
+
+[xml]
+output = reports/quality/coverage.xml
+
+[json]
+output = reports/quality/coverage.json
+pretty_print = True

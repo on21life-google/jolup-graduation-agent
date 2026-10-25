@@ -1,0 +1,43 @@
+{
+  "reviewed_date": "2026-10-22",
+  "scope": "2024학번 컴퓨터공학과 전공심화 / 공학인증 제외",
+  "review_note": "제공 PDF 페이지 및 공식 학과 공지와 계산 규칙 수치 대조. 학생 자료는 포함하지 않음. 변경 시 재검토 필요. 2026-2 안내문 PDF7~8: 4학년 최소9, 그외15, 학사경고15 상한 대조 추가.",
+  "files": [
+    {
+      "path": "data/rules/sungkyul_cs_2024.json",
+      "sha256": "228346f3379b4bc5a43ddc5cc2a011fe1e973dc4a778267f73cd72e3dbb007b5"
+    },
+    {
+      "path": "data/sources.json",
+      "sha256": "09604b47d33aa37526cb0cc43271e1bbd39383ad9d5c9b151cf3ff97e40b9efb"
+    },
+    {
+      "path": "data/sources/(2-1-1)성결대학교 학칙20260506.pdf",
+      "sha256": "f5e338a090a86d0613f32e97927b774b62c769c993b89cfa76701a8df6244616"
+    },
+    {
+      "path": "data/sources/2026-2학기 강의시간표 안내문.pdf",
+      "sha256": "a8680d026d0242ac6628845b08e1a44b13f9a412bfb31d4618c78612244b1646"
+    },
+    {
+      "path": "data/sources/컴퓨터공학과_1학년_교육과정_사실정리.txt",
+      "sha256": "7e10342f35e098360e5826a934cf6d44773ab7bf498eca8ef4025b35ae0d7be6"
+    },
+    {
+      "path": "data/sources/컴퓨터공학과_2학년_교육과정_사실정리.txt",
+      "sha256": "cdff549199bb62a2849232132bd088a7698bade1512973fe88ee35e9e548ed1e"
+    },
+    {
+      "path": "data/sources/컴퓨터공학과_3학년_교육과정_사실정리.txt",
+      "sha256": "bc58e5c1ed9bf904b919d01598f14311f9c90a51e0d2a60c93884f0e0f7020e0"
+    },
+    {
+      "path": "data/sources/컴퓨터공학과_4학년_교육과정_사실정리.txt",
+      "sha256": "55490167d41a027334b42379d8ec92d8d52bc7f755fd40cfd2f0a19dabaa25d3"
+    },
+    {
+      "path": "data/sources/컴퓨터공학과_졸업요건변경_20250120_사실정리.txt",
+      "sha256": "80433d6d00231be790ce1a518ffb42741f6b0863d668995d9be237eef198a371"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+.venv/
+.env
+.cache/
+.build/
+__pycache__/
+.pytest_cache/
+*.pyc
+data/index/
+data/models/
+reports/screenshots/
+*.log
+.quality/
+.scannerwork/
+.coverage
+.coverage.*
+reports/quality/
+
+# Keep private configuration and generated local results out of public commits.
+.env.*
+!.env.example
+reports/
+output/
+.DS_Store
+**/.DS_Store
+data/uploads/

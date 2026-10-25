@@ -1,0 +1,114 @@
+{
+  "sources": [
+    {
+      "source_id": "school_rules",
+      "file_name": "(2-1-1)성결대학교 학칙20260506.pdf",
+      "path": "data/sources/(2-1-1)성결대학교 학칙20260506.pdf",
+      "url": "https://www.sungkyul.ac.kr/skukr/253/subview.do",
+      "registered_date": null,
+      "date_note": "파일명의 20260506은 등록일로 단정하지 않음. 사용자가 제공한 원본.",
+      "priority": 80,
+      "school": "성결대학교",
+      "retrieved_date": "2026-10-22",
+      "applies_to": {
+        "department": "컴퓨터공학과",
+        "entry_year": 2024
+      }
+    },
+    {
+      "source_id": "course_guide",
+      "file_name": "2026-2학기 강의시간표 안내문.pdf",
+      "path": "data/sources/2026-2학기 강의시간표 안내문.pdf",
+      "url": "https://www.sungkyul.ac.kr/bbs/skukr/96/26953/download.do",
+      "registered_date": "2026-08-07",
+      "date_note": "학사 공지 게시글 등록일. PDF 내부 작성일 아님.",
+      "priority": 90,
+      "school": "성결대학교",
+      "retrieved_date": "2026-10-22",
+      "applies_to": {
+        "department": "컴퓨터공학과",
+        "entry_year": 2024
+      }
+    },
+    {
+      "source_id": "major_notice",
+      "file_name": "컴퓨터공학과_졸업요건변경_20250120_사실정리.txt",
+      "path": "data/sources/컴퓨터공학과_졸업요건변경_20250120_사실정리.txt",
+      "url": "https://www.sungkyul.ac.kr/bbs/computer/1372/37225/artclView.do",
+      "registered_date": "2025-01-20",
+      "priority": 100,
+      "kind": "official_facts",
+      "date_note": "학과 공지의 수치와 적용 조건을 정리. 원문은 URL 참조.",
+      "school": "성결대학교",
+      "retrieved_date": "2026-10-22",
+      "applies_to": {
+        "department": "컴퓨터공학과",
+        "entry_year": 2024
+      }
+    },
+    {
+      "source_id": "curriculum_year1",
+      "file_name": "컴퓨터공학과_1학년_교육과정_사실정리.txt",
+      "path": "data/sources/컴퓨터공학과_1학년_교육과정_사실정리.txt",
+      "url": "https://www.sungkyul.ac.kr/computer/9780/subview.do",
+      "registered_date": null,
+      "priority": 70,
+      "kind": "official_facts",
+      "date_note": "게시일 미표시. 2026-10-22 열람. 미래 학기 실제 개설표가 아님.",
+      "school": "성결대학교",
+      "retrieved_date": "2026-10-22",
+      "applies_to": {
+        "department": "컴퓨터공학과",
+        "entry_year": 2024
+      }
+    },
+    {
+      "source_id": "curriculum_year2",
+      "file_name": "컴퓨터공학과_2학년_교육과정_사실정리.txt",
+      "path": "data/sources/컴퓨터공학과_2학년_교육과정_사실정리.txt",
+      "url": "https://www.sungkyul.ac.kr/computer/9781/subview.do",
+      "registered_date": null,
+      "priority": 70,
+      "kind": "official_facts",
+      "date_note": "게시일 미표시. 2026-10-22 열람. 미래 학기 실제 개설표가 아님.",
+      "school": "성결대학교",
+      "retrieved_date": "2026-10-22",
+      "applies_to": {
+        "department": "컴퓨터공학과",
+        "entry_year": 2024
+      }
+    },
+    {
+      "source_id": "curriculum_year3",
+      "file_name": "컴퓨터공학과_3학년_교육과정_사실정리.txt",
+      "path": "data/sources/컴퓨터공학과_3학년_교육과정_사실정리.txt",
+      "url": "https://www.sungkyul.ac.kr/computer/9782/subview.do",
+      "registered_date": null,
+      "priority": 70,
+      "kind": "official_facts",
+      "date_note": "게시일 미표시. 2026-10-22 열람. 미래 학기 실제 개설표가 아님.",
+      "school": "성결대학교",
+      "retrieved_date": "2026-10-22",
+      "applies_to": {
+        "department": "컴퓨터공학과",
+        "entry_year": 2024
+      }
+    },
+    {
+      "source_id": "curriculum_year4",
+      "file_name": "컴퓨터공학과_4학년_교육과정_사실정리.txt",
+      "path": "data/sources/컴퓨터공학과_4학년_교육과정_사실정리.txt",
+      "url": "https://www.sungkyul.ac.kr/computer/9783/subview.do",
+      "registered_date": null,
+      "priority": 70,
+      "kind": "official_facts",
+      "date_note": "게시일 미표시. 2026-10-22 열람. 미래 학기 실제 개설표가 아님.",
+      "school": "성결대학교",
+      "retrieved_date": "2026-10-22",
+      "applies_to": {
+        "department": "컴퓨터공학과",
+        "entry_year": 2024
+      }
+    }
+  ]
+}

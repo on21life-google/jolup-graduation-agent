@@ -1,0 +1,9 @@
+{
+  "test_file": "learning/tdd/checks.py",
+  "stage_env": "JOLUP_TDD_STAGE",
+  "red_marker": "TDD_REPLAY_RED",
+  "functions": ["build_learning_report", "export_reviewed_events"],
+  "contract_count": 5,
+  "case_count": 21,
+  "scope": "New learning-report adapter, not a claim about historical application development"
+}

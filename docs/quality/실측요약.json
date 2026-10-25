@@ -1,0 +1,659 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23T10:23:44+09:00",
+  "status": "final_verified",
+  "scope_note": "Final local regression, coverage and same-profile SonarQube analysis of the frozen production code. Common-file changes and added analysis tools are reported separately. This does not claim validation of a newly packaged ZIP.",
+  "profile": {
+    "status": "configured",
+    "configured_at": "2026-10-23T09:57:38+09:00",
+    "server_version": "26.10.0.133078",
+    "profile": {
+      "key": "2ac4a1d9-c3b6-42e2-a678-aea5fb20fb9d",
+      "name": "Sonar way extended",
+      "language": "py",
+      "rulesUpdatedAt": "2026-10-23T00:46:02+0000",
+      "activeRuleCount": 266
+    },
+    "rule": {
+      "key": "python:S3776",
+      "threshold": 15
+    },
+    "projects": [
+      "jolup-roadmap-before",
+      "jolup-roadmap"
+    ]
+  },
+  "analyses": {
+    "before": {
+      "project": "jolup-roadmap-before",
+      "analysis_id": "05f4e9a7-f2b8-4ae2-b890-6c08e86766fe",
+      "collected_at": "2026-10-23T10:02:06+09:00",
+      "metrics": {
+        "cognitive_complexity": 1319,
+        "complexity": 1096,
+        "ncloc": 3062,
+        "coverage": null,
+        "branch_coverage": null,
+        "duplicated_lines_density": 0.0,
+        "bugs": 1,
+        "vulnerabilities": 0,
+        "code_smells": 49
+      },
+      "coverage_input_included": false,
+      "raw_sonar_coverage": 0.0,
+      "quality_gate": {
+        "status": "OK",
+        "conditions": [
+          {
+            "status": "OK",
+            "metricKey": "new_violations",
+            "comparator": "GT",
+            "errorThreshold": "0",
+            "actualValue": "0"
+          }
+        ],
+        "ignoredConditions": false,
+        "period": {
+          "mode": "PREVIOUS_VERSION",
+          "date": "2026-10-23T00:49:19+0000"
+        },
+        "caycStatus": "compliant"
+      },
+      "all_issue_count": 50,
+      "all_issue_count_note": "Includes resolved issues; do not interpret as the count of open issues.",
+      "open_s3776_count": 29,
+      "source_report": "reports/quality/sonar-before.json",
+      "source_report_sha256": "6b2272e60877c3d67a4f01cb5708708109ea3d7723c5d2e56dbdf6b4e0ae27d3"
+    },
+    "after": {
+      "project": "jolup-roadmap",
+      "analysis_id": "6c5cab8a-13ff-4a26-a999-f471cbf853f2",
+      "collected_at": "2026-10-23T10:19:50+09:00",
+      "metrics": {
+        "cognitive_complexity": 1418,
+        "complexity": 1402,
+        "ncloc": 4002,
+        "coverage": 82.1,
+        "branch_coverage": 76.8,
+        "duplicated_lines_density": 0.0,
+        "bugs": 0,
+        "vulnerabilities": 1,
+        "code_smells": 48
+      },
+      "coverage_input_included": true,
+      "raw_sonar_coverage": 82.1,
+      "quality_gate": {
+        "status": "OK",
+        "conditions": [
+          {
+            "status": "OK",
+            "metricKey": "new_coverage",
+            "comparator": "LT",
+            "errorThreshold": "80",
+            "actualValue": "100.0"
+          },
+          {
+            "status": "OK",
+            "metricKey": "new_duplicated_lines_density",
+            "comparator": "GT",
+            "errorThreshold": "3",
+            "actualValue": "0.0"
+          },
+          {
+            "status": "OK",
+            "metricKey": "new_violations",
+            "comparator": "GT",
+            "errorThreshold": "0",
+            "actualValue": "0"
+          }
+        ],
+        "ignoredConditions": false,
+        "period": {
+          "mode": "PREVIOUS_VERSION",
+          "date": "2026-10-23T01:04:17+0000"
+        },
+        "caycStatus": "compliant"
+      },
+      "all_issue_count": 51,
+      "all_issue_count_note": "Includes resolved issues; do not interpret as the count of open issues.",
+      "open_s3776_count": 20,
+      "source_report": "reports/quality/sonar-after.json",
+      "source_report_sha256": "6e54bad6302b73978a2080a380ffd0eae0c328d83efba0677574d68143b3b58b"
+    }
+  },
+  "comparison": {
+    "common_file_count": 20,
+    "common_file_metrics": [
+      {
+        "path": "app.py",
+        "before": 156,
+        "after": 154,
+        "delta": -2
+      },
+      {
+        "path": "jolup/__init__.py",
+        "before": null,
+        "after": null,
+        "delta": null
+      },
+      {
+        "path": "jolup/academic.py",
+        "before": 172,
+        "after": 158,
+        "delta": -14
+      },
+      {
+        "path": "jolup/agent.py",
+        "before": 66,
+        "after": 66,
+        "delta": 0
+      },
+      {
+        "path": "jolup/calendar.py",
+        "before": 29,
+        "after": 29,
+        "delta": 0
+      },
+      {
+        "path": "jolup/course_solver.py",
+        "before": 28,
+        "after": 32,
+        "delta": 4
+      },
+      {
+        "path": "jolup/evidence.py",
+        "before": 17,
+        "after": 17,
+        "delta": 0
+      },
+      {
+        "path": "jolup/llm.py",
+        "before": 171,
+        "after": 141,
+        "delta": -30
+      },
+      {
+        "path": "jolup/mcp_client.py",
+        "before": 23,
+        "after": 23,
+        "delta": 0
+      },
+      {
+        "path": "jolup/mcp_server.py",
+        "before": 2,
+        "after": 2,
+        "delta": 0
+      },
+      {
+        "path": "jolup/observability.py",
+        "before": 149,
+        "after": 138,
+        "delta": -11
+      },
+      {
+        "path": "jolup/planner.py",
+        "before": 71,
+        "after": 63,
+        "delta": -8
+      },
+      {
+        "path": "jolup/rag.py",
+        "before": 224,
+        "after": 160,
+        "delta": -64
+      },
+      {
+        "path": "jolup/samples.py",
+        "before": 14,
+        "after": 14,
+        "delta": 0
+      },
+      {
+        "path": "jolup/settings.py",
+        "before": null,
+        "after": null,
+        "delta": null
+      },
+      {
+        "path": "scripts/build_index.py",
+        "before": 8,
+        "after": 8,
+        "delta": 0
+      },
+      {
+        "path": "scripts/export_samples.py",
+        "before": 3,
+        "after": 3,
+        "delta": 0
+      },
+      {
+        "path": "scripts/package_project.py",
+        "before": 41,
+        "after": 41,
+        "delta": 0
+      },
+      {
+        "path": "scripts/prepare_data.py",
+        "before": 31,
+        "after": 31,
+        "delta": 0
+      },
+      {
+        "path": "scripts/tdd_study.py",
+        "before": 114,
+        "after": 114,
+        "delta": 0
+      }
+    ],
+    "common_cognitive_complexity": {
+      "before": 1319,
+      "after": 1194,
+      "null_metric_files": [
+        "jolup/__init__.py",
+        "jolup/settings.py"
+      ],
+      "aggregation": "sum of reported non-null file metrics; individual nulls are preserved"
+    },
+    "common_open_s3776": {
+      "before": 29,
+      "after": 20
+    },
+    "added_files": [
+      {
+        "path": "scripts/quality_check.py",
+        "cognitive_complexity": 74
+      },
+      {
+        "path": "scripts/sonar_local.py",
+        "cognitive_complexity": 150
+      }
+    ],
+    "all_after_open_s3776": 20,
+    "resolved_function_issues": [
+      {
+        "path": "app.py",
+        "function": "_render_study_trace",
+        "reported_line": 136,
+        "cognitive_complexity": 20,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/academic.py",
+        "function": "_normalize",
+        "reported_line": 52,
+        "cognitive_complexity": 17,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/academic.py",
+        "function": "_calculate",
+        "reported_line": 160,
+        "cognitive_complexity": 44,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/course_solver.py",
+        "function": "choose_courses",
+        "reported_line": 11,
+        "cognitive_complexity": 28,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/llm.py",
+        "function": "generate",
+        "reported_line": 196,
+        "cognitive_complexity": 56,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/observability.py",
+        "function": "_validated_trace",
+        "reported_line": 267,
+        "cognitive_complexity": 29,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/observability.py",
+        "function": "export_study_trace",
+        "reported_line": 314,
+        "cognitive_complexity": 38,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/planner.py",
+        "function": "plan_courses",
+        "reported_line": 74,
+        "cognitive_complexity": 58,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      },
+      {
+        "path": "jolup/rag.py",
+        "function": "_grounded_statements",
+        "reported_line": 361,
+        "cognitive_complexity": 87,
+        "threshold": 15,
+        "after_exact_cognitive_complexity": null,
+        "after_confirmed_upper_bound": 15,
+        "finding": "Same function remains present and has no S3776 issue under verified threshold 15; exact score is not returned."
+      }
+    ],
+    "remaining_common_function_issues": [
+      {
+        "path": "app.py",
+        "function": "_sources",
+        "reported_line": 66,
+        "cognitive_complexity": 25,
+        "threshold": 15
+      },
+      {
+        "path": "app.py",
+        "function": "_render_plan",
+        "reported_line": 99,
+        "cognitive_complexity": 17,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/academic.py",
+        "function": "parse_transcript",
+        "reported_line": 123,
+        "cognitive_complexity": 28,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/academic.py",
+        "function": "_profile_issues",
+        "reported_line": 316,
+        "cognitive_complexity": 19,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/academic.py",
+        "function": "_diagnostic_rows",
+        "reported_line": 343,
+        "cognitive_complexity": 30,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/agent.py",
+        "function": "_route",
+        "reported_line": 52,
+        "cognitive_complexity": 21,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/calendar.py",
+        "function": "create_calendar_event",
+        "reported_line": 58,
+        "cognitive_complexity": 18,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/llm.py",
+        "function": "_resolve",
+        "reported_line": 44,
+        "cognitive_complexity": 34,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/llm.py",
+        "function": "list_available_models",
+        "reported_line": 139,
+        "cognitive_complexity": 26,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/llm.py",
+        "function": "safe_explanation_input",
+        "reported_line": 342,
+        "cognitive_complexity": 24,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/observability.py",
+        "function": "_plan_summary",
+        "reported_line": 74,
+        "cognitive_complexity": 28,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/observability.py",
+        "function": "_summary",
+        "reported_line": 107,
+        "cognitive_complexity": 33,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/rag.py",
+        "function": "_load_sources",
+        "reported_line": 218,
+        "cognitive_complexity": 34,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/rag.py",
+        "function": "search",
+        "reported_line": 391,
+        "cognitive_complexity": 31,
+        "threshold": 15
+      },
+      {
+        "path": "jolup/rag.py",
+        "function": "answer",
+        "reported_line": 440,
+        "cognitive_complexity": 19,
+        "threshold": 15
+      },
+      {
+        "path": "scripts/package_project.py",
+        "function": "selected_files",
+        "reported_line": 40,
+        "cognitive_complexity": 32,
+        "threshold": 15
+      },
+      {
+        "path": "scripts/prepare_data.py",
+        "function": "main",
+        "reported_line": 15,
+        "cognitive_complexity": 30,
+        "threshold": 15
+      },
+      {
+        "path": "scripts/tdd_study.py",
+        "function": "validate_requirements",
+        "reported_line": 34,
+        "cognitive_complexity": 25,
+        "threshold": 15
+      },
+      {
+        "path": "scripts/tdd_study.py",
+        "function": "read_junit",
+        "reported_line": 70,
+        "cognitive_complexity": 19,
+        "threshold": 15
+      },
+      {
+        "path": "scripts/tdd_study.py",
+        "function": "main",
+        "reported_line": 166,
+        "cognitive_complexity": 44,
+        "threshold": 15
+      }
+    ],
+    "added_file_function_issues": [],
+    "function_name_basis": "Function names are mapped to the prepared source copy used by the recorded analysis, not to subsequently edited working files."
+  },
+  "limitations": [
+    "Quality Gate OK is not evidence of no issues. Before checks new_violations=0. Final after evaluates new_coverage=100.0 against 80, new_duplicated_lines_density=0.0 against 3 and new_violations=0 for the server-defined PREVIOUS_VERSION new-code scope dated 2026-10-23T01:04:17+0000 (10:04:17 KST), not the entire application.",
+    "No coverage input was supplied for before. Sonar raw coverage 0.0 is recorded as unmeasured, not as a zero-coverage baseline.",
+    "After includes two new analysis tools with cognitive complexity 224. Whole-project cognitive complexity 1418 cannot be compared to before 1319 as a same-scope refactor delta.",
+    "Resolved S3776 functions are confirmed at or below threshold 15; no exact after score or score of zero is claimed.",
+    "SonarQube coverage and coverage.py statement, branch and combined percentages are different measurements and are labeled separately."
+  ],
+  "review_findings": [
+    {
+      "rule": "python:S2068",
+      "path": "scripts/sonar_local.py",
+      "state": "still_open_reviewed_as_likely_false_positive",
+      "reason": "password_status: pending is a state marker. The actual replacement password uses secrets.token_urlsafe(36). The original warning has not been deleted or marked resolved."
+    },
+    {
+      "rule": "python:S8786",
+      "count": 3,
+      "state": "still_open",
+      "reason": "Regex runtime warnings remain in llm.py and rag.py. A simplistic email-boundary rewrite can miss the second email in first@example.com2second@example.org; preserve masking semantics while evaluating a future fix."
+    }
+  ],
+  "private_artifacts_excluded": [
+    "API keys",
+    "passwords",
+    "tokens",
+    "student uploads",
+    "local credential files",
+    "raw HTTP bodies"
+  ],
+  "final_cleanup_verification": [
+    {
+      "rule": "python:S1226",
+      "path": "jolup/planner.py",
+      "status": "CLOSED",
+      "resolution": "FIXED",
+      "analysis_id": "6c5cab8a-13ff-4a26-a999-f471cbf853f2",
+      "change": "Use current_diagnosis instead of overwriting the compatibility parameter diagnosis."
+    },
+    {
+      "rule": "python:S3776",
+      "path": "scripts/sonar_local.py",
+      "status": "CLOSED",
+      "resolution": "FIXED",
+      "analysis_id": "6c5cab8a-13ff-4a26-a999-f471cbf853f2",
+      "change": "Extract _verify_source_file from _verify_hashes."
+    }
+  ],
+  "regression_and_coverage": {
+    "manifest_measured_at": "20261023_101348_845377",
+    "status": "passed",
+    "exit_code": 0,
+    "tests": {
+      "status": "passed",
+      "exit_code": 0,
+      "total": 357,
+      "passed": 357,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "source_unchanged": true,
+    "vector": true,
+    "coverage_py_totals": {
+      "covered_lines": 2923,
+      "num_statements": 3478,
+      "percent_covered": 82.08892617449665,
+      "percent_covered_display": "82.09",
+      "missing_lines": 555,
+      "excluded_lines": 0,
+      "percent_statements_covered": 84.04255319148936,
+      "percent_statements_covered_display": "84.04",
+      "num_branches": 1290,
+      "num_partial_branches": 185,
+      "covered_branches": 991,
+      "missing_branches": 299,
+      "percent_branches_covered": 76.82170542635659,
+      "percent_branches_covered_display": "76.82"
+    },
+    "selected_files": {
+      "jolup/academic.py": {
+        "covered_lines": 294,
+        "num_statements": 316,
+        "percent_covered": 90.80717488789237,
+        "percent_covered_display": "90.81",
+        "missing_lines": 22,
+        "excluded_lines": 0,
+        "percent_statements_covered": 93.0379746835443,
+        "percent_statements_covered_display": "93.04",
+        "num_branches": 130,
+        "num_partial_branches": 19,
+        "covered_branches": 111,
+        "missing_branches": 19,
+        "percent_branches_covered": 85.38461538461539,
+        "percent_branches_covered_display": "85.38"
+      },
+      "jolup/planner.py": {
+        "covered_lines": 168,
+        "num_statements": 186,
+        "percent_covered": 89.28571428571429,
+        "percent_covered_display": "89.29",
+        "missing_lines": 18,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.3225806451613,
+        "percent_statements_covered_display": "90.32",
+        "num_branches": 66,
+        "num_partial_branches": 7,
+        "covered_branches": 57,
+        "missing_branches": 9,
+        "percent_branches_covered": 86.36363636363636,
+        "percent_branches_covered_display": "86.36"
+      },
+      "jolup/course_solver.py": {
+        "covered_lines": 90,
+        "num_statements": 93,
+        "percent_covered": 95.2755905511811,
+        "percent_covered_display": "95.28",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 96.7741935483871,
+        "percent_statements_covered_display": "96.77",
+        "num_branches": 34,
+        "num_partial_branches": 3,
+        "covered_branches": 31,
+        "missing_branches": 3,
+        "percent_branches_covered": 91.17647058823529,
+        "percent_branches_covered_display": "91.18"
+      },
+      "jolup/mcp_server.py": {
+        "covered_lines": 43,
+        "num_statements": 52,
+        "percent_covered": 80.35714285714286,
+        "percent_covered_display": "80.36",
+        "missing_lines": 9,
+        "excluded_lines": 0,
+        "percent_statements_covered": 82.6923076923077,
+        "percent_statements_covered_display": "82.69",
+        "num_branches": 4,
+        "num_partial_branches": 2,
+        "covered_branches": 2,
+        "missing_branches": 2,
+        "percent_branches_covered": 50.0,
+        "percent_branches_covered_display": "50.00"
+      }
+    },
+    "source_manifest": "reports/quality/manifest.json",
+    "source_manifest_sha256": "f041b50a27e8dd08921a647c5efdd7a73f6467bfb54399bbd3b4ed007899e6da",
+    "source_coverage": "reports/quality/coverage.json",
+    "source_coverage_sha256": "cc224fe5c2ec2037828bfe3375f46e74a6dbbcec1af4e20977573aa83a803b4c",
+    "coverage_xml_sha256": "d2878a8075705a955c3d034baa3e8980419c465313469424836ab56e8708c1a9"
+  }
+}

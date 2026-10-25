@@ -1,0 +1,177 @@
+{
+  "domain_id": "sungkyul-computer-2024",
+  "version": "2026-10-22.1",
+  "school": "성결대학교",
+  "department": "컴퓨터공학과",
+  "entry_year": 2024,
+  "track": "전공심화",
+  "enrollment_type": "신입학",
+  "engineering_accreditation": false,
+  "total_credits": 123,
+  "general_required": 14,
+  "general_elective": 20,
+  "major_base": 42,
+  "major_depth": 21,
+  "major_total": 63,
+  "major_required": 6,
+  "registered_semesters": 8,
+  "chapel_semesters": 6,
+  "term_limit": 18,
+  "year_limit": 36,
+  "summer_limit": 6,
+  "overload": {
+    "extra": 3,
+    "previous_earned_min": 15,
+    "previous_gpa_min": 4.2
+  },
+  "general_required_courses": [
+    {
+      "course_id": "GE001",
+      "name": "기독교로의초대",
+      "credits": 3,
+      "aliases": [
+        "현대인과기독교"
+      ]
+    },
+    {
+      "course_id": "GE002",
+      "name": "신앙으로의초대",
+      "credits": 3,
+      "aliases": [
+        "현대인과성경"
+      ]
+    },
+    {
+      "course_id": "GE003",
+      "name": "영어커뮤니케이션(1)",
+      "credits": 2,
+      "aliases": []
+    },
+    {
+      "course_id": "GE004",
+      "name": "영어커뮤니케이션(2)",
+      "credits": 2,
+      "aliases": []
+    },
+    {
+      "course_id": "GE005",
+      "name": "기초글쓰기",
+      "credits": 2,
+      "aliases": []
+    },
+    {
+      "course_id": "GE006",
+      "name": "대학생활과진로",
+      "credits": 1,
+      "aliases": []
+    },
+    {
+      "course_id": "GE007",
+      "name": "사회봉사",
+      "credits": 1,
+      "aliases": []
+    }
+  ],
+  "major_required_courses": [
+    {
+      "course_id": "CS_CAP1",
+      "name": "전공종합설계(1)",
+      "credits": 3,
+      "aliases": []
+    },
+    {
+      "course_id": "CS_CAP2",
+      "name": "전공종합설계(2)",
+      "credits": 3,
+      "aliases": []
+    }
+  ],
+  "graduation_project_required": true,
+  "notes": [
+    "공학인증은 사용자가 지정한 프로젝트 범위에서 제외.",
+    "기타 26학점은 합계의 잔여분이며 일선 26학점 필수 규칙이 아님.",
+    "전공필수 초과학점은 전공 총합에 인정. 전선 36학점 독립 부족 판정 금지.",
+    "컴공 2021학번 이후 교필 14학점. 코딩기초/AI의이해와활용 제외.",
+    "공식 졸업 확정은 학교 졸업사정회를 거쳐야 함.",
+    "대체 과목의 인정은 승인 증빙이 있는 경우에 한함. 본 샘플은 현재 명칭 사용."
+  ],
+  "citations": {
+    "credits": [
+      {
+        "source_id": "course_guide",
+        "page": 24
+      },
+      {
+        "source_id": "school_rules",
+        "page": 6,
+        "section": "제35조"
+      }
+    ],
+    "general": [
+      {
+        "source_id": "course_guide",
+        "page": 17
+      },
+      {
+        "source_id": "course_guide",
+        "page": 28
+      }
+    ],
+    "major": [
+      {
+        "source_id": "major_notice",
+        "page": null
+      },
+      {
+        "source_id": "course_guide",
+        "page": 29
+      }
+    ],
+    "noncredit": [
+      {
+        "source_id": "school_rules",
+        "page": 9,
+        "section": "제50조"
+      },
+      {
+        "source_id": "major_notice",
+        "page": null
+      }
+    ],
+    "limits": [
+      {
+        "source_id": "school_rules",
+        "page": 7,
+        "section": "제40조"
+      },
+      {
+        "source_id": "course_guide",
+        "page": 7
+      },
+      {
+        "source_id": "course_guide",
+        "page": 8
+      }
+    ],
+    "grades": [
+      {
+        "source_id": "school_rules",
+        "page": 8,
+        "section": "제44조"
+      }
+    ],
+    "retakes": [
+      {
+        "source_id": "course_guide",
+        "page": 9
+      },
+      {
+        "source_id": "course_guide",
+        "page": 29
+      }
+    ]
+  },
+  "term_min_regular": 15,
+  "term_min_senior": 9,
+  "academic_warning_limit": 15
+}

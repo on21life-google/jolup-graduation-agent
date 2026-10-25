@@ -1,0 +1,21 @@
+﻿이름,학번,row_id,course_id,course_name,term,category,credits,grade,status,retake_of,retake_approved
+김가온 (가상),DUMMY-2024-001,GE001,GE001,기독교로의초대,2024-1,교필,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE002,GE002,신앙으로의초대,2024-1,교필,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE003,GE003,영어커뮤니케이션(1),2026-1,교필,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE004,GE004,영어커뮤니케이션(2),2026-1,교필,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE005,GE005,기초글쓰기,2026-1,교필,2,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE006,GE006,대학생활과진로,2026-1,교필,1,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE007,GE007,사회봉사,2026-1,교필,1,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS011,CS011,선형대수,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS012,CS012,논리회로,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS013,CS013,컴퓨터네트워크,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS014,CS014,데이터베이스,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS015,CS015,웹 표준기술,2025-1,전선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E05,GE_E05,성과인간심리,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E06,GE_E06,생태환경과윤리,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,GE_E07,GE_E07,현대사회와범죄,2025-2,교선,3,B+,completed,,False
+김가온 (가상),DUMMY-2024-001,CS_CAP1,CS_CAP1,전공종합설계(1),2026-2,전필,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS023,CS023,컴퓨터구조,2026-2,전선,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS024,CS024,운영체제,2026-2,전선,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS025,CS025,임베디드시스템,2026-2,전선,3,,in_progress,,False
+김가온 (가상),DUMMY-2024-001,CS027,CS027,머신러닝,2026-2,전선,3,,in_progress,,False

@@ -1,0 +1,751 @@
+[
+  {
+    "id": "REQ-001",
+    "title": "지원하는 학생 범위를 먼저 확인한다",
+    "basis": "사용자 범위: 성결대학교 2024학번 컴퓨터공학과·일반 신입학·전공심화·공학인증 제외. data/rules/sungkyul_cs_2024.json",
+    "technique": "동등분할: 지원 프로필 / 미지원 학과·학번·입학 방식 / 불명확한 프로필",
+    "risk": "다른 교육과정의 학생에게 잘못된 졸업 가능 판정을 내림",
+    "acceptance_criteria": [
+      "지원 범위를 벗어나거나 학기·비학점 기록이 잘못되면 확인 필요로 판정한다.",
+      "CSV에 명시된 학교·입학년도 불일치를 조용히 제거하지 않는다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_invalid_or_unsupported_profile_never_returns_graduation_pass",
+      "tests/test_domain_guard.py::test_explicit_foreign_school_column_is_not_silently_dropped",
+      "tests/test_domain_guard.py::test_mixed_cohort_rows_rejected"
+    ],
+    "implementation": [
+      "jolup/academic.py:_profile_issues",
+      "jolup/academic.py:parse_transcript",
+      "jolup/academic.py:check_requirements"
+    ],
+    "scope_notes": "현재 구현의 동작을 학습용으로 재구성한 요구사항이다. 이 문서는 과거 테스트 작성 순서를 증명하지 않는다. 편입·복수전공·공학인증은 구현 범위 밖이다."
+  },
+  {
+    "id": "REQ-002",
+    "title": "CSV를 검증하고 식별정보를 제거한다",
+    "basis": "docs/INTERFACES.md의 parse_transcript 계약, 사용자 요청의 더미 성적표, 세션 데이터 보호 정책",
+    "technique": "동등분할: 정상 CSV / 잘못된 형식·학점 / 식별정보가 추가된 CSV",
+    "risk": "잘못된 행을 부분 반영하거나 오류 메시지에 이름·학번을 노출함",
+    "acceptance_criteria": [
+      "잘못된 CSV는 ok=false이며 정상 성적표로 부분 채택하지 않는다.",
+      "이름·학번 열을 제거하고 반환값과 오류에 해당 원문 값을 노출하지 않는다.",
+      "화면에서 잘못된 업로드를 시도해도 직전의 유효한 자료를 유지한다."
+    ],
+    "tests": [
+      "tests/test_academic.py::test_invalid_csv_not_partially_accepted",
+      "tests/test_academic_review.py::test_invalid_credit_input_is_not_silently_accepted",
+      "tests/test_academic_review.py::test_csv_drops_identifiers_and_reports_invalid_values_without_echoing_private_cell",
+      "tests/test_app.py::test_invalid_csv_reports_error_and_preserves_previous_valid_record"
+    ],
+    "implementation": [
+      "jolup/academic.py:_normalize",
+      "jolup/academic.py:validate_courses",
+      "jolup/academic.py:parse_transcript"
+    ],
+    "scope_notes": "선택한 테스트는 대표적인 유효·무효 입력을 검증한다. 모든 CSV 인코딩·열 조합·크기 경계를 검증했다고 주장하지 않는다."
+  },
+  {
+    "id": "REQ-003",
+    "title": "이수 상태와 성적에 따라 학점·평점을 따로 계산한다",
+    "basis": "data/rules/sungkyul_cs_2024.json의 grades 근거: 학칙 제44조. docs/INTERFACES.md의 search_scores 계약",
+    "technique": "결정표: 이수완료·수강중·예정·철회 × D0·P·F·0학점",
+    "risk": "F·예정 과목을 취득 학점으로 합산하거나 P를 평점 분모에 넣음",
+    "acceptance_criteria": [
+      "이수완료 급제 과목만 현재 취득 학점에 반영하고 F·예정·철회를 제외한다.",
+      "P는 취득 학점에는 포함하되 평점 계산에서는 제외한다.",
+      "3학점 D0, 3학점 F, 3학점 P, 0학점 A+ 입력의 취득 학점은 6, 평점 대상은 6학점, 평점은 0.5다.",
+      "행별 counted(취득 학점)와 gpa_counted(평점 대상)를 분리하며, 미확인 재수강은 두 합계에 추가하지 않는다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_f_and_p_and_zero_credit_rows_have_hand_calculated_gpa",
+      "tests/test_academic_review.py::test_planned_and_withdrawn_records_never_create_earned_credit",
+      "tests/test_academic_review.py::test_unverified_retake_is_excluded_from_gpa_as_well_as_earned_credit",
+      "tests/test_academic_review.py::test_retake_over_limit_does_not_add_unrecognized_gpa_credits"
+    ],
+    "implementation": [
+      "jolup/academic.py:_calculate",
+      "jolup/academic.py:search_scores"
+    ],
+    "scope_notes": "위 수치는 독립적인 손계산 사례다. 모든 성적등급과 이수 상태의 곱집합을 검증했다는 의미는 아니다."
+  },
+  {
+    "id": "REQ-004",
+    "title": "재수강과 중복 이수를 두 번 인정하지 않는다",
+    "basis": "data/rules/sungkyul_cs_2024.json의 retakes 근거: 수강 안내 9·29쪽, 승인 연결을 요구하는 현재 계산 계약",
+    "technique": "결정표·경계값: 원행 존재·승인 여부·연속 대체·중복 대체·누적 재수강 한도",
+    "risk": "같은 과목이나 하나의 원행을 여러 번 대체해 졸업 학점을 부풀림",
+    "acceptance_criteria": [
+      "승인된 3학점 재수강은 원래 3학점을 대체하며 합계 6학점으로 만들지 않는다.",
+      "F 재수강의 승인된 급제는 한 번만 취득으로 인정한다.",
+      "미승인 반복·하나의 원행에 대한 중복 대체는 추가 합산하지 않고 확인 필요를 남긴다.",
+      "승인된 연속 재수강에서는 대체된 최초 F가 평점 분모에 다시 살아나지 않는다.",
+      "완료되지 않은 원행·잘못된 연결·검토가 필요한 성적은 원래 인정 결과를 제거하지 않는다.",
+      "누적 재수강 한도 경계와 충돌을 검토한 뒤 취득 학점·평점 반영 여부를 함께 정한다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_approved_retake_replaces_old_earned_credit_instead_of_adding_it",
+      "tests/test_academic_review.py::test_approved_retake_of_failed_course_earns_credit_once",
+      "tests/test_academic_review.py::test_two_replacements_for_one_original_attempt_are_not_counted_twice",
+      "tests/test_academic_review.py::test_unapproved_same_name_repeat_is_not_counted_twice",
+      "tests/test_academic_review.py::test_retake_chain_does_not_restore_the_first_failed_grade_to_gpa",
+      "tests/test_academic_review.py::test_retake_original_requires_a_confirmed_attempt",
+      "tests/test_academic_review.py::test_unverified_retake_link_never_removes_original_attempt",
+      "tests/test_academic_review.py::test_retake_cumulative_thirty_credit_boundary",
+      "tests/test_academic_review.py::test_colliding_retake_is_rejected_before_cumulative_limit_is_reserved"
+    ],
+    "implementation": [
+      "jolup/academic.py:canonical_key",
+      "jolup/academic.py:_calculate",
+      "jolup/academic.py:search_scores",
+      "jolup/academic.py:_retake_link_issue",
+      "jolup/academic.py:_review_retake",
+      "jolup/academic.py:_replace_accepted_attempt"
+    ],
+    "scope_notes": "실제 승인 증빙을 학교 시스템에서 조회하는 기능은 없다. 입력된 승인 연결을 검증하며 애매한 경우 확인 필요로 남긴다."
+  },
+  {
+    "id": "REQ-005",
+    "title": "총학점과 영역별 학점 기준을 각각 비교한다",
+    "basis": "data/rules/sungkyul_cs_2024.json: 총123·교필14·교선20·전공합계63. credits·general·major citations",
+    "technique": "경계값 분석: 다른 조건을 고정한 총학점 122 / 123; 영역 간 대체 가능성 검증",
+    "risk": "한 학점 부족을 통과시키거나 잔여 26학점을 별도 일선 필수로 잘못 강제함",
+    "acceptance_criteria": [
+      "필수과목·비학점·영역별 조건이 모두 충족된 122학점은 총학점 1 부족이며, 123학점은 자료 기준 충족이다.",
+      "전공 초과 학점은 총학점에 인정하며, 일선 26학점을 별도 필수로 강제하지 않는다.",
+      "과거 전필 분류가 많다는 이유로 전선 36학점이라는 독립 부족분을 만들지 않는다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_exact_123_boundary_with_seven_required_general_courses_and_two_design_courses",
+      "tests/test_academic_review.py::test_122_credits_is_one_short_even_when_all_other_areas_pass",
+      "tests/test_academic_review.py::test_surplus_major_credits_can_replace_residual_other_credits",
+      "tests/test_academic_review.py::test_legacy_major_required_classification_does_not_create_extra_elective_deficit"
+    ],
+    "implementation": [
+      "jolup/academic.py:_diagnostic_rows",
+      "jolup/academic.py:check_requirements"
+    ],
+    "scope_notes": "학교의 공식 최종 졸업 확정과 자료 기준 충족을 구분한다. 여기 연결한 경계 테스트만으로 모든 영역별 경계가 완전 검증됐다고 할 수 없다."
+  },
+  {
+    "id": "REQ-006",
+    "title": "필수과목은 다른 과목의 학점으로 대신하지 않는다",
+    "basis": "data/rules/sungkyul_cs_2024.json의 general_required_courses·major_required_courses; 교필7과목·전공종합설계2과목",
+    "technique": "결정표: 영역 학점 충족 × 필수과목 일치 × 필수과목 인정 학점",
+    "risk": "총학점만 맞으면 필수과목 누락이나 0학점 설계 과목도 통과시킴",
+    "acceptance_criteria": [
+      "총123학점이어도 사회봉사 또는 전공종합설계(2)를 다른 과목으로 바꾸면 미충족이다.",
+      "3학점이 필요한 설계 과목은 0학점 P 기록만으로 충족하지 않는다.",
+      "필수과목 부족은 학점과 별도로 과목 단위로 표시한다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_same_area_credit_total_cannot_replace_a_missing_required_course",
+      "tests/test_academic_review.py::test_zero_credit_pass_does_not_fulfil_a_three_credit_required_design_course"
+    ],
+    "implementation": [
+      "jolup/academic.py:canonical_key",
+      "jolup/academic.py:_diagnostic_rows"
+    ],
+    "scope_notes": "개별 대체과목 승인 증빙은 제공되지 않았다. 공식 승인되지 않은 다른 과목으로 대체 가능하다고 추정하지 않는다."
+  },
+  {
+    "id": "REQ-007",
+    "title": "채플·등록·졸업작품을 학점과 독립된 요건으로 판정한다",
+    "basis": "data/rules/sungkyul_cs_2024.json의 noncredit 근거: 학칙 제50조·학과 공지; 채플6학기·등록8학기·작품심사1건 통과",
+    "technique": "결정표: 채플·등록·작품 상태; 단위별 부족분 확인",
+    "risk": "여분 학점을 채플 학기나 작품 심사 통과로 잘못 바꿈",
+    "acceptance_criteria": [
+      "총학점이 126이어도 채플5학기·등록7학기·작품미완료 중 하나가 있으면 해당 비학점 요건은 미충족이다.",
+      "채플·등록은 학기, 작품심사는 건 단위를 유지한다.",
+      "기록 누락은 0 또는 통과로 추정하지 않고 확인 필요로 표시한다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_noncredit_requirement_cannot_be_paid_for_with_extra_credits",
+      "tests/test_academic_review.py::test_invalid_or_unsupported_profile_never_returns_graduation_pass",
+      "tests/test_academic.py::test_independent_scenario_answers"
+    ],
+    "implementation": [
+      "jolup/academic.py:_profile_issues",
+      "jolup/academic.py:_diagnostic_rows",
+      "jolup/academic.py:check_requirements"
+    ],
+    "scope_notes": "더미 프로필의 학기·심사 값만 사용한다. 실제 학적부·졸업증명서를 검증했다는 뜻은 아니다."
+  },
+  {
+    "id": "REQ-008",
+    "title": "현재 이수와 수강 중 합격 전망을 분리한다",
+    "basis": "사용자 성공 기준: 수강 중 학점을 완료로 계산하지 않음. docs/INTERFACES.md의 totals·projection 계약",
+    "technique": "상태 기반 테스트: in_progress에서 completed를 가정한 별도 전망; 불변 조건 확인",
+    "risk": "미래 합격을 이미 이수한 성적으로 표시해 지금 졸업할 수 있다고 답함",
+    "acceptance_criteria": [
+      "정상 재학 더미는 현재90학점, 수강 중15학점 합격 전망105학점을 구분한다.",
+      "독립 경계 사례에서 현재121학점+수강중2학점은 현재미충족·전망123학점으로 구분한다.",
+      "전망 계산이 채플·등록·작품의 현재 확인값을 자동으로 통과 처리하지 않는다.",
+      "수강 중 재수강의 승인이 미확인이라면 projection.review_items에 사유를 보존하고 전망을 확인 필요로 표시한다."
+    ],
+    "tests": [
+      "tests/test_academic.py::test_independent_scenario_answers",
+      "tests/test_academic_review.py::test_in_progress_final_course_counts_only_in_projection",
+      "tests/test_academic_review.py::test_projection_does_not_automatically_grant_chapel_or_project_pass",
+      "tests/test_academic_review.py::test_unreviewed_in_progress_retake_blocks_the_plan_with_an_actionable_reason"
+    ],
+    "implementation": [
+      "jolup/academic.py:_calculate",
+      "jolup/academic.py:check_requirements"
+    ],
+    "scope_notes": "합격 전망은 시나리오다. 미래 합격 사실이나 공식 졸업 확정이 아니다."
+  },
+  {
+    "id": "REQ-009",
+    "title": "검토한 근거가 달라지거나 기록이 모순되면 재확인을 요구한다",
+    "basis": "자료 누락은 확인 필요로 표시한다는 사용자 기준; jolup/evidence.py의 검토된 규칙·원문 무결성 계약",
+    "technique": "오류 추정·상태전이: 검토 완료 자료 → 변경된 자료; 미래 완료 기록",
+    "risk": "변경된 규정이나 미래 성적을 옛 캐시와 결합해 확정 판정함",
+    "acceptance_criteria": [
+      "규칙 파일이 검토 당시와 달라지면 기존 승인 상태로 처리하지 않는다.",
+      "현재보다 미래 학기의 이수완료 기록은 확인 필요다.",
+      "화면은 근거 변경 시 이전 진단 캐시를 무효화한다.",
+      "reviewed_bundle의 필수 파일 목록을 비우거나 규칙·제공 안내문을 빼면 검토 완료로 인정하지 않는다."
+    ],
+    "tests": [
+      "tests/test_domain_guard.py::test_changed_rules_are_not_treated_as_approved",
+      "tests/test_academic_review.py::test_future_completed_credit_is_not_sufficient_to_issue_pass",
+      "tests/test_app.py::test_cached_diagnosis_is_invalidated_when_reviewed_source_changes",
+      "tests/test_domain_guard.py::test_review_manifest_cannot_silently_omit_required_evidence"
+    ],
+    "implementation": [
+      "jolup/evidence.py:validate_rule_bundle",
+      "jolup/academic.py:_profile_issues",
+      "jolup/academic.py:check_requirements"
+    ],
+    "scope_notes": "자동으로 새 규정을 승인·갱신하는 기능은 없다. 새 자료 확인과 규칙 재검토는 별도 작업이다."
+  },
+  {
+    "id": "REQ-010",
+    "title": "수강 계획은 학기·연간 상한과 최소 수강을 함께 만족한다",
+    "basis": "data/rules/sungkyul_cs_2024.json의 term_limit18·year_limit36·term_min_senior9·academic_warning_limit15. 학칙·수강 안내 limits 근거",
+    "technique": "경계값·제약 조합: 희망8 대 최소9, 학기18·연간36, 경고15",
+    "risk": "학점을 채워도 등록할 수 없는 시간량의 계획을 가능으로 표시함",
+    "acceptance_criteria": [
+      "학기18·연간36 한도를 적용하며 계절학기와 F 이력도 연간 부담 계산에 반영한다.",
+      "4학년의 부족분이6학점이어도 정규학기 최소9학점을 고려한다.",
+      "희망상한8학점과 최소9학점이 충돌하면 성공 계획으로 바꾸지 않는다.",
+      "학사경고가 명시되면 상한15를 적용하고, 명시적으로 미확인인 경우 임의로18을 적용하지 않는다.",
+      "projection.review_items가 있으면 해당 사유를 표시하고 확인되지 않은 학점을 기초로 수강 계획을 생성하지 않는다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_planner_applies_18_per_term_and_36_per_year_including_summer_attempts",
+      "tests/test_academic_review.py::test_senior_minimum_requires_nine_even_when_only_six_credits_are_missing",
+      "tests/test_academic_review.py::test_preferred_eight_credit_cap_cannot_bypass_senior_nine_credit_minimum",
+      "tests/test_academic_review.py::test_academic_warning_limits_each_senior_term_to_fifteen",
+      "tests/test_academic_review.py::test_explicitly_unknown_academic_warning_does_not_assume_eighteen",
+      "tests/test_academic_review.py::test_unreviewed_in_progress_retake_blocks_the_plan_with_an_actionable_reason"
+    ],
+    "implementation": [
+      "jolup/planner.py:plan_courses",
+      "jolup/course_solver.py:choose_courses"
+    ],
+    "scope_notes": "개인별 초과수강·최소학점 예외 승인은 자동 적용하지 않는다. 승인 자료가 없는 현재 범위의 보수적 계획이다."
+  },
+  {
+    "id": "REQ-011",
+    "title": "미래 학기를 함께 고려해 후보 과목을 배치한다",
+    "basis": "사용자 수강 계획 기능; data/courses.json의 교육과정·모의 개설 후보와 프로젝트의 설계 순서 정책",
+    "technique": "결정표·시나리오: 계절별 후보 × 필수과목 × 설계 순서",
+    "risk": "앞 학기를 먼저 채워 실제 가능한 다음 학기 계획을 놓치거나 설계 순서를 뒤집음",
+    "acceptance_criteria": [
+      "전공종합설계(2)를 (1)보다 앞 학기에 배치하지 않는다.",
+      "봄에만 가능한 교양 후보의 공간을 남겨 미래 학기 전체를 함께 계산한다.",
+      "기존 이수·중복 후보는 선택 대상에서 제외한다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_planner_does_not_put_design_two_before_design_one",
+      "tests/test_academic_review.py::test_planner_keeps_spring_capacity_for_general_courses_unavailable_in_fall",
+      "tests/test_academic.py::test_plan_never_mutates_current_record_and_respects_18_36"
+    ],
+    "implementation": [
+      "jolup/planner.py:search_courses",
+      "jolup/planner.py:plan_courses",
+      "jolup/course_solver.py:choose_courses"
+    ],
+    "scope_notes": "설계(1) 다음 (2)는 이 프로젝트의 보수적 계획 정책이며 공식 선수과목 제한으로 단정하지 않는다. 실제 시간표·정원·개설 확정은 검증 범위 밖이다."
+  },
+  {
+    "id": "REQ-012",
+    "title": "학기별 전망을 누적하되 원래 성적표를 변경하지 않는다",
+    "basis": "docs/INTERFACES.md의 semesters.projected_rows·projection_assumptions 계약; 정상 재학 손계산 시나리오",
+    "technique": "시나리오·불변 조건: 90 → 105 → 114 → 123; 원본과 복사본 비교",
+    "risk": "모든 학기에 최종123학점을 표시하거나 계획을 실제 이수에 덮어씀",
+    "acceptance_criteria": [
+      "정상 더미는 수강 중 합격 전망105에서 2027-1에9, 2027-2에9를 더해114·123으로 누적한다.",
+      "계획 실행 전후 원본 프로필·과목 목록은 같고 현재 취득90은 유지한다.",
+      "학기별 표에서 채플·작품의 현재 확인값과 향후 등록 가정을 구분한다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_on_track_plan_uses_nine_each_senior_term_and_finishes_at_123",
+      "tests/test_academic_review.py::test_planning_does_not_mutate_original_student_record",
+      "tests/test_academic_review.py::test_each_semester_diagnosis_is_cumulative_and_keeps_unconfirmed_noncredit_values",
+      "tests/test_app.py::test_each_planned_term_shows_its_own_projected_diagnosis"
+    ],
+    "implementation": [
+      "jolup/planner.py:_semester_projection",
+      "jolup/planner.py:plan_courses"
+    ],
+    "scope_notes": "목표2027-2는 마지막 수학 학기이며 통상2028년2월 졸업 목표다. 해당 날짜의 공식 일정이 확정됐다는 뜻은 아니다."
+  },
+  {
+    "id": "REQ-013",
+    "title": "계획의 실행 가능성과 최적 탐색 완료를 구분한다",
+    "basis": "jolup/course_solver.py의 feasible·optimal 계약과 계산 결과 재확인 정책",
+    "technique": "결정표: feasible × optimal × 남은 부족분; 오류 추정: 위조된 사전 진단",
+    "risk": "불가능한 배치나 검증되지 않은 사전 진단을 성공으로 표시함",
+    "acceptance_criteria": [
+      "연간 여유가 최소 수강보다 작으면 성공 계획으로 표시하지 않는다.",
+      "제한 시간 안에 찾은 유효한 배치와 제약을 위반한 배치를 구분한다.",
+      "호출자가 전달한 가짜 사전 진단을 그대로 믿지 않고 현재 입력을 재계산한다."
+    ],
+    "tests": [
+      "tests/test_academic_review.py::test_annual_capacity_below_regular_minimum_is_not_a_successful_plan",
+      "tests/test_academic_review.py::test_valid_time_limited_incumbent_is_distinct_from_infeasible_assignment",
+      "tests/test_academic_review.py::test_planner_does_not_trust_a_forged_precomputed_diagnosis"
+    ],
+    "implementation": [
+      "jolup/course_solver.py:choose_courses",
+      "jolup/planner.py:plan_courses"
+    ],
+    "scope_notes": "선택 테스트의 탐색 종료 상황은 모의 결과를 사용한다. 모든 입력 규모의 최적해 보장이나 수행시간 보장을 뜻하지 않는다."
+  },
+  {
+    "id": "REQ-014",
+    "title": "공개 자료만 검색하고 검색 방식과 적용 범위를 표시한다",
+    "basis": "사용자 규정 검색 RAG 기능; data/sources.json, docs/RAG.md, docs/INTERFACES.md",
+    "technique": "동등분할: 공개·지원 범위 자료 / 학생 자료·경로 밖 자료 / 미지원 프로필",
+    "risk": "학생 성적을 규정 색인에 넣거나 대체 검색을 실제 벡터 검증으로 오인함",
+    "acceptance_criteria": [
+      "허용된 공개 출처만 색인하고 학생 자료·범위 밖 파일·다른 학번 자료는 제외한다.",
+      "검색 결과는 순위·점수·출처를 가지며 최대5개로 제한한다.",
+      "실제 Chroma·FastEmbed와 명시적 lexical 대체 모드를 구분한다.",
+      "벡터 청크는 실제 임베딩 토크나이저의 특수 토큰을 포함한 한도를 지키며 원문 문자를 누락하지 않는다.",
+      "청크 방식이 바뀌면 이전 벡터 캐시와 구분하고, 긴 검색 질의도 모델 입력 한도에 맞게 처리한다."
+    ],
+    "tests": [
+      "tests/test_rag.py::test_path_and_student_data_isolation",
+      "tests/test_rag.py::test_profile_scope_is_enforced",
+      "tests/test_rag.py::test_retrieval_contains_ranked_real_vector_results",
+      "tests/test_rag.py::test_fallback_mode_and_errors_are_explicit",
+      "tests/test_chunking.py::test_split_respects_real_budget_including_special_tokens_without_changing_model",
+      "tests/test_chunking.py::test_prefer_line_or_sentence_boundary_and_keep_every_character",
+      "tests/test_chunking.py::test_unicode_rows_and_long_text_are_preserved_without_a_download",
+      "tests/test_rag_edges.py::test_token_chunks_and_page_context_replace_legacy_cache"
+    ],
+    "implementation": [
+      "jolup/rag.py:KnowledgeBase._load_sources",
+      "jolup/rag.py:KnowledgeBase.build_index",
+      "jolup/rag.py:KnowledgeBase.search",
+      "jolup/chunking.py:TokenChunker.count",
+      "jolup/chunking.py:TokenChunker.split",
+      "jolup/rag.py:KnowledgeBase._append_page_chunks",
+      "jolup/rag.py:KnowledgeBase._vector_scores"
+    ],
+    "scope_notes": "test_retrieval_contains_ranked_real_vector_results의 실제 벡터 단정은 JOLUP_TEST_VECTOR=1일 때 실행된다. 함수 이름만 보고 오프라인 실행을 벡터 검증으로 보고하면 안 된다."
+  },
+  {
+    "id": "REQ-015",
+    "title": "근거 있는 규정 답변과 원문 메타데이터를 함께 제공한다",
+    "basis": "사용자 성공 형식의 근거자료·meta: 파일명·주소·등록일. data/sources.json과 공개 원문",
+    "technique": "명세 기반 시나리오·오류 추정: 근거 존재 / 누락 / 변경 / 미지원 질문",
+    "risk": "관련 없는 문서로 주장을 뒷받침하거나 모르는 날짜·규정을 만들어냄",
+    "acceptance_criteria": [
+      "대표 규정 질문의 답변·출처ID·원문 페이지가 고정 기대값과 일치한다.",
+      "원문 파일명·주소·등록일·페이지를 보존하며 모르는 등록일은 null로 남긴다.",
+      "필요한 학과 공지가 없거나 내용이 바뀌면 다른 근거로 단정하지 않는다.",
+      "근거 없는 질문·다른 학생 정보 요청은 확인 필요이며 꾸며낸 근거를 붙이지 않는다.",
+      "검색 청크와 함께 해당 페이지 전체 context_text를 보존해 표 머리글·예외 조건을 확인할 수 있게 한다.",
+      "상위 검색 결과는 동일 페이지의 작은 청크만 반복하기보다 서로 다른 페이지의 근거를 우선 제시한다."
+    ],
+    "tests": [
+      "tests/test_rag.py::test_twenty_regulatory_questions",
+      "tests/test_rag.py::test_original_metadata_and_unknown_dates_are_preserved",
+      "tests/test_rag.py::test_missing_authoritative_notice_cannot_reuse_unrelated_evidence",
+      "tests/test_rag.py::test_changed_source_number_requires_review_instead_of_stale_answer",
+      "tests/test_rag.py::test_five_unsupported_or_unsafe_requests",
+      "tests/test_rag.py::test_retrieval_always_keeps_full_page_context_for_table_and_exception",
+      "tests/test_rag.py::test_additional_phrasings_keep_verified_source_context",
+      "tests/test_rag_edges.py::test_top_results_prefer_distinct_pages_when_full_page_context_is_available"
+    ],
+    "implementation": [
+      "jolup/rag.py:KnowledgeBase.answer",
+      "jolup/rag.py:KnowledgeBase._grounded_statements",
+      "jolup/evidence.py:metadata",
+      "jolup/rag.py:KnowledgeBase._select_pages",
+      "jolup/rag.py:KnowledgeBase._fact_context"
+    ],
+    "scope_notes": "고정 질문 집합의 통과는 임의 자연어 전체의 정확도를 뜻하지 않는다. PDF 메타데이터의 생성일과 학교 등록일은 같다고 가정하지 않는다."
+  },
+  {
+    "id": "REQ-016",
+    "title": "공통 모델 인터페이스에서 제공자별 요청을 처리한다",
+    "basis": "사용자 요청: OpenAI·Claude 코드를 사용자에게 나누지 않고 키를 바꾸는 공통 인터페이스. docs/API.md",
+    "technique": "동등분할·계약 테스트: OpenAI / Claude / 잘못된 설정 / 통신 오류",
+    "risk": "다른 제공자에 키를 보내거나 설정 변경만으로 과금 요청을 실행함",
+    "acceptance_criteria": [
+      "지원되는 키·제공자 설정에 따라 올바른 호스트와 요청 형식을 사용한다.",
+      "설정 오류·HTTP 오류·연결 오류를 고정된 안전한 결과로 돌려주며 키나 서버 원문을 노출하지 않는다.",
+      "모델 목록은 명시적 조회 때 읽기 요청으로 가져오고 모델 선택이나 생성 요청을 자동 실행하지 않는다.",
+      "제공자 전환은 계산 결과를 바꾸지 않는다.",
+      "공식 ChatOpenAI·ChatAnthropic 통합의 with_structured_output을 사용하고 앱 설명에는 ExplanationSelection의 fact_ids 스키마를 요청한다.",
+      "구조화 출력의 형식 검증과 선택한 문장이 로컬 근거에 있는지의 검증을 별도로 수행한다."
+    ],
+    "tests": [
+      "tests/test_llm.py::test_common_interface_uses_correct_transport",
+      "tests/test_llm.py::test_invalid_configuration_never_calls_network",
+      "tests/test_llm.py::test_http_errors_do_not_echo_body_retry_or_follow_redirects",
+      "tests/test_llm.py::test_model_catalog_is_one_read_only_get_without_model_selection",
+      "tests/test_app.py::test_common_ai_ui_switches_only_key_and_keeps_calculation",
+      "tests/test_llm.py::test_provider_schema_mismatch_never_becomes_a_displayed_explanation",
+      "tests/test_explanation_facts.py::test_unknown_duplicate_or_malformed_fact_selection_is_not_displayed"
+    ],
+    "implementation": [
+      "jolup/llm.py:detect_provider",
+      "jolup/llm.py:_resolve",
+      "jolup/llm.py:list_available_models",
+      "jolup/llm.py:generate",
+      "jolup/llm.py:_chat_model",
+      "jolup/llm.py:ExplanationSelection"
+    ],
+    "scope_notes": "연결된 pytest는 모의 HTTP 계약 검증이다. 실제 제공자별 호출 결과는 docs/검증결과.md의 날짜별 실검증 기록과 구분한다. 모든 업체의 임의 키를 자동 인식하는 인터페이스는 아니다."
+  },
+  {
+    "id": "REQ-017",
+    "title": "AI는 검증된 설명 문장을 선택하며 계산 권한을 갖지 않는다",
+    "basis": "docs/INTERFACES.md: LLM은 수치를 바꿀 권한 없음; 개인정보를 모델 입력에서 제외하는 프로젝트 계약",
+    "technique": "허용 목록·부정 테스트: 원문·식별정보·알 수 없는 의도·미등록 또는 중복 문장 ID·필수 경고 누락",
+    "risk": "모델이 성적이나 판정을 덮어쓰거나 질문 속 지시로 임의 도구를 호출함",
+    "acceptance_criteria": [
+      "AI 설명 입력에서 원문 질문·학생 식별정보·원본 성적행을 제외하고 허용된 숫자·상태·출처만 전달한다.",
+      "AI 설명은 별도 필드이며 결정적 계산의 answer·totals·projection을 덮어쓰지 않는다.",
+      "분류 결과는 고정된 의도 열거값으로 제한하고 알 수 없는 값으로 임의 도구를 호출하지 않는다.",
+      "explanation_facts가 계산 결과에서 만든 문장 중 허용된 ID만 선택할 수 있고 모델 자유문장을 화면에 표시하지 않는다.",
+      "현재 판정·위험·자료 누락·합격 가정 등 해당 사례의 필수 문장은 모델이 선택하지 않아도 유지한다.",
+      "알 수 없는 ID·중복 ID·잘못된 형식·모델 오류에서는 AI 설명을 채택하지 않고 기존 로컬 결과를 유지한다.",
+      "규정·일정 조회의 확인 필요 상태를 학생의 졸업 진단 상태로 바꾸어 설명하지 않는다."
+    ],
+    "tests": [
+      "tests/test_llm.py::test_private_fields_and_raw_query_are_never_sent_and_result_not_mutated",
+      "tests/test_llm.py::test_safe_input_only_allows_numeric_totals_and_safe_sources",
+      "tests/test_llm_routing.py::test_routing_uses_only_fixed_signals_and_enum_not_raw_student_query",
+      "tests/test_llm_routing.py::test_unknown_llm_route_cannot_name_or_invoke_arbitrary_tool",
+      "tests/test_agent.py::test_graph_keeps_current_and_projection_separate_and_ai_cannot_replace",
+      "tests/test_explanation_facts.py::test_model_cannot_replace_current_result_or_omit_conditional_warning",
+      "tests/test_explanation_facts.py::test_review_and_risk_are_mandatory_even_if_model_selects_only_evidence",
+      "tests/test_explanation_facts.py::test_provider_failure_keeps_the_existing_fallback",
+      "tests/test_explanation_facts.py::test_nonpersonal_lookup_never_invents_a_student_diagnosis",
+      "tests/test_explanation_facts.py::test_unknown_duplicate_or_malformed_fact_selection_is_not_displayed",
+      "tests/test_explanation_facts.py::test_missing_calculation_fields_do_not_become_an_invented_verdict",
+      "tests/test_explanation_facts.py::test_known_but_unavailable_fact_is_rejected",
+      "tests/test_explanation_facts.py::test_fact_selection_uses_official_sdk_contract_and_keeps_required_caveats"
+    ],
+    "implementation": [
+      "jolup/llm.py:safe_explanation_input",
+      "jolup/llm.py:explain_result",
+      "jolup/llm.py:classify_intent",
+      "jolup/agent.py:_route",
+      "jolup/agent.py:_explain",
+      "jolup/llm.py:explanation_facts",
+      "jolup/llm.py:ExplanationSelection"
+    ],
+    "scope_notes": "앱 설명 경로는 로컬에서 작성한 근거 문장만 표시한다. 이 제한도 학교 자료 해석·입력 완전성·계산 자체의 모든 오류를 증명하는 것은 아니다. 일반 generate()의 기본 ExplanationOutput과 앱 explain_result()의 ExplanationSelection 계약을 구분한다."
+  },
+  {
+    "id": "REQ-018",
+    "title": "Agent 분기와 로컬·MCP 호출을 같은 도메인 계약으로 연결한다",
+    "basis": "팀 A4 흐름의 규정·진단·계획·일정; docs/INTERFACES.md의 respond·MCP9도구 계약",
+    "technique": "분기·통합 테스트: 진단 / 계획 / 규정 / 일정 / 미지원; stdio·HTTP 전송",
+    "risk": "다른 도구로 분기하거나 전송 방식 변경 시 학점·승인 규칙이 사라짐",
+    "acceptance_criteria": [
+      "실제 LangGraph에 네 도메인 분기와 설명 단계가 있다.",
+      "학생 기록이 없으면 긍정 진단을 만들지 않고 금지 요청은 도구·모델 실행을 제한한다.",
+      "실제 MCP stdio·HTTP에서 도구 조회와 승인 없는 일정 생성 차단이 동작한다.",
+      "MCP HTTP를 경유한 정상 더미 현재학점도90이다."
+    ],
+    "tests": [
+      "tests/test_agent.py::test_router",
+      "tests/test_agent.py::test_actual_langgraph_has_four_domain_branches",
+      "tests/test_agent.py::test_missing_student_data_cannot_produce_positive_verdict",
+      "tests/test_agent.py::test_api_classifier_is_used_but_cannot_override_prohibited_request",
+      "tests/test_calendar.py::test_real_mcp_stdio_tool_discovery_and_approval_gate",
+      "tests/test_calendar.py::test_real_mcp_http_handshake_and_tools"
+    ],
+    "implementation": [
+      "jolup/agent.py:build_graph",
+      "jolup/agent.py:respond",
+      "jolup/mcp_client.py:call_domain",
+      "jolup/mcp_server.py:check_requirements",
+      "jolup/mcp_server.py:create_calendar_event"
+    ],
+    "scope_notes": "HTTP 테스트는 로컬 포트 권한이 필요하다. 도구 이름 조회에 포함된 부분집합의 확인을9개 도구의 모든 행동 검증으로 확대하지 않는다. LangGraph와 공식 LangChain 모델 통합 패키지를 실제 사용하며 상위 langchain 패키지의 자율 에이전트는 사용하지 않는다."
+  },
+  {
+    "id": "REQ-019",
+    "title": "사용자가 답변·진단표·근거·출처를 연결해 읽을 수 있다",
+    "basis": "사용자가 지정한 성공 케이스: ①답변 ②reason 진단표 ③근거자료 ④meta; 현재 충족과 목표 준비의 구분",
+    "technique": "인수 시나리오·UI 계약: 정상 / 부족 / 확인 필요 / 현재 질문 / 준비 상태 질문",
+    "risk": "근거 없는 낙관 답변이나 현재미충족과 목표조건부가능의 혼동",
+    "acceptance_criteria": [
+      "진단 대화에 네 요소가 있고 현재90·합격전망105·계획123을 서로 구분한다.",
+      "나 졸업 괜찮아?는 목표 준비 상태와 현재 진단을 함께 설명한다.",
+      "지금 졸업요건이 충족됐는지 묻는 질문은 현재 진단을 먼저 답한다.",
+      "내장 더미 선택 결과는 독립 기대 정답표와 일치한다.",
+      "근거 카드에서 표 머리글·예외를 포함한 페이지 문맥을 펼칠 수 있고, 과목별 취득 인정과 평점 반영을 구분한다.",
+      "전망의 확인 필요 사유는 수강 계획보다 먼저 화면에 표시한다."
+    ],
+    "tests": [
+      "tests/test_app.py::test_diagnosis_chat_has_four_sections_and_keeps_current_separate",
+      "tests/test_agent.py::test_readiness_question_explains_target_and_current_but_current_question_leads_with_current",
+      "tests/test_app.py::test_every_sample_loads_and_agrees_with_fixed_expected_results",
+      "tests/test_app_edges.py::test_source_page_context_and_gpa_decision_are_visible",
+      "tests/test_app_edges.py::test_projection_review_is_shown_before_planning"
+    ],
+    "implementation": [
+      "jolup/agent.py:_diagnose",
+      "jolup/agent.py:respond",
+      "app.py:_diagnosis_table",
+      "app.py:_sources",
+      "app.py:_render_plan",
+      "app.py:_source_item"
+    ],
+    "scope_notes": "Streamlit AppTest로 기능 상태를 확인한다. 평점 열·전망 경고 일부는 app.py 최상위 실행문에 있다. 모든 화면 크기·접근성 적합성까지 검증한 것은 아니다."
+  },
+  {
+    "id": "REQ-020",
+    "title": "일정은 미리보기와 명시적 승인 뒤에만 ICS로 만든다",
+    "basis": "사용자 일정 기능과 docs/INTERFACES.md의 preview_events·create_calendar_event 계약",
+    "technique": "상태전이: 미승인 → 승인 → 선택 변경으로 미승인; 날짜 경계·변조 부정 테스트",
+    "risk": "사용자 승인 없이 일정 생성, 잘못된 종료일, 조작·중복 일정 출력",
+    "acceptance_criteria": [
+      "승인 값이 정확한 true가 아니면 생성하지 않는다.",
+      "화면의 선택 일정이 바뀌면 직전 승인을 해제한다.",
+      "사용자에게 보이는 마지막 날짜 다음 날을 종일 ICS의 DTEND로 사용한다.",
+      "날짜·ID 변조를 거부하고 같은 일정의 UID와 중복 제거 결과를 유지한다.",
+      "자료 없는 미래 일정은 만들지 않는다.",
+      "2028년처럼 한글 접미사가 붙은 연도도 요청 연도로 해석하며 해당 연도 자료가 없으면 다른 연도 일정을 반환하지 않는다."
+    ],
+    "tests": [
+      "tests/test_calendar.py::test_no_export_without_explicit_approval",
+      "tests/test_app.py::test_calendar_preview_requires_approval_and_selection_change_resets_it",
+      "tests/test_calendar.py::test_inclusive_final_day_becomes_exclusive_ics_end",
+      "tests/test_calendar.py::test_cannot_export_modified_or_invented_dates",
+      "tests/test_calendar.py::test_repeat_export_stable_and_no_duplicates",
+      "tests/test_agent.py::test_future_calendar_has_no_fabricated_dates",
+      "tests/test_agent.py::test_korean_year_suffix_uses_requested_calendar_year"
+    ],
+    "implementation": [
+      "jolup/calendar.py:search_events",
+      "jolup/calendar.py:preview_events",
+      "jolup/calendar.py:create_calendar_event",
+      "jolup/agent.py:_calendar"
+    ],
+    "scope_notes": "현재 제공 범위는 다운로드 가능한 ICS다. Google Calendar에 직접 등록했다는 뜻은 아니다."
+  },
+  {
+    "id": "REQ-021",
+    "title": "단계 기록과 실제 함수 호출을 구분해 로컬에서 분석한다",
+    "basis": "사용자의 코드 학습·LangSmith 요청; docs/INTERFACES.md의 StudyRecorder·observe_call 계약",
+    "technique": "통합·동시성·실패 경로·허용 목록 검증",
+    "risk": "학습 기록에 키·학생 원문을 남기거나 동시 요청의 단계를 섞음",
+    "acceptance_criteria": [
+      "키 없이 실제 Graph 노드와 계산 호출의 부모·자식 관계, 함수 위치, 시간을 기록한다.",
+      "질문·키·자유문장·예외 원문은 기록하지 않는다.",
+      "동시 실행의 run_id와 부모 관계가 분리된다.",
+      "처리 실패는 안전한 실패 단계로 남기며 부분 계산을 정상 판정처럼 반환하지 않는다.",
+      "별도 로컬 프로파일러는 Python sys.monitoring의 실제 호출 이벤트에서 현재 스레드의 허용된 코어 함수 간 호출만 기록한다.",
+      "cProfile 시간 통계가 빠져도 관찰된 호출 관계를 보존하며 실행하지 않은 간선은 만들어내지 않는다.",
+      "함수 인수·반환값을 기록하지 않고 관찰 종료·실패 시 monitoring 슬롯을 반환한다."
+    ],
+    "tests": [
+      "tests/test_study_agent.py::test_real_graph_study_records_nodes_and_nested_calculation_without_changing_results",
+      "tests/test_study_agent.py::test_ai_child_records_exclude_questions_keys_and_free_form_response",
+      "tests/test_study_agent.py::test_parallel_graph_runs_keep_local_trace_context_separate",
+      "tests/test_study_agent.py::test_failed_tool_keeps_a_sanitized_learning_record_without_partial_verdict",
+      "tests/test_app_study.py::test_local_steps_show_source_duration_summary_without_a_key",
+      "tests/test_profile_study.py::test_builtin_run_records_real_calls_without_student_values_or_network",
+      "tests/test_profile_study.py::test_only_observed_edges_and_allowlisted_core_files_are_serialized",
+      "tests/test_profile_study.py::test_observer_does_not_invent_missing_callers_or_mix_threads",
+      "tests/test_profile_study.py::test_missing_cprofile_timing_does_not_remove_observed_call_graph",
+      "tests/test_profile_study.py::test_monitoring_slots_are_released_when_the_observed_function_fails"
+    ],
+    "implementation": [
+      "jolup/observability.py:StudyRecorder",
+      "jolup/observability.py:observe_call",
+      "jolup/agent.py:_observed_node",
+      "jolup/agent.py:respond",
+      "app.py:_render_study_trace",
+      "scripts/profile_study.py:CallObserver",
+      "scripts/profile_study.py:run_profile",
+      "scripts/profile_study.py:render_markdown"
+    ],
+    "scope_notes": "StudyRecorder는 앱의 단계·부모자식 관계이며 별도 프로파일러는 실제 코어 함수 호출 집계와 시간 통계다. 어느 쪽도 숨은 추론·전체 Python 실행·모든 스레드·네트워크 분산 추적을 뜻하지 않는다. 실행 성공과 학업요건 충족도 다르다."
+  },
+  {
+    "id": "REQ-022",
+    "title": "LangSmith 전송은 검증된 더미 기록의 명시 동작으로 제한한다",
+    "basis": "사용자 LangSmith 연결 요청; docs/LANGSMITH.md의 별도 전용키·US/EU·명시 전송 정책",
+    "technique": "동등분할·상태전이·부정 테스트: 기본 더미 / 변경·업로드·변조 / 성공 중복 / 일부 수락 오류",
+    "risk": "개인자료 자동 전송, 다른 서비스 키 오발송, 부분 실패를 성공으로 숨김",
+    "acceptance_criteria": [
+      "키 입력·질문·설정 변경만으로 전송하지 않고 별도 버튼에서만 전송한다.",
+      "변경하지 않은 기본 더미와 현재 프로세스에서 만든 무결한 기록만 전송할 수 있다.",
+      "OpenAI·Claude로 인식되는 sk-키를 LangSmith에 보내지 않는다.",
+      "성공 기록은 같은 세션에서 중복 전송을 막고 오류는 자동 재시도하지 않는다.",
+      "일부 단계만 수락된 오류 가능성을 숨기지 않으며 요청 수락과 클라우드 재조회 확인을 구분한다."
+    ],
+    "tests": [
+      "tests/test_app_study.py::test_settings_and_question_do_not_export_and_leave_model_key_unchanged",
+      "tests/test_app_study.py::test_explicit_export_once_and_success_prevents_duplicate",
+      "tests/test_app_study.py::test_uploaded_csv_disables_export_until_builtin_sample_is_reloaded",
+      "tests/test_observability.py::test_modified_trace_is_blocked_without_network",
+      "tests/test_observability.py::test_openai_and_claude_keys_are_not_sent_to_langsmith",
+      "tests/test_observability.py::test_partial_acceptance_is_honest_and_not_retried",
+      "tests/test_agent.py::test_langsmith_tracing_disabled_even_if_shell_enables_it"
+    ],
+    "implementation": [
+      "jolup/observability.py:_builtin_case",
+      "jolup/observability.py:_validated_trace",
+      "jolup/observability.py:export_study_trace",
+      "jolup/agent.py:respond",
+      "app.py:_render_study_trace"
+    ],
+    "scope_notes": "연결된 pytest는 모의 전송 검증이다. 별도의 실제 계정 검증 기록은 docs/검증결과.md와 reports/langsmith_live_validation.json에 있다. OpenAI 키를 LangSmith 전용키로 재사용하지 않는다."
+  },
+  {
+    "id": "REQ-023",
+    "title": "학생 자료 변경과 세션 초기화가 이전 상태를 남기지 않는다",
+    "basis": "docs/UI.md·docs/INTERFACES.md의 세션 메모리·업로드·초기화 계약",
+    "technique": "상태전이: 기본 더미 → 업로드 → 초기화; 키·승인·대화의 수명 검증",
+    "risk": "이전 학생 진단·대화·승인·API 키가 새 입력의 결과에 재사용됨",
+    "acceptance_criteria": [
+      "CSV 업로드 후 새 자료로 계산하고 이전 대화를 제거한다.",
+      "세션 초기화는 업로드·모델 키·대화·일정 승인을 제거한다.",
+      "LangSmith 키·설정·전송 완료 상태도 함께 제거한다.",
+      "기존 세션에 기본 더미 출처 표식이 없으면 추정하여 외부 전송을 허용하지 않는다."
+    ],
+    "tests": [
+      "tests/test_app.py::test_csv_upload_removes_identifiers_and_recalculates_without_old_chat",
+      "tests/test_app.py::test_session_reset_discards_uploaded_file_key_chat_and_calendar_approval",
+      "tests/test_app_study.py::test_session_reset_clears_langsmith_keys_settings_and_sent_status",
+      "tests/test_app_study.py::test_old_session_does_not_infer_builtin_origin"
+    ],
+    "implementation": [
+      "app.py:_load",
+      "app.py:_render_study_trace"
+    ],
+    "scope_notes": "세션 초기화·업로드 처리 일부는 app.py의 최상위 Streamlit 실행문에 있다. 연결된 두 함수만이 해당 동작 전체를 구현한다는 의미는 아니다."
+  },
+  {
+    "id": "REQ-024",
+    "title": "GitHub 없이 전달할 공유본에서 비밀값·실행 자료를 제외한다",
+    "basis": "사용자 로컬 통합·GitHub 미사용 요청; scripts/package_project.py의 허용 파일 목록·필수 파일·무결성 계약",
+    "technique": "정적 검토·산출물 검증: 허용 파일 목록·필수 파일·심볼릭 링크·CRC·SHA-256",
+    "risk": "API 키·업로드·캐시를 공유하거나 필요한 근거 파일이 빠진 ZIP을 전달함",
+    "acceptance_criteria": [
+      "허용된 소스·문서·공개 자료·더미·실행 파일만 묶고 .env·캐시·업로드·reports·output은 제외한다.",
+      "비어 있지 않은 예제 API 키·외부 경로·심볼릭 링크·필수 파일 누락을 거부한다.",
+      "공유 ZIP의 MANIFEST.json에 파일 해시를 기록하고 생성 후 CRC와 각 파일 SHA-256을 대조한다."
+    ],
+    "tests": [
+      "tests/test_release_scripts.py::test_release_allowlist_omits_private_and_unknown_files",
+      "tests/test_release_scripts.py::test_release_zip_crc_manifest_and_hashes_agree",
+      "tests/test_release_scripts.py::test_release_missing_required_source_and_external_symlinks_are_rejected",
+      "tests/test_release_scripts.py::test_release_example_must_have_blank_credentials",
+      "tests/test_release_scripts.py::test_release_detects_corrupted_archive"
+    ],
+    "implementation": [
+      "scripts/package_project.py:selected_files",
+      "scripts/package_project.py:package"
+    ],
+    "scope_notes": "연결된 pytest는 임시 프로젝트에서 포장·누락·손상 반례를 검사한다. 실제 전달할 공유본은 package_project.py --check와 ZIP 생성 후 CRC·SHA-256 결과로 별도 확인한다. 실제 값이 든 .env는 사용자가 명시 요청한 별도 전달 예외이며 기본 ZIP에 포함하지 않는다. Windows 실기 검증과 시연 영상은 사용자 요청으로 현재 범위에서 제외한다."
+  },
+  {
+    "id": "REQ-025",
+    "title": "혼합 질문과 최근4턴 기억은 영역별 사실과 변경 무효화를 보존한다",
+    "basis": "교수 Day4·Day5 실습의 혼합 RAG/도구 질문·단기메모리; 사용자 전체 답변 정확성과 학습 가시성 요청",
+    "technique": "결정표·상태전이·경계값: 단일/혼합, 4/5턴, 같은자료/변경자료, 명시재표시/새조건",
+    "risk": "복수 요청 일부 누락, 다른 학생·변경 전 자료의 결과 재사용, 부분실패를 정상 판정으로 표시",
+    "acceptance_criteria": [
+      "명시적으로 요청한 규정·진단·계획·일정 영역을 sections로 보존하며 모델의 단일 intent가 나머지를 지우지 않는다.",
+      "중복 현재진단·계획 계산을 재사용하고 부분 실패는 전체완료처럼 표시하지 않는다.",
+      "세션별 최근4턴만 보관하고 입력과 학교자료 내용 변경은 이전 결과를 무효화한다.",
+      "명시적 이전 결과 재표시만 검증된 결과를 재사용하며 새조건·금지요청·실패결과는 재사용하지 않는다.",
+      "혼합 질문의 입학년도와 일정 대상연도를 구분한다."
+    ],
+    "tests": [
+      "tests/test_agent_conversation.py::test_mixed_request_preserves_regulation_diagnosis_and_calendar",
+      "tests/test_agent_conversation.py::test_explicit_current_and_plan_calculate_only_once",
+      "tests/test_agent_conversation.py::test_mixed_domain_failure_keeps_other_sections_and_marks_incomplete",
+      "tests/test_agent_conversation.py::test_four_turn_memory_replays_evidence_without_search_and_isolated",
+      "tests/test_agent_conversation.py::test_student_and_school_changes_invalidate_previous_results",
+      "tests/test_agent_conversation.py::test_memory_does_not_reuse_new_constraints_or_prohibited_requests",
+      "tests/test_agent_conversation.py::test_actual_source_content_and_profile_change_invalidate_memory",
+      "tests/test_agent_conversation.py::test_model_single_intent_cannot_drop_explicit_mixed_parts",
+      "tests/test_agent_conversation.py::test_cache_never_replays_failed_partial_results_or_arbitrary_context",
+      "tests/test_agent_conversation.py::test_memory_new_followup_uses_previous_intent_but_recalculates",
+      "tests/test_agent_conversation.py::test_mixed_calendar_uses_event_year_instead_of_admission_year",
+      "tests/test_app_conversation.py::test_mixed_answer_displays_each_requested_section"
+    ],
+    "implementation": [
+      "jolup/agent.py:_requested_intents",
+      "jolup/agent.py:_compose",
+      "jolup/agent.py:_conversation_context",
+      "jolup/agent.py:respond",
+      "jolup/conversation.py:ConversationMemory.synchronize",
+      "jolup/conversation.py:ConversationMemory.replay",
+      "jolup/conversation.py:ConversationMemory.remember"
+    ],
+    "scope_notes": "단기 검증결과 기억이며 영구DB·자유로운 장기기억·자유 ReAct 행동반복은 아니다. 모델에 대화전체를 전송하지 않는다."
+  },
+  {
+    "id": "REQ-026",
+    "title": "로컬과 HTTP 채팅은 같은 학사 결과를 보존하고 세션·오류 계약을 구분한다",
+    "basis": "교수 Day5 Streamlit→FastAPI /chat 확장 실습; 사용자 모듈학습·Swagger/Postman 요청",
+    "technique": "계약·동등분할·상태전이: local/http, 200/422/503, 새세션/동일/삭제/64초과, 유효/잘못된응답",
+    "risk": "HTTP 실패 은폐, 세션혼합, UI키 전송, 과거결과 주입, 스키마 기본값을 학적 사실로 간주",
+    "acceptance_criteria": [
+      "주소 미설정은 기존 로컬 respond로 연결하고 HTTP는 /chat에 허용필드만 전달한다.",
+      "HTTP의 현재90학점 미충족과 목표조건부가능을 보존하며 자료누락은 도메인 확인필요로 반환한다.",
+      "서버 세션은 격리되고 최근4턴·최대64세션으로 제한하며 DELETE와 UI초기화로 이전ID를 폐기한다.",
+      "추가 history/result·키 입력을 거부하고 누락학생사실을 기본값으로 보완하지 않는다.",
+      "HTTP는 생성AI와 LangSmith내보내기를 지원하지 않으며 서버단계 열람만 제공한다.",
+      "실패응답/잘못된스키마는 고정오류로 표시하고 자동로컬성공으로 대체하지 않는다."
+    ],
+    "tests": [
+      "tests/test_chat_api.py::test_chat_calls_the_agent_and_preserves_current_vs_future",
+      "tests/test_chat_api.py::test_sessions_are_isolated_reused_and_reset_without_history_injection",
+      "tests/test_chat_api.py::test_chat_rejects_undeclared_credentials_and_invalid_session_contract",
+      "tests/test_chat_api.py::test_chat_blank_query_and_backend_error_are_actionable",
+      "tests/test_chat_api.py::test_memory_is_bounded_and_repeated_explicit_request_reuses_only_its_session",
+      "tests/test_chat_api.py::test_session_eviction_removes_least_recently_used_memory",
+      "tests/test_chat_api.py::test_domain_execution_error_is_transport_failure_not_successful_diagnosis",
+      "tests/test_chat_api.py::test_chat_preserves_absent_student_facts_and_does_not_fill_schema_defaults",
+      "tests/test_chat_client.py::test_local_adapter_preserves_explicit_local_ai_and_memory",
+      "tests/test_chat_client.py::test_http_adapter_sends_only_declared_fields_and_keeps_result_details",
+      "tests/test_chat_client.py::test_bad_http_or_schema_response_becomes_fixed_error",
+      "tests/test_chat_client.py::test_connection_failure_is_fixed_and_never_falls_back_silently",
+      "tests/test_chat_client.py::test_reset_session_uses_delete_and_checks_response",
+      "tests/test_app_conversation.py::test_http_mode_keeps_server_session_and_resets_it_without_llm_key",
+      "tests/test_app_conversation.py::test_session_delete_failure_is_visible_and_never_reuses_old_id",
+      "tests/test_study_api.py::test_all_swagger_post_examples_execute_with_the_advertised_outcome",
+      "tests/test_api_contract_export.py::test_postman_chat_sequence_uses_new_session_then_followup_then_reset"
+    ],
+    "implementation": [
+      "jolup/chat_client.py:respond_chat",
+      "jolup/chat_client.py:reset_chat_session",
+      "jolup/study_api.py:ChatRequest",
+      "jolup/study_api.py:ChatResponse",
+      "jolup/study_api.py:chat",
+      "jolup/study_api.py:_conversation",
+      "jolup/study_api.py:reset_session",
+      "app.py:_reset_conversation"
+    ],
+    "scope_notes": "로컬/Compose 학습 API다. 영구 학생DB와 인증된 다중사용자 서비스는 추가하지 않았다. 모의HTTP·FastAPI TestClient와 실제Postman localhost시험을 구분한다. Docker 최신기동은 별도 검증사항이다."
+  }
+]

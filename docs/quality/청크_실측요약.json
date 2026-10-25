@@ -1,0 +1,1299 @@
+{
+  "schema_version": 2,
+  "status": "token_chunking_implemented_and_local_vector_verified",
+  "measured_at": "2026-10-23T17:50:09.395854+09:00",
+  "purpose": "Token budget, source/page context and retrieval regression; not a universal answer-accuracy or model-selection benchmark.",
+  "baseline": {
+    "chunks": 208,
+    "truncated_chunks": 178,
+    "design_source_page_hit_at_5": 17,
+    "design_cases": 20,
+    "source_report_sha256": "74446c066e87f7f5b7524afc5b4d93974151459b4f436a652cefb0550eab9d6d"
+  },
+  "environment": {
+    "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "model_backend": "PooledEmbedding",
+    "model_cache_revision": "faf4aa4225822f3bc6376869cb1164e8e3feedd0",
+    "tokenizer_truncation": {
+      "max_length": 128,
+      "stride": 0,
+      "strategy": "longest_first",
+      "direction": "right"
+    },
+    "versions": {
+      "fastembed": "0.9.0",
+      "chromadb": "1.5.9",
+      "tokenizers": "0.23.3",
+      "pypdf": "6.21.2"
+    }
+  },
+  "input_hashes": {
+    "rag_py_sha256": "adeaee719f7021e6368f91a8184f0cad53bbe69c940ca5b968e1f3c1167d9812",
+    "chunking_py_sha256": "e112588bbf20edfbddc9b45080dbf6abd0152d8b9452e2d33d1d98b31f018829",
+    "test_rag_sha256": "fc0e21adc0fe3572b31dc7d086b64441afd75961cb0d799bdde5e1bf1bd9e9ac",
+    "sources_json_sha256": "09604b47d33aa37526cb0cc43271e1bbd39383ad9d5c9b151cf3ff97e40b9efb"
+  },
+  "chunking": {
+    "policy": "6-token-page-context",
+    "fingerprint": "cb7d12aa593439437a58c487",
+    "sources": 7,
+    "chunks": 448,
+    "token_limit": 128,
+    "max_tokens": 128,
+    "min_tokens": 6,
+    "truncated_chunks": 0,
+    "tokenizer_sha256": "674dca942ded696896a24c8985270ee6b05b9caad54e841eecdf75f555c8e7d3",
+    "context_policy": "Search chunks carry context_id; answers additionally return unmodified complete source-page context_text. No cross-page table inference."
+  },
+  "retrieval": {
+    "design": {
+      "count": 20,
+      "source_page_hit_at_5": 17,
+      "mrr_at_5": 0.6917,
+      "cases": [
+        {
+          "query": "졸업학점은 총 몇 학점인가요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            9,
+            6
+          ],
+          "first_hit_rank": 3,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 6,
+              "chunk_id": "course_guide:p6:7:fa58071a5609"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 6,
+              "chunk_id": "school_rules:p6:1:1d2c485639f4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:0:7db47aba017c"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:1:a7b5a3f72c7a"
+            }
+          ]
+        },
+        {
+          "query": "2024학번 컴퓨터공학과 전공심화는 몇 학점인가요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            24
+          ],
+          "first_hit_rank": 3,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:1:6124b2b55d15"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 24,
+              "chunk_id": "course_guide:p24:2:5a9aef4d211f"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 26,
+              "chunk_id": "course_guide:p26:2:61c58fb6b29b"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:2:b42aaf2208ae"
+            }
+          ]
+        },
+        {
+          "query": "주전공 학점은 얼마인가요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            24
+          ],
+          "first_hit_rank": null,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:1:6124b2b55d15"
+            },
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:2:b42aaf2208ae"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 26,
+              "chunk_id": "course_guide:p26:2:61c58fb6b29b"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:8:df8acabeb1ab"
+            }
+          ]
+        },
+        {
+          "query": "전공필수 학점은 24인가요 6인가요?",
+          "expected_source": "major_notice",
+          "expected_pages": [
+            null
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            },
+            {
+              "source_id": "curriculum_year4",
+              "page": null,
+              "chunk_id": "curriculum_year4:p0:0:69851bae6734"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 56,
+              "chunk_id": "school_rules:p56:0:274b0fb3d577"
+            },
+            {
+              "source_id": "curriculum_year1",
+              "page": null,
+              "chunk_id": "curriculum_year1:p0:0:bcc9f5a0dd65"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:4:822d43c082c0"
+            }
+          ]
+        },
+        {
+          "query": "전공종합설계 과목을 모두 들어야 하나요?",
+          "expected_source": "major_notice",
+          "expected_pages": [
+            null
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            },
+            {
+              "source_id": "curriculum_year4",
+              "page": null,
+              "chunk_id": "curriculum_year4:p0:0:69851bae6734"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 56,
+              "chunk_id": "school_rules:p56:0:274b0fb3d577"
+            },
+            {
+              "source_id": "curriculum_year1",
+              "page": null,
+              "chunk_id": "curriculum_year1:p0:0:bcc9f5a0dd65"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:4:822d43c082c0"
+            }
+          ]
+        },
+        {
+          "query": "데이터구조 권장필수도 졸업 필수인가요?",
+          "expected_source": "major_notice",
+          "expected_pages": [
+            null
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:2:f64d6faaa53b"
+            },
+            {
+              "source_id": "curriculum_year4",
+              "page": null,
+              "chunk_id": "curriculum_year4:p0:0:69851bae6734"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 56,
+              "chunk_id": "school_rules:p56:0:274b0fb3d577"
+            },
+            {
+              "source_id": "curriculum_year2",
+              "page": null,
+              "chunk_id": "curriculum_year2:p0:0:844f9a8fbd3e"
+            },
+            {
+              "source_id": "curriculum_year3",
+              "page": null,
+              "chunk_id": "curriculum_year3:p0:0:d97557b47910"
+            }
+          ]
+        },
+        {
+          "query": "교양필수는 몇 학점인가요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            24
+          ],
+          "first_hit_rank": null,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:1:95f0d2cb7f04"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:5:24182957bedb"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 20,
+              "chunk_id": "course_guide:p20:0:87b6a1d01436"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:2:fae22820cee4"
+            },
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            }
+          ]
+        },
+        {
+          "query": "교양선택은 몇 학점인가요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            24
+          ],
+          "first_hit_rank": null,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:1:95f0d2cb7f04"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:5:24182957bedb"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 20,
+              "chunk_id": "course_guide:p20:0:87b6a1d01436"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:2:fae22820cee4"
+            },
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            }
+          ]
+        },
+        {
+          "query": "교양필수 과목 목록이 궁금해요",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            17
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:1:95f0d2cb7f04"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:6:6540574da566"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 20,
+              "chunk_id": "course_guide:p20:2:56210607d3b6"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:2:fae22820cee4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 21,
+              "chunk_id": "course_guide:p21:0:b96907ba55af"
+            }
+          ]
+        },
+        {
+          "query": "컴퓨터공학과도 AI의이해와활용 필수인가요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            17
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 2,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:1:95f0d2cb7f04"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:7:d8049689b32f"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 20,
+              "chunk_id": "course_guide:p20:2:56210607d3b6"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:2:fae22820cee4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 21,
+              "chunk_id": "course_guide:p21:0:b96907ba55af"
+            }
+          ]
+        },
+        {
+          "query": "경건회 채플은 몇 학기 이수해야 하나요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            9
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:1:cefbc7898e5a"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 1,
+              "chunk_id": "school_rules:p1:3:0bd9e1eb2085"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 6,
+              "chunk_id": "school_rules:p6:2:116a074293ef"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:2:fae22820cee4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:1:a7b5a3f72c7a"
+            }
+          ]
+        },
+        {
+          "query": "졸업에 필요한 등록학기는?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            9
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:0:7db47aba017c"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 6,
+              "chunk_id": "school_rules:p6:2:116a074293ef"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 1,
+              "chunk_id": "school_rules:p1:3:0bd9e1eb2085"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:3:ed67b08d71d9"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 15,
+              "chunk_id": "school_rules:p15:3:f7a7eb8eb77d"
+            }
+          ]
+        },
+        {
+          "query": "졸업작품은 학점만 채우면 통과인가요?",
+          "expected_source": "major_notice",
+          "expected_pages": [
+            null
+          ],
+          "first_hit_rank": 3,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "curriculum_year4",
+              "page": null,
+              "chunk_id": "curriculum_year4:p0:0:69851bae6734"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:2:0b463cb11db5"
+            },
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:1:d6fb445e873e"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 56,
+              "chunk_id": "school_rules:p56:0:274b0fb3d577"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:3:ed67b08d71d9"
+            }
+          ]
+        },
+        {
+          "query": "학기당 최대학점은 얼마인가요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:1:1e182c700da5"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 7,
+              "chunk_id": "course_guide:p7:4:622d118da102"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:1:a7b5a3f72c7a"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:0:7db47aba017c"
+            }
+          ]
+        },
+        {
+          "query": "연간 취득학점 한도는?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:1:1e182c700da5"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 7,
+              "chunk_id": "course_guide:p7:4:622d118da102"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:0:7db47aba017c"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:2:72cf1bc369b4"
+            }
+          ]
+        },
+        {
+          "query": "초과수강하려면 평점이 4.2여야 하나요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:1:1e182c700da5"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 7,
+              "chunk_id": "course_guide:p7:4:622d118da102"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:0:529525de0c4d"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:0:7db47aba017c"
+            }
+          ]
+        },
+        {
+          "query": "계절학기는 최대 몇 학점인가요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 3,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 7,
+              "chunk_id": "course_guide:p7:4:622d118da102"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:1:1e182c700da5"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 2,
+              "chunk_id": "school_rules:p2:0:9da1d0eb8657"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:2:72cf1bc369b4"
+            }
+          ]
+        },
+        {
+          "query": "재수강 상한과 최고 성적은?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            9
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 9,
+              "chunk_id": "course_guide:p9:4:778bda2bb594"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:3:efd91bfb93fd"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 6,
+              "chunk_id": "course_guide:p6:3:5394fbe65007"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:8:df8acabeb1ab"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 4,
+              "chunk_id": "course_guide:p4:3:f4d663dd9dc8"
+            }
+          ]
+        },
+        {
+          "query": "같은 과목 두 번 이수하면 중복 학점인가요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            29
+          ],
+          "first_hit_rank": 2,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:5:369449129f28"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:3:efd91bfb93fd"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:8:df8acabeb1ab"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 9,
+              "chunk_id": "course_guide:p9:2:100fba2cc60a"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:0:e491e913539f"
+            }
+          ]
+        },
+        {
+          "query": "D0와 P학점, F학점은 어떻게 계산해요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:0:bd03c0e378fb"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:0:529525de0c4d"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:5:369449129f28"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:1:cefbc7898e5a"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 59,
+              "chunk_id": "school_rules:p59:0:966956812d7e"
+            }
+          ]
+        }
+      ]
+    },
+    "additional_phrasings": {
+      "count": 12,
+      "source_page_hit_at_5": 11,
+      "mrr_at_5": 0.7778,
+      "cases": [
+        {
+          "query": "입학한 해가 2024년인 컴공 학생인데 전공심화 총 이수 기준을 알려주세요",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            24
+          ],
+          "first_hit_rank": null,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 2,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:1:6124b2b55d15"
+            },
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:8:df8acabeb1ab"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 6,
+              "chunk_id": "course_guide:p6:7:fa58071a5609"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:2:b42aaf2208ae"
+            }
+          ]
+        },
+        {
+          "query": "채플을 다섯 번 통과했어요. 졸업에 필요한 횟수는 몇 번인가요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            9
+          ],
+          "first_hit_rank": 2,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 6,
+              "chunk_id": "school_rules:p6:2:116a074293ef"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:1:cefbc7898e5a"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 22,
+              "chunk_id": "course_guide:p22:0:bbb44972f195"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 24,
+              "chunk_id": "course_guide:p24:0:53686eccad7a"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 1,
+              "chunk_id": "school_rules:p1:3:0bd9e1eb2085"
+            }
+          ]
+        },
+        {
+          "query": "등록학기를 일곱 학기만 채워도 정규 졸업을 할 수 있나요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            9
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:5:45c4829699af"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 1,
+              "chunk_id": "school_rules:p1:3:0bd9e1eb2085"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:3:ed67b08d71d9"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 6,
+              "chunk_id": "school_rules:p6:2:116a074293ef"
+            }
+          ]
+        },
+        {
+          "query": "전공필수는 예전 안내와 변경 공지 중 어떤 과목을 따라야 하나요?",
+          "expected_source": "major_notice",
+          "expected_pages": [
+            null
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:0:a7a459e9cabf"
+            },
+            {
+              "source_id": "curriculum_year4",
+              "page": null,
+              "chunk_id": "curriculum_year4:p0:0:69851bae6734"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 56,
+              "chunk_id": "school_rules:p56:0:274b0fb3d577"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 32,
+              "chunk_id": "school_rules:p32:1:37842c56aa8d"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:4:822d43c082c0"
+            }
+          ]
+        },
+        {
+          "query": "졸업작품 심사 결과를 성적 합계로 대신 확인할 수 있나요?",
+          "expected_source": "major_notice",
+          "expected_pages": [
+            null
+          ],
+          "first_hit_rank": 3,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "curriculum_year4",
+              "page": null,
+              "chunk_id": "curriculum_year4:p0:0:69851bae6734"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:3:cffde8b2fe85"
+            },
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:1:d6fb445e873e"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 56,
+              "chunk_id": "school_rules:p56:0:274b0fb3d577"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:3:ed67b08d71d9"
+            }
+          ]
+        },
+        {
+          "query": "교양필수 과목에 기초글쓰기와 사회봉사가 들어가나요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            17
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:1:95f0d2cb7f04"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:6:6540574da566"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 20,
+              "chunk_id": "course_guide:p20:0:87b6a1d01436"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:2:fae22820cee4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 21,
+              "chunk_id": "course_guide:p21:0:b96907ba55af"
+            }
+          ]
+        },
+        {
+          "query": "AI의이해와활용은 컴퓨터공학과에도 추가로 필요한가요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            17
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 2,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 17,
+              "chunk_id": "course_guide:p17:1:95f0d2cb7f04"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:7:d8049689b32f"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 20,
+              "chunk_id": "course_guide:p20:2:56210607d3b6"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:2:fae22820cee4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 19,
+              "chunk_id": "course_guide:p19:5:613aa9483e85"
+            }
+          ]
+        },
+        {
+          "query": "학기당 수강을 더 할 때 직전 이수량과 평점 조건을 같이 알려주세요",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:1:1e182c700da5"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 7,
+              "chunk_id": "course_guide:p7:4:622d118da102"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:2:72cf1bc369b4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:0:7db47aba017c"
+            }
+          ]
+        },
+        {
+          "query": "겨울 계절학기 이수분도 연간 취득 한도에 넣나요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:1:1e182c700da5"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 7,
+              "chunk_id": "course_guide:p7:4:622d118da102"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:2:72cf1bc369b4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:0:7db47aba017c"
+            }
+          ]
+        },
+        {
+          "query": "재수강 횟수 대신 누적 학점 제한과 받을 수 있는 최고 등급이 궁금해요",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            9
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 9,
+              "chunk_id": "course_guide:p9:4:778bda2bb594"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:3:efd91bfb93fd"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:1:cefbc7898e5a"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 19,
+              "chunk_id": "course_guide:p19:0:e921ed2aeae4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:5:369449129f28"
+            }
+          ]
+        },
+        {
+          "query": "동일과목을 두 번 통과한 기록을 모두 학점에 넣어도 되나요?",
+          "expected_source": "course_guide",
+          "expected_pages": [
+            29
+          ],
+          "first_hit_rank": 2,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 0,
+          "retrieved": [
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:5:369449129f28"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 29,
+              "chunk_id": "course_guide:p29:3:efd91bfb93fd"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 19,
+              "chunk_id": "course_guide:p19:0:e921ed2aeae4"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 28,
+              "chunk_id": "course_guide:p28:3:f85b8233b8aa"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:0:bd03c0e378fb"
+            }
+          ]
+        },
+        {
+          "query": "P학점과 낙제 F학점을 이수학점에 똑같이 합산하나요?",
+          "expected_source": "school_rules",
+          "expected_pages": [
+            8,
+            7
+          ],
+          "first_hit_rank": 1,
+          "answer_status": "근거 확인",
+          "query_parts": 1,
+          "source_context_citations": 1,
+          "retrieved": [
+            {
+              "source_id": "school_rules",
+              "page": 7,
+              "chunk_id": "school_rules:p7:1:4ce23524eac4"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 8,
+              "chunk_id": "school_rules:p8:0:529525de0c4d"
+            },
+            {
+              "source_id": "course_guide",
+              "page": 8,
+              "chunk_id": "course_guide:p8:5:369449129f28"
+            },
+            {
+              "source_id": "school_rules",
+              "page": 9,
+              "chunk_id": "school_rules:p9:1:cefbc7898e5a"
+            },
+            {
+              "source_id": "major_notice",
+              "page": null,
+              "chunk_id": "major_notice:p0:1:d6fb445e873e"
+            }
+          ]
+        }
+      ]
+    },
+    "design_answer_expected_claims_passed": 20,
+    "weight_changes": false,
+    "parent_page_diversity": true,
+    "heldout_note": "Additional phrasings were fixed after token-split implementation and before first measurement. Parent-page diversity was then applied as a general rule; this is not an independent human-authored final benchmark. Question wording and expected pages were not changed."
+  },
+  "limitations": [
+    "Pages are linked context, not automatically reconstructed semantic tables across pages.",
+    "Citation excerpts alone may omit an exception; read context_text and the source page.",
+    "No comparison against other embedding models or vector databases.",
+    "All arbitrary questions and future source revisions are not proven correct."
+  ]
+}

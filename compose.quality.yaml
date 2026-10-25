@@ -1,0 +1,42 @@
+# Optional local learning service, separate from the graduation app stack.
+# H2 is suitable only for this local analysis exercise, not a shared production server.
+name: jolup-quality
+
+services:
+  sonarqube:
+    image: sonarqube:26.10.0.133078-community
+    ports:
+      - "127.0.0.1:9000:9000"
+    environment:
+      SONAR_TELEMETRY_ENABLE: "false"
+      # Official local evaluation option; this is not a production deployment.
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    volumes:
+      - sonar-data:/opt/sonarqube/data
+      - sonar-extensions:/opt/sonarqube/extensions
+      - sonar-logs:/opt/sonarqube/logs
+    mem_limit: 4g
+    restart: "no"
+
+  scanner:
+    image: sonarsource/sonar-scanner-cli:12.2.0.4256_8.1.0
+    # The official scanner image currently supplies amd64 only.
+    platform: linux/amd64
+    profiles: ["tools"]
+    environment:
+      SONAR_HOST_URL: http://sonarqube:9000
+      SONAR_TOKEN: ${SONAR_TOKEN:-}
+      # Persist report-task.txt in the disposable source mount for CE verification.
+      SCANNER_WORKDIR_PATH: /usr/src/.scannerwork
+    working_dir: /usr/src
+    volumes:
+      # Only selected code and coverage are staged here; never mount the whole project.
+      - ${SONAR_STAGE_DIR:-./.build/sonar-analysis}:/usr/src
+      - scanner-cache:/opt/sonar-scanner/.sonar/cache
+    restart: "no"
+
+volumes:
+  sonar-data:
+  sonar-extensions:
+  sonar-logs:
+  scanner-cache:
