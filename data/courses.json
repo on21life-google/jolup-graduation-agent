@@ -1,0 +1,789 @@
+{
+  "note": "학수번호는 내부 ID. 실제 시간표 미제공이므로 후보만 제시. 현장실습 등 별도 승인 과목은 자동 추천에서 제외.",
+  "courses": [
+    {
+      "course_id": "GE001",
+      "course_name": "기독교로의초대",
+      "credits": 3,
+      "category": "교필",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [],
+      "aliases": [
+        "현대인과기독교"
+      ]
+    },
+    {
+      "course_id": "GE002",
+      "course_name": "신앙으로의초대",
+      "credits": 3,
+      "category": "교필",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [],
+      "aliases": [
+        "현대인과성경"
+      ]
+    },
+    {
+      "course_id": "GE003",
+      "course_name": "영어커뮤니케이션(1)",
+      "credits": 2,
+      "category": "교필",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [],
+      "aliases": []
+    },
+    {
+      "course_id": "GE004",
+      "course_name": "영어커뮤니케이션(2)",
+      "credits": 2,
+      "category": "교필",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [],
+      "aliases": []
+    },
+    {
+      "course_id": "GE005",
+      "course_name": "기초글쓰기",
+      "credits": 2,
+      "category": "교필",
+      "offered_semesters": [
+        1,
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [],
+      "aliases": []
+    },
+    {
+      "course_id": "GE006",
+      "course_name": "대학생활과진로",
+      "credits": 1,
+      "category": "교필",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [],
+      "aliases": []
+    },
+    {
+      "course_id": "GE007",
+      "course_name": "사회봉사",
+      "credits": 1,
+      "category": "교필",
+      "offered_semesters": [
+        1,
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [],
+      "aliases": []
+    },
+    {
+      "course_id": "CS001",
+      "course_name": "컴퓨터공학입문",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "curriculum_year1"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS002",
+      "course_name": "C프로그래밍",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "curriculum_year1"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS003",
+      "course_name": "창의적공학설계",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "curriculum_year1"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS004",
+      "course_name": "C프로그래밍응용",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "curriculum_year1"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS005",
+      "course_name": "파이썬프로그래밍",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "curriculum_year1"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS006",
+      "course_name": "전산수학",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "curriculum_year1"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS007",
+      "course_name": "데이터구조",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS008",
+      "course_name": "유닉스와리눅스",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS009",
+      "course_name": "자바프로그래밍",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS010",
+      "course_name": "윈도우프로그래밍",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS011",
+      "course_name": "선형대수",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS012",
+      "course_name": "논리회로",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS013",
+      "course_name": "컴퓨터네트워크",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS014",
+      "course_name": "데이터베이스",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS015",
+      "course_name": "웹 표준기술",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS016",
+      "course_name": "자바프로그래밍응용",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS017",
+      "course_name": "확률통계",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 2,
+      "source_ids": [
+        "curriculum_year2"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS018",
+      "course_name": "소프트웨어공학",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS019",
+      "course_name": "인공지능",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS020",
+      "course_name": "컴퓨터알고리즘",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS021",
+      "course_name": "모바일프로그래밍",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS022",
+      "course_name": "웹응용기술",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS023",
+      "course_name": "컴퓨터구조",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS024",
+      "course_name": "운영체제",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS025",
+      "course_name": "임베디드시스템",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS_CAP1",
+      "course_name": "전공종합설계(1)",
+      "credits": 3,
+      "category": "전필",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS027",
+      "course_name": "머신러닝",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 3,
+      "source_ids": [
+        "curriculum_year3"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS028",
+      "course_name": "고급네트워킹",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 4,
+      "source_ids": [
+        "curriculum_year4"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS_CAP2",
+      "course_name": "전공종합설계(2)",
+      "credits": 3,
+      "category": "전필",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 4,
+      "source_ids": [
+        "curriculum_year4"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": [
+        "CS_CAP1"
+      ],
+      "prerequisite_note": "설계(1)→설계(2)의 이수 순서를 보수적으로 적용한 계획 정책. 공식 수강 제한 확정은 학과 확인 필요."
+    },
+    {
+      "course_id": "CS030",
+      "course_name": "텍스트마이닝",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 4,
+      "source_ids": [
+        "curriculum_year4"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS031",
+      "course_name": "정보보안",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 4,
+      "source_ids": [
+        "curriculum_year4"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS032",
+      "course_name": "엔터프라이즈애플리케이션",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 4,
+      "source_ids": [
+        "curriculum_year4"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "CS033",
+      "course_name": "IT창업실습",
+      "credits": 3,
+      "category": "전선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 4,
+      "source_ids": [
+        "curriculum_year4"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E01",
+      "course_name": "건강한자아찾기",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E02",
+      "course_name": "과학과종교의대화",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E03",
+      "course_name": "범죄심리와교정교화",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E04",
+      "course_name": "생성형AI이해와윤리",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        1
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E05",
+      "course_name": "성과인간심리",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E06",
+      "course_name": "생태환경과윤리",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E07",
+      "course_name": "현대사회와범죄",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    },
+    {
+      "course_id": "GE_E08",
+      "course_name": "영화로만나는기독교",
+      "credits": 3,
+      "category": "교선",
+      "offered_semesters": [
+        2
+      ],
+      "recommended_year": 1,
+      "source_ids": [
+        "course_guide"
+      ],
+      "offering_status": "교육과정상 후보 · 실제 개설 미확인",
+      "course_id_note": "프로젝트 내부 식별자이며 학교 학수번호가 아님",
+      "prerequisites": []
+    }
+  ]
+}
