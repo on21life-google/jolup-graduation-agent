@@ -9,26 +9,19 @@ import pandas as pd
 import streamlit as st
 
 from jolup.chat_client import ChatServiceError, reset_chat_session, respond_chat as respond, transport_mode
-from jolup.conversation import ConversationMemory
+from jolup.conversation import ConversationMemory, school_revision
 from jolup.evidence import validate_rule_bundle
 from jolup.env_export import export_dotenv
 from jolup.mcp_client import ServiceError, call_domain, check_requirements, parse_transcript, plan_courses
 from jolup.samples import list_samples, load_sample
 from jolup.settings import DEFAULT_PROFILE
+from jolup.planner import search_courses
 
-st.set_page_config(page_title="졸업로드맵 · 나 졸업 괜찮아?", page_icon="🎓", layout="wide", initial_sidebar_state="expanded")
-st.markdown("""<style>
- .block-container {max-width:1260px;padding-top:2rem;padding-bottom:3rem;}
- h1,h2,h3 {letter-spacing:-.035em;}
- [data-testid="stMetric"] {background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px 20px;}
- [data-testid="stMetricLabel"]{color:#52657C;}
- [data-testid="stMetricValue"]{font-size:2rem;}
- .hero-label {font-size:.75rem;font-weight:700;letter-spacing:.13em;color:#087F8C;}
- .hero-note {color:#52657C;font-size:1.05rem;line-height:1.7;margin:0 0 1.4rem;}
- div[data-testid="stTabs"] button {font-weight:600;}
- [data-testid="stSidebar"]{border-right:1px solid #E2E8F0;}
- [data-testid="stChatMessage"]{border:1px solid #E2E8F0;background:white;}
- </style>""", unsafe_allow_html=True)
+from jolup.ui_design import AVATAR, hero_html, panel_title, requirement_cards, steps_html, theme_css
+from jolup.ui_calendar import calendar_html, event_rows, month_events, today_seoul
+
+st.set_page_config(page_title="졸업각 · 나 졸업 괜찮아?", page_icon="🐰", layout="wide", initial_sidebar_state="expanded")
+st.markdown(theme_css(), unsafe_allow_html=True)
 
 
 def _reset_conversation():
@@ -84,6 +77,11 @@ def _source_item(item):
     label = item.get("title") or item.get("file_name") or item.get("source_id") or "학교 자료"
     page = item.get("page", item.get("pages"))
     st.write(f"{label}" + (f" · PDF {page}쪽" if page else ""))
+    details = [item.get("section"), item.get("document_type")]
+    if item.get("version_date_hint"):
+        details.append("파일명 날짜(참고): " + str(item["version_date_hint"]))
+    if any(details):
+        st.caption(" · ".join(str(value) for value in details if value))
     excerpt = item.get("text") or item.get("excerpt") or item.get("description")
     if excerpt:
         st.caption(str(excerpt)[:1600])
@@ -102,7 +100,10 @@ def _source_metadata(meta):
                 continue
             normalized.append({"파일명": item.get("file_name", item.get("filename", item.get("source_id", "미확인"))),
                                "주소": item.get("url") or "제공된 로컬 자료",
-                               "등록일": item.get("registered_date") or "미확인"})
+                               "등록일": item.get("registered_date") or "미확인",
+                               "문서 종류": item.get("document_type") or "미확인",
+                               "조문": item.get("section") or "해당 없음",
+                               "파일명 날짜(참고)": item.get("version_date_hint") or "미확인"})
         _df(normalized)
     else:
         st.caption("출처 정보 없음 — 등록일은 파일명이나 수정일로 추정하지 않습니다.")
@@ -279,7 +280,7 @@ def _clear_model_list():
 _sync_api_model()
 
 with st.sidebar:
-    st.markdown("### 🎓 졸업로드맵")
+    st.markdown("### 🐰 졸업각")
     st.caption("성결대학교 · 컴퓨터공학과")
     st.divider()
     st.markdown("**더미 학생 사례**")
@@ -400,9 +401,87 @@ with st.sidebar:
     st.caption("실제 개인정보를 입력하지 마세요. 업로드·대화·API 키의 세션 메모리는 초기화하면 폐기합니다. 직접 내려받은 .env 파일은 별도로 남습니다.")
 
 
+def _render_chat_result(result):
+    st.caption(result.get("execution_mode", "로컬 계산·검색"))
+    st.markdown("**① 답변**")
+    st.write(result.get("answer", ""))
+    st.markdown("**② reason · 진단·확인 결과**")
+    if result.get("rows"):
+        _diagnosis_table(result["rows"])
+    elif result.get("events"):
+        _df(result["events"], {"title": "일정", "start_date": "시작일", "end_date": "마지막 날"})
+    else:
+        st.caption("개별 학생의 학점 진단이 아닌 응답입니다. 근거자료에서 확인한 범위를 표시합니다.")
+    if result.get("plan"):
+        with st.expander("목표 졸업까지 수강 계획"):
+            _render_plan(result["plan"])
+    for section in result.get("sections", []):
+        label = {"regulation": "학교 규정", "diagnosis": "이수 진단", "planning": "수강 계획", "calendar": "학사일정"}.get(section.get("intent"), "요청한 내용")
+        with st.expander(label, expanded=True):
+            st.write(section.get("answer", ""))
+            if section.get("events"):
+                _df(section["events"], {"title": "일정", "start_date": "시작일", "end_date": "마지막 날"})
+            _sources(section)
+    if result.get("memory", {}).get("reused"):
+        st.caption("동일한 학생 조건·학교 자료에서 검증한 최근 결과를 다시 보여드립니다.")
+    if result.get("ai_explanation"):
+        with st.container(border=True):
+            st.caption("AI 추가 설명 · 위 계산표가 기준입니다")
+            st.write(result["ai_explanation"])
+    if result.get("llm", {}).get("error"):
+        st.warning(result["llm"]["error"])
+    if result.get("routing", {}).get("error"):
+        st.warning("AI 의도 분류를 사용할 수 없어 로컬 분류로 처리했어요. " + result["routing"]["error"])
+    with st.expander("③ 근거자료 · ④ meta"):
+        _sources(result)
+
+
+def _sync_course_interests(fingerprint):
+    """Discard a reading list belonging to changed student data or rules."""
+    if st.session_state.get("interest_fingerprint") != fingerprint:
+        for key in list(st.session_state):
+            if key.startswith("interest_"):
+                del st.session_state[key]
+        st.session_state["interest_fingerprint"] = fingerprint
+        st.session_state["interest_selected_ids"] = []
+
+
+def _render_course_interests(fingerprint):
+    """An explicitly separate reading list; never mutate the verified plan."""
+    _sync_course_interests(fingerprint)
+    with st.expander("관심 과목 찾고 담기 · 계획과 별도"):
+        st.caption("교육과정 후보를 비교하는 관심 목록입니다. 실제 개설·시간표·여석은 미확인이며, 담아도 현재 진단이나 자동 수강 계획에 반영되지 않습니다.")
+        query = st.text_input("관심 과목 검색 · 과목명·구분·내부 ID", key="interest_query")
+        category = st.selectbox("관심 과목 구분", ["전체", "교필", "교선", "전필", "전선", "일선"], key="interest_category")
+        semester = st.selectbox("관심 과목 개설학기 후보", ["전체", "1학기", "2학기"], key="interest_semester")
+        catalog = {item["course_id"]: item for item in search_courses()}
+        candidates = [item for item in search_courses(query)
+                      if (category == "전체" or item["category"] == category)
+                      and (semester == "전체" or int(semester[0]) in item["offered_semesters"])]
+        chosen = st.multiselect("관심 목록에 추가할 과목", [item["course_id"] for item in candidates],
+                                format_func=lambda key: f"{catalog[key]['course_name']} · {catalog[key]['category']} · {catalog[key]['credits']}학점", key="interest_add")
+        if st.button("선택한 과목 관심 목록에 담기", disabled=not chosen):
+            st.session_state["interest_selected_ids"] = list(dict.fromkeys(st.session_state["interest_selected_ids"] + chosen))
+        selected = [catalog[key] for key in st.session_state["interest_selected_ids"]]
+        st.write(f"관심 과목 {len(selected)}개 · 합계 {sum(item['credits'] for item in selected):g}학점")
+        if selected:
+            _df(selected, {"course_name": "과목", "category": "구분", "credits": "학점", "offering_status": "개설 확인"})
+            removed = st.multiselect("관심 목록에서 뺄 과목", [item["course_id"] for item in selected],
+                                     format_func=lambda key: catalog[key]["course_name"], key="interest_remove")
+            if st.button("선택한 과목 관심 목록에서 빼기", disabled=not removed):
+                st.session_state["interest_selected_ids"] = [key for key in st.session_state["interest_selected_ids"] if key not in removed]
+                st.rerun()
+        if not candidates:
+            st.info("검색 조건에 맞는 교육과정 후보가 없습니다.")
+        st.caption("학생 조건·성적표·학교 자료가 달라지면 관심 목록도 초기화합니다. 과목 ID는 프로젝트 내부 식별자입니다.")
+
+
 profile = st.session_state["profile"]
 courses = st.session_state["courses"]
-fingerprint = hashlib.sha256(json.dumps({"profile": profile, "courses": courses, "rule_review": validate_rule_bundle()}, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+fingerprint = hashlib.sha256(json.dumps({
+    "profile": profile, "courses": courses, "rule_review": validate_rule_bundle(),
+    "school_revision": school_revision(),
+}, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
 if st.session_state.get("calculation_fingerprint") != fingerprint:
     try:
         computed_diagnosis = check_requirements(profile, courses)
@@ -416,9 +495,14 @@ if st.session_state.get("calculation_fingerprint") != fingerprint:
 diagnosis = st.session_state["diagnosis"]
 plan = st.session_state["plan"]
 
-st.markdown('<div class="hero-label">MY GRADUATION ROADMAP</div>', unsafe_allow_html=True)
-st.title("나 졸업 괜찮아?")
-st.markdown('<p class="hero-note">지금까지 이수한 것부터, 앞으로 준비할 것까지.<br>학점과 학교 근거를 함께 보며 졸업 계획을 확인하세요.</p>', unsafe_allow_html=True)
+st.markdown(hero_html(), unsafe_allow_html=True)
+with st.expander("처음 사용 안내 · FAQ"):
+    st.markdown("**① 더미 선택·CSV 검증 → ② 현재 졸업요건 확인 → ③ 수강 후보·조건 확인 → ④ 일정 미리보기·승인**")
+    st.write("성적표 입력은 현재 CSV를 지원합니다. 수강 중 학점은 이수 완료로 계산하지 않으며, 자료가 없으면 확인 필요로 남깁니다.")
+    st.write("결과는 학교 근거와 가상 기록에 따른 준비 안내입니다. 공식 졸업 승인은 학과·학사 시스템에서 확인하세요.")
+    st.write("기본 계산·검색은 로컬에서 실행합니다. HTTP 모드는 구성한 프로젝트 서버를 사용하고, 외부 AI는 연결을 켠 경우에만 호출합니다. LangSmith는 기본 더미 기록을 선택해 전송할 때만 사용합니다.")
+    st.write("ICS는 날짜를 확인하고 승인한 뒤 내려받아 캘린더에서 직접 가져옵니다. 외부 캘린더에 자동 등록하지 않습니다.")
+st.markdown(steps_html(bool(courses)), unsafe_allow_html=True)
 st.caption(f"{profile.get('display_name', '가상 학생')} · {st.session_state['record_label']} · 현재 {profile.get('current_term', '확인 필요')} · 목표 마지막 학기 {profile.get('target_graduation_term', '확인 필요')}")
 totals = diagnosis.get("totals", {})
 col1, col2, col3 = st.columns(3)
@@ -442,6 +526,7 @@ with diagnosis_tab:
             st.markdown(f"### {plan.get('status', '확인 필요')}")
             st.write(plan.get("answer", ""))
     st.markdown("**② reason · 졸업요건 상태 진단표**")
+    st.markdown(requirement_cards(diagnosis.get("rows", [])), unsafe_allow_html=True)
     _diagnosis_table(diagnosis.get("rows", []))
     for item in diagnosis.get("review_items", []):
         st.warning(item if isinstance(item, str) else json.dumps(item, ensure_ascii=False))
@@ -454,71 +539,57 @@ with diagnosis_tab:
             st.warning(item)
     st.subheader("남은 학기의 수강 후보")
     _render_plan(plan)
+    _render_course_interests(fingerprint)
 
 with chat_tab:
-    st.subheader("학교 근거와 함께 답해드려요")
-    st.caption("FastAPI 서버의 계산·검색으로 답합니다. 최근 4회 결과는 서버 세션에 보관합니다." if transport_mode() == "http" else "로컬 계산·검색으로 답합니다. AI 설명 연결을 켠 경우에만 선택한 API를 호출합니다.")
-    st.caption("최근 4회 결과를 이어서 확인할 수 있습니다. ‘아까 규정 다시 보여줘’처럼 요청하세요. 학생 조건이나 학교 자료가 달라지면 이전 결과를 재사용하지 않습니다.")
-    quick = st.columns(3)
-    selected_query = None
-    for col, label in zip(quick, ["나 졸업 괜찮아?", "다음 학기 수강 계획을 알려줘", "2026년 졸업 관련 일정 알려줘"]):
-        if col.button(label, width="stretch"):
-            selected_query = label
-    query = st.chat_input("졸업요건, 수강 계획, 학사일정을 물어보세요", max_chars=4000)
-    if selected_query or query:
-        text = selected_query or query
-        config = {"api_key": st.session_state.get("api_key", ""), "provider": st.session_state.get("api_provider", "auto"), "model": st.session_state.get("api_model", "").strip() or None, "workspace_id": st.session_state.get("api_workspace", "").strip() or None}
-        previous_intent = next((m["result"]["intent"] for m in reversed(st.session_state.get("messages", [])) if m["result"].get("intent") in {"diagnosis", "planning", "regulation", "calendar"}), None)
-        with st.spinner("자료와 계산 결과를 확인하고 있어요…"):
-            try:
-                conversation = st.session_state.setdefault("conversation", ConversationMemory())
-                result = respond(text, profile, courses, context={"conversation": conversation, "session_id": st.session_state.get("chat_session_id"), "previous_intent": previous_intent, "use_llm": bool(st.session_state.get("api_enabled")), "llm_config": config if st.session_state.get("api_enabled") else {}, "builtin_sample_id": st.session_state.get("study_builtin_sample_id")})
-                if result.get("session_id"):
-                    st.session_state["chat_session_id"] = result["session_id"]
-            except Exception:
-                result = {"status": "확인 필요", "answer": "응답을 만드는 중 오류가 발생했어요. 계산·출처 탭의 자료를 확인하고 다시 시도해 주세요.", "rows": [], "evidence": [], "meta": [], "execution_mode": "처리 오류"}
-        st.session_state.setdefault("messages", []).append({"query": text, "result": result})
-    for message in st.session_state.get("messages", []):
-        with st.chat_message("user"):
-            st.write(message["query"])
-        with st.chat_message("assistant", avatar="🎓"):
-            result = message["result"]
-            st.caption(result.get("execution_mode", "로컬 계산·검색"))
-            st.markdown("**① 답변**")
-            st.write(result.get("answer", ""))
-            st.markdown("**② reason · 진단·확인 결과**")
-            if result.get("rows"):
-                _diagnosis_table(result["rows"])
-            elif result.get("events"):
-                _df(result["events"], {"title": "일정", "start_date": "시작일", "end_date": "마지막 날"})
-            else:
-                st.caption("개별 학생의 학점 진단이 아닌 응답입니다. 근거자료에서 확인한 범위를 표시합니다.")
-            if result.get("plan"):
-                with st.expander("목표 졸업까지 수강 계획"):
-                    _render_plan(result["plan"])
-            for section in result.get("sections", []):
-                label = {"regulation": "학교 규정", "diagnosis": "이수 진단", "planning": "수강 계획", "calendar": "학사일정"}.get(section.get("intent"), "요청한 내용")
-                with st.expander(label, expanded=True):
-                    st.write(section.get("answer", ""))
-                    if section.get("events"):
-                        _df(section["events"], {"title": "일정", "start_date": "시작일", "end_date": "마지막 날"})
-                    _sources(section)
-            if result.get("memory", {}).get("reused"):
-                st.caption("동일한 학생 조건·학교 자료에서 검증한 최근 결과를 다시 보여드립니다.")
-            if result.get("ai_explanation"):
-                with st.container(border=True):
-                    st.caption("AI 추가 설명 · 위 계산표가 기준입니다")
-                    st.write(result["ai_explanation"])
-            if result.get("llm", {}).get("error"):
-                st.warning(result["llm"]["error"])
-            if result.get("routing", {}).get("error"):
-                st.warning("AI 의도 분류를 사용할 수 없어 로컬 분류로 처리했어요. " + result["routing"]["error"])
-            with st.expander("③ 근거자료 · ④ meta"):
-                _sources(result)
-    if not st.session_state.get("messages"):
-        st.info("위 질문 버튼을 눌러 정상·부족 사례의 답변을 확인해 보세요.")
-    else:
-        _render_study_trace(st.session_state["messages"][-1]["result"])
+    chat_left, chat_right = st.columns([5, 7], gap="large")
+    with chat_left:
+        st.markdown(panel_title("💬 AI 에이전트 채팅"), unsafe_allow_html=True)
+        st.subheader("학교 근거와 함께 답해드려요")
+        st.caption("FastAPI 서버의 계산·검색으로 답합니다. 최근 4회 결과는 서버 세션에 보관합니다." if transport_mode() == "http" else "로컬 계산·검색으로 답합니다. AI 설명 연결을 켠 경우에만 선택한 API를 호출합니다.")
+        st.caption("최근 4회 결과를 이어서 확인할 수 있습니다. ‘아까 규정 다시 보여줘’처럼 요청하세요. 학생 조건이나 학교 자료가 달라지면 이전 결과를 재사용하지 않습니다.")
+        quick = st.columns(3)
+        selected_query = None
+        for col, label in zip(quick, ["나 졸업 괜찮아?", "다음 학기 수강 계획을 알려줘", "2026년 졸업 관련 일정 알려줘"]):
+            if col.button(label, width="stretch"):
+                selected_query = label
+        query = st.chat_input("졸업요건, 수강 계획, 학사일정을 물어보세요", max_chars=4000)
+        if selected_query or query:
+            text = selected_query or query
+            config = {"api_key": st.session_state.get("api_key", ""), "provider": st.session_state.get("api_provider", "auto"), "model": st.session_state.get("api_model", "").strip() or None, "workspace_id": st.session_state.get("api_workspace", "").strip() or None}
+            previous_intent = next((m["result"]["intent"] for m in reversed(st.session_state.get("messages", [])) if m["result"].get("intent") in {"diagnosis", "planning", "regulation", "calendar"}), None)
+            with st.spinner("자료와 계산 결과를 확인하고 있어요…"):
+                try:
+                    conversation = st.session_state.setdefault("conversation", ConversationMemory())
+                    result = respond(text, profile, courses, context={"conversation": conversation, "session_id": st.session_state.get("chat_session_id"), "previous_intent": previous_intent, "use_llm": bool(st.session_state.get("api_enabled")), "llm_config": config if st.session_state.get("api_enabled") else {}, "builtin_sample_id": st.session_state.get("study_builtin_sample_id")})
+                    if result.get("session_id"):
+                        st.session_state["chat_session_id"] = result["session_id"]
+                except Exception:
+                    result = {"status": "확인 필요", "answer": "응답을 만드는 중 오류가 발생했어요. 계산·출처 탭의 자료를 확인하고 다시 시도해 주세요.", "rows": [], "evidence": [], "meta": [], "execution_mode": "처리 오류"}
+            st.session_state.setdefault("messages", []).append({"query": text, "result": result})
+        messages = st.session_state.get("messages", [])
+        for index, message in enumerate(messages):
+            with st.chat_message("user"):
+                st.write(message["query"])
+            with st.chat_message("assistant", avatar=str(AVATAR)):
+                st.write(message["result"].get("answer", ""))
+                if index < len(messages) - 1:
+                    with st.expander(f"이전 답변 {index + 1} · 진단표와 근거 다시 보기"):
+                        _render_chat_result(message["result"])
+        if not st.session_state.get("messages"):
+            st.info("위 질문 버튼을 눌러 정상·부족 사례의 답변을 확인해 보세요.")
+    with chat_right:
+        st.markdown(panel_title("📊 대화에 따라 바뀌는 대시보드"), unsafe_allow_html=True)
+        if st.session_state.get("messages"):
+            latest = st.session_state["messages"][-1]["result"]
+            _render_chat_result(latest)
+            _render_study_trace(latest)
+        else:
+            st.caption("현재 선택한 학생 · 질문을 하면 해당 진단·계획·일정이 이곳에 표시됩니다.")
+            st.write(diagnosis.get("answer", ""))
+            st.markdown(requirement_cards(diagnosis.get("rows", [])), unsafe_allow_html=True)
+            st.caption("현재 확정 이수 기준입니다. 전체 진단표와 앞으로의 계획은 ‘진단·수강 계획’에서 확인하세요.")
+
 
 with calendar_tab:
     st.subheader("학사일정 미리보기")
@@ -532,6 +603,17 @@ with calendar_tab:
     if not events:
         st.info("이 연도에 확인된 학교 일정이 없습니다. 공식 공지가 제공되면 추가할 수 있습니다.")
     else:
+        today = today_seoul()
+        default_month = today.month if today.year == year else int(events[0]["start_date"][5:7])
+        month = st.selectbox("달력 월", list(range(1, 13)), index=default_month - 1,
+                             format_func=lambda value: f"{value}월", key=f"calendar_month_{year}")
+        st.markdown(calendar_html(events, year, month, today), unsafe_allow_html=True)
+        shown_events = month_events(events, year, month)
+        st.caption(f"{today.isoformat()} · 한국 시간 기준 · 출처에 있는 일정만 표시합니다. 날짜를 누르는 것만으로 등록되지 않습니다.")
+        if shown_events:
+            _df(event_rows(shown_events, today))
+        else:
+            st.info("이 달에 확인된 학교 일정이 없습니다. 다른 달 또는 아래 전체 일정 목록을 확인하세요.")
         by_id = {x["id"]: x for x in events}
         selected_ids = st.multiselect("파일에 넣을 일정", list(by_id), format_func=lambda x: f"{by_id[x]['start_date']} · {by_id[x]['title']}", key=f"calendar_selection_{year}")
         preview = {"events": [by_id[event_id] for event_id in selected_ids]}
@@ -556,3 +638,5 @@ with details_tab:
         _df(courses, {"course_id": "과목 코드", "course_name": "과목", "term": "학기", "category": "구분", "credits": "학점", "grade": "성적", "status": "상태", "retake_of": "재수강 대상", "retake_approved": "재수강 승인"})
     st.subheader("학교 자료와 적용 근거")
     _sources(diagnosis)
+
+st.markdown('<div class="j-footer">졸업각 · UniPath AI 디자인: 우수진 · 학교 근거와 검증된 계산을 연결한 팀 통합본</div>', unsafe_allow_html=True)

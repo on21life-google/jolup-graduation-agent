@@ -50,6 +50,40 @@ def test_release_zip_crc_manifest_and_hashes_agree(release):
             assert hashlib.sha256(body).hexdigest() == row["sha256"]
 
 
+def test_release_keeps_design_and_authored_contributions_without_runtime_archives(release):
+    included = {
+        "assets/sujin/rabbit-hero.png", "assets/sujin/rabbit-avatar.png", "assets/sujin/theme.css",
+        "team_contributions/README.md", "team_contributions/sujin/prototype.html",
+        "team_contributions/sujin/preview.py", "team_contributions/sujin/notes.txt",
+        "team_contributions/jumi/main.py", "team_contributions/jumi/requirements.txt",
+        "team_contributions/jumi/tests/test_text_splitter.py",
+        "team_contributions/jumi/index_manifest.json",
+    }
+    excluded = {
+        "assets/sujin/source.zip", "assets/sujin/.private.png", "assets/other/unused.png",
+        "team_contributions/.env", "team_contributions/jumi/config.json",
+        "team_contributions/jumi/chroma_db/chroma.sqlite3", "team_contributions/jumi/index.bin",
+        "team_contributions/incoming.zip", "team_contributions/node_modules/library/index.py",
+        "team_contributions/cache/previous.py", "team_contributions/caches/index_manifest.json",
+        "team_contributions/logs/session.txt", "team_contributions/rawzips/notes.txt",
+        "team_contributions/.venv/runtime.py", "team_contributions/jumi/__pycache__/compiled.py",
+    }
+    for relative in included | excluded:
+        path = release / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(relative.encode("utf-8"))
+    report = package.package()
+    with ZipFile(report["path"]) as archive:
+        manifest = json.loads(archive.read("jolup_team/MANIFEST.json"))
+        entries = {row["path"]: row for row in manifest["files"]}
+        assert included <= entries.keys()
+        assert not excluded & entries.keys()
+        for relative in included:
+            content = archive.read("jolup_team/" + relative)
+            assert content == (release / relative).read_bytes()
+            assert hashlib.sha256(content).hexdigest() == entries[relative]["sha256"]
+
+
 def test_release_missing_required_source_and_external_symlinks_are_rejected(release):
     (release / "README.md").unlink()
     with pytest.raises(ValueError, match="Required release"):

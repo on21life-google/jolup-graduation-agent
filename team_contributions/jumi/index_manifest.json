@@ -1,0 +1,12 @@
+{
+  "(2-1-1)성결대학교 학칙20260506.pdf": {
+    "sha256": "f5e338a090a86d0613f32e97927b774b62c769c993b89cfa76701a8df6244616",
+    "chunks": 74,
+    "model": "text-embedding-3-small"
+  },
+  "2026-2학기 강의시간표 안내문.pdf": {
+    "sha256": "a8680d026d0242ac6628845b08e1a44b13f9a412bfb31d4618c78612244b1646",
+    "chunks": 60,
+    "model": "text-embedding-3-small"
+  }
+}

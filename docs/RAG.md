@@ -10,6 +10,12 @@
 
 `KnowledgeBase.answer()`의 문장은 원문에 연결한 규정 설명입니다. LLM이 숫자를 생성하는 방식이 아니며, 별도의 LLM 연결 여부는 Agent/UI에서 표시합니다. 규정 검색만으로 개인의 졸업 가능 여부를 판단하지 않습니다.
 
+## 팀원 제출본에서 합친 부분
+
+2026-10-26 김주미 제출 ZIP의 테스트 명세를 검토하여 분해형 한글(NFD) 질문과 범위 검사를 NFC로 통일하고, 문서 종류·조문 제목·파일명 날짜 참고값·문서별 SHA256/청크 수를 추가했다. 비교용 문자열만 정규화하며 `text`·`context_text` 원문은 변경하지 않는다. 제출 `main.py`가 가져오는 `rag/` 구현 폴더는 ZIP에 없었으므로 원래 구현을 실행했다고 설명하지 않는다. 원본 코드·테스트·색인 manifest는 [기여 자료](../team_contributions/README.md)에 보존하고, 최종 구현은 이 프로젝트의 인터페이스에 맞춰 작성했다.
+
+제출 색인은 OpenAI `text-embedding-3-small`의 134개 청크다. 같은 공개 PDF 2개임을 SHA256으로 확인했으며 기존 FastEmbed의 벡터와 섞지 않았다. 최종 기본은 API 키 없이 실행하는 로컬 임베딩을 유지한다. 제출 DB/BIN 원본은 로컬 인수 자료에 보존하고 공개 저장소에는 비교에 필요한 manifest를 포함한다. [통합 결정](팀원_통합결과.md)
+
 ## 실행
 
 프로젝트 루트에서 가상환경을 설치한 뒤 실행합니다.
@@ -22,7 +28,7 @@ JOLUP_TEST_VECTOR=1 .venv/bin/python -m pytest tests/test_rag.py -q
 
 최초 실행에는 공개 임베딩 모델 다운로드가 필요합니다. 캐시는 `data/models/`, 로컬 Chroma는 `data/index/chroma/`에 생성됩니다. 공개 자료만 저장하며 업로드한 학생 성적표를 받지 않습니다. 이미 받은 모델과 색인이 있으면 이를 재사용합니다.
 
-정상 결과의 `backend`는 `chroma_fastembed`, `status`는 `ready`입니다. 자료·모델명·토크나이저·토큰 한도·분할 정책이 바뀌면 지문이 달라져 새 컬렉션을 만듭니다. 버전 6 토큰 색인은 이전 문자 색인을 재사용하지 않습니다. 이전 컬렉션은 자동 삭제하지 않지만 현재 검색에는 선택되지 않습니다. 같은 자료를 강제로 다시 만들 때만 `--force`를 사용합니다. `CHROMA_HOST`가 있으면 `CHROMA_PORT`(기본 8000)의 외부 Chroma 서비스에 연결합니다. 이 설정이 없으면 로컬 저장소를 사용합니다.
+정상 결과의 `backend`는 `chroma_fastembed`, `status`는 `ready`입니다. 자료·모델명·토크나이저·토큰 한도·분할 정책이 바뀌면 지문이 달라져 새 컬렉션을 만듭니다. 현재 `7-token-page-source-metadata` 정책은 새 출처 메타데이터를 색인 지문에 반영합니다. 토큰 분할 자체는 유지하지만 이전 정책 컬렉션의 메타데이터를 재사용하지 않습니다. 이전 컬렉션은 자동 삭제하지 않지만 현재 검색에는 선택되지 않습니다. 같은 자료를 강제로 다시 만들 때만 `--force`를 사용합니다. `CHROMA_HOST`가 있으면 `CHROMA_PORT`(기본 8000)의 외부 Chroma 서비스에 연결합니다. 이 설정이 없으면 로컬 저장소를 사용합니다.
 
 ## 팀원이 연결할 인터페이스
 
@@ -39,6 +45,17 @@ result = kb.answer("전공필수는 몇 학점인가요?", DEFAULT_PROFILE)
 `search()`는 `source_id`, `chunk_id`, `context_id`, `text`, `file_name`, `url`, `registered_date`, `page`, `score`, `retrieval_backend`를 제공합니다. `answer()`는 `status`, `answer`, `evidence`, `meta`, `retrieval`, `warnings`, `answer_mode`를 제공합니다. JSON으로 직렬화할 수 있습니다. `answer().evidence[].text`는 검색 청크 원문이고 `context_text`는 같은 출처·페이지의 전체 원문입니다. 표의 열 이름이나 예외가 작은 청크 밖에 있을 수 있으므로 해당 문맥을 함께 확인합니다. 검색 벡터에는 작은 청크만 넣습니다.
 
 `search()`의 상위 결과와 규정 설명에 사용한 `answer().evidence`는 항상 같지는 않습니다. 설명은 해당 규정의 검토된 원문 페이지까지 확인해 근거를 보완합니다. 이러한 인용에는 `citation_origin=source_context`가 표시됩니다. 상위 검색 결과에 없던 인용의 `score`는 `null`이며 가짜 유사도 점수를 붙이지 않습니다. 최대 5개 인용을 넘으면 근거를 버린 채 설명만 덧붙이지 않습니다.
+
+추가 출처 필드는 다음 의미로 읽습니다. 기존 필드와 반환 순서는 유지하며 새 필드를 뒤에 추가했습니다.
+
+| 필드 | 뜻 | 모르는 값과 주의점 |
+|---|---|---|
+| `document_type` | regulation / course / schedule / curriculum / other | 파일명 기준의 문서 분류이며 원문·사실정리 여부인 `source_kind`와 다름 |
+| `section` | 청크에 완전히 포함된 실제 줄 시작 조문 제목 | 본문 참조·여러 조문·반복 발췌 등 모호한 경우 `null`; 조문 전체 의미를 자동 복원하지 않음 |
+| `version_date_hint` | 파일명에서 읽은 유효한 날짜 참고값 | **등록일·작성일·시행일이 아님**. `registered_date`는 원래 확인값 또는 `null` 유지 |
+| `retrieval.sources[]` | `source_id`, `file_name`, `sha256`, `chunk_count` | 실제 읽은 자료별 해시·생성 청크 수. 모델과 정책은 같은 retrieval 보고서의 `model`·`chunking` 확인 |
+
+`tests/test_source_metadata.py`는 분해형 한글 동등성·타학교/타학과 범위 검사·원문 보존·오인하지 않는 조문·날짜 불명·실제 해시·HTTP 출력 계약 보존을 검사합니다. 파일 수정 시각을 문서 등록일로 바꾸지 않습니다.
 
 ## 자료와 적용 범위
 
@@ -87,13 +104,15 @@ result = kb.answer("전공필수는 몇 학점인가요?", DEFAULT_PROFILE)
 flowchart TD
     A["sources.json 공개 자료 목록"] --> B["rag._read_pages: 페이지와 원문"]
     B --> C["chunking.TokenChunker: 실제 토크나이저·128토큰 검증"]
+    B --> M["source_metadata: 문서종류·조문·파일명 날짜 참고"]
+    M --> D
     C --> D["Chroma: 작은 청크 벡터 + context_id"]
     B --> P["원문 페이지 문맥"]
-    Q["질문: 긴 질의도 토큰 분할"] --> D
+    Q["질문: NFC 비교·긴 질의 토큰 분할"] --> D
     D --> R["벡터·어휘·검토된 출처 가점"]
     R --> V["규정 조건 확인"]
     P --> V
     V --> E["답변 + 청크 발췌 + context_text + 출처"]
 ```
 
-먼저 `tests/test_chunking.py`의 입력 보존·한도 검사를 읽고, `jolup/chunking.py`를 확인합니다. 이어 `tests/test_rag_edges.py`의 색인 버전·긴 질문·페이지 문맥 계약과 `tests/test_rag.py`의 규정 기대 답을 읽습니다. 입력 잘림 0건과 정확한 규정 답변은 별도의 검증 항목입니다.
+먼저 `tests/test_chunking.py`의 입력 보존·한도 검사를 읽고, `jolup/chunking.py`를 확인합니다. 이어 `tests/test_rag_edges.py`의 색인 버전·긴 질문·페이지 문맥 계약과 `tests/test_rag.py`의 규정 기대 답을 읽습니다. 입력 잘림 0건과 정확한 규정 답변은 별도의 검증 항목입니다. 이어 `tests/test_source_metadata.py`의 NFD 질문 실패 사례와 `jolup/source_metadata.py`의 정규화·날짜·조문 판별을 읽습니다. 새 전체 시험·커버리지 수치는 [검증결과](검증결과.md)의 측정 시점과 범위를 확인합니다.

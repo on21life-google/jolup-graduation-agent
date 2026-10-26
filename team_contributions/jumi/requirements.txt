@@ -1,0 +1,10 @@
+chromadb>=0.5.0
+openai>=1.40.0
+pypdf>=5.0.0
+python-dotenv>=1.0.0
+pytest>=8.0.0
+
+# 현재 RAG 코드에서는 쓰지 않음 (임베딩·답변 모두 OpenAI 사용).
+# 다른 파트에서 쓰지 않으면 지워도 된다. sentence-transformers는 torch까지 설치돼 무겁다.
+# sentence-transformers>=3.0.0
+# google-genai>=1.0.0

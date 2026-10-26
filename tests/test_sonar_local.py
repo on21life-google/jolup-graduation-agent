@@ -155,6 +155,26 @@ def test_stage_scope_and_current_source_hashes_are_checked(tmp_path):
 
 
 @pytest.mark.parametrize("changed_location", ["source", "stage"])
+def test_prepared_test_discovery_configuration_is_verified_with_source(tmp_path, changed_location):
+    """The preparer and scanner must agree on the same measured input set."""
+    from scripts.quality_check import prepare_analysis
+    (tmp_path / "app.py").write_text("print('study')\n")
+    for directory in ("jolup", "scripts", "tests"):
+        (tmp_path / directory).mkdir()
+        (tmp_path / directory / "sample.py").write_text("EXAMPLE = True\n")
+    (tmp_path / "pytest.ini").write_text("[pytest]\ntestpaths = tests\n")
+    (tmp_path / "sonar-project.properties").write_text("sonar.projectKey=jolup-roadmap\n")
+    prepared = prepare_analysis(tmp_path, project="jolup-roadmap", without_coverage=True)
+    stage = Path(prepared["path"])
+    assert "pytest.ini" in prepared["source_hashes"]
+    assert sonar.validate_stage(tmp_path, "jolup-roadmap") == prepared
+    location = tmp_path if changed_location == "source" else stage
+    (location / "pytest.ini").write_text("[pytest]\ntestpaths = other_tests\n")
+    with pytest.raises(sonar.SonarError, match="hash mismatch"):
+        sonar.validate_stage(tmp_path, "jolup-roadmap")
+
+
+@pytest.mark.parametrize("changed_location", ["source", "stage"])
 def test_added_python_source_invalidates_prepared_inventory(tmp_path, changed_location):
     stage, _ = prepare_stage(tmp_path)
     location = tmp_path if changed_location == "source" else stage

@@ -17,18 +17,20 @@ from typing import Any
 
 from .settings import DATA, DOMAIN_ID
 from .chunking import TokenChunker
+from .source_metadata import (classify_document_type, filename_date_hint,
+                              normalize_text, section_for_chunk)
 
 MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-INDEX_VERSION = "6-token-page-context"
+INDEX_VERSION = "7-token-page-source-metadata"
 
 
 def _compact(text: str) -> str:
-    return re.sub(r"[^가-힣a-z0-9]", "", text.lower())
+    return re.sub(r"[^가-힣a-z0-9]", "", normalize_text(text).lower())
 
 
 def _terms(text: str) -> Counter:
     # Korean character bigrams also match inflected words without a tokenizer service.
-    terms = re.findall(r"[a-z0-9]+|[가-힣]+", text.lower())
+    terms = re.findall(r"[a-z0-9]+|[가-힣]+", normalize_text(text).lower())
     return Counter(terms + [word[i:i + 2] for word in terms if re.search("[가-힣]", word)
                             for i in range(len(word) - 1)])
 
@@ -217,6 +219,7 @@ class KnowledgeBase:
         self._fingerprint = ""
         self._chunker = None
         self._page_context: dict[str, str] = {}
+        self._source_stats: list[dict] = []
 
     def _source_path(self, value: str) -> Path:
         path = Path(value)
@@ -257,6 +260,8 @@ class KnowledgeBase:
 
     def _append_page_chunks(self, record: dict, pages: list, chunker: TokenChunker | None):
         sid = record["source_id"]
+        document_type = classify_document_type(record["file_name"])
+        version_date_hint = filename_date_hint(record["file_name"])
         for page_no, text in pages:
             context_id = f"{sid}:p{page_no or 0}"
             self._page_context[context_id] = text
@@ -271,11 +276,15 @@ class KnowledgeBase:
                     "source_kind": record.get("kind", "provided_original"),
                     "date_note": record.get("date_note"),
                     "retrieved_date": record.get("retrieved_date"),
+                    "document_type": document_type,
+                    "section": section_for_chunk(text, chunk),
+                    "version_date_hint": version_date_hint,
                 })
 
     def _load_sources(self, chunker: TokenChunker | None = None):
         self.chunks, self.sources, self.warnings = [], {}, []
         self._page_context = {}
+        self._source_stats = []
         manifest = json.loads(self.sources_path.read_text(encoding="utf-8"))
         records = manifest.get("sources", []) if isinstance(manifest, dict) else manifest
         if not isinstance(records, list):
@@ -290,10 +299,14 @@ class KnowledgeBase:
             self.sources[sid] = record
             try:
                 pages = self._read_pages(path, source)
+                source_hash = hashlib.sha256(path.read_bytes()).hexdigest()
             except Exception as exc:
                 self.warnings.append(f"{sid}: 자료 읽기 실패 ({type(exc).__name__}).")
                 continue
+            before = len(self.chunks)
             self._append_page_chunks(record, pages, chunker)
+            self._source_stats.append({"source_id": sid, "file_name": record["file_name"],
+                                       "sha256": source_hash, "chunk_count": len(self.chunks) - before})
         self._tokens = [_terms(c["text"]) for c in self.chunks]
         payload = json.dumps([INDEX_VERSION, self.model_name,
                               chunker.tokenizer_hash if chunker else None,
@@ -386,6 +399,7 @@ class KnowledgeBase:
         return {"status": "ready" if self.backend == "chroma_fastembed" else "degraded" if self.chunks else "unavailable",
                 "backend": self.backend, "model": self.model_name if self.backend == "chroma_fastembed" else None,
                 "source_count": len(self.sources), "chunk_count": len(self.chunks),
+                "sources": [dict(source) for source in self._source_stats],
                 "fingerprint": self._fingerprint, "warnings": list(self.warnings),
                 "chunking": {"policy": INDEX_VERSION,
                              "token_limit": self._chunker.limit if self._chunker else None,
@@ -479,6 +493,7 @@ class KnowledgeBase:
     def search(self, query: str, profile: dict | None = None, k: int = 5) -> list[dict]:
         if not isinstance(query, str) or not query.strip() or self._profile_error(profile):
             return []
+        query = normalize_text(query)
         if not self._built:
             self.build_index()
         if not self.chunks:
@@ -494,6 +509,7 @@ class KnowledgeBase:
     def _query_scope_error(query: str) -> str | None:
         """Explain unsupported question scope before retrieval can begin."""
         # Unsupported promises and injection attempts must not become retrieval instructions.
+        query = normalize_text(query)
         compact = _compact(query)
         restricted = ["시스템프롬프트", "apikey", "api키", "비밀키", "다른학생", "타학생", "성적조작", "성적위조", "이전지시무시", "규칙무시", "무조건졸업", "졸업보장", "토익", "toeic", "토플", "장학금", "공학인증"]
         if any(token in compact for token in restricted):
@@ -601,7 +617,9 @@ class KnowledgeBase:
                  "registered_date": e.get("registered_date"), "page": e.get("page"),
                  "chunk_id": e["chunk_id"], "retrieval_backend": self.backend,
                  "source_kind": e.get("source_kind"), "date_note": e.get("date_note"),
-                 "retrieved_date": e.get("retrieved_date")} for e in evidence]
+                 "retrieved_date": e.get("retrieved_date"),
+                 "document_type": e.get("document_type"), "section": e.get("section"),
+                 "version_date_hint": e.get("version_date_hint")} for e in evidence]
         return {"status": status, "answer": answer, "evidence": evidence, "meta": meta,
                 "retrieval": self._report(), "scope": DOMAIN_ID,
                 "warnings": list(self.warnings), "answer_mode": "로컬 근거 검색·규칙 설명"}

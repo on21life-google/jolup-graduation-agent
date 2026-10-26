@@ -1,6 +1,6 @@
 # 모듈 연결 계약 v2
 
-2024학번 컴퓨터공학과 전공심화, 공학인증 제외. 프로젝트 루트에서 실행. 아래 팀원 이름은 담당 계획이며 개인별 완료 기여는 팀원 자료 병합 후 확인한다.
+2024학번 컴퓨터공학과 전공심화, 공학인증 제외. 프로젝트 루트에서 실행. 아래 팀원 이름은 담당 계획과 이번 제출본 기여를 구분해 읽는다. 2026-10-26 수진님의 디자인·일정·과목 탐색과 주미님의 출처/청킹 테스트 명세를 통합했다. 주미님 `rag/` 구현 폴더는 미수령이며, [실제 반영·보존·보류 범위](팀원_통합결과.md)를 따른다.
 업무 결과는 JSON으로 직렬화 가능한 dict/list로 연결한다. CSV 입력의 bytes/str와 ICS 결과의 bytes는 별도 입출력 경계다. 아래는 핵심 필드이며, 통합할 때 반환된 추가 필드를 임의로 버리지 않는다. 학생 업로드는 메모리에만 유지한다.
 
 ## 계산 모듈: jolup.academic (윤석현)
@@ -28,6 +28,8 @@
 - `KnowledgeBase()`; `.build_index(force=False)->dict`; `.search(query, profile=None, k=5)->list[dict]`; `.answer(query, profile=None)->dict`.
 - `.search()`의 결과에는 `{source_id, chunk_id, context_id, text, file_name, url, registered_date, page, score, retrieval_backend}`가 포함된다. `text`는 실제 모델 토큰 한도에 맞춘 작은 검색 청크이며 `context_id`는 같은 원문 페이지를 연결하는 키다. 최대 5개 페이지에서 강한 청크 하나씩 선택한다. 알 수 없는 등록일은 `None`이다.
 - `.answer()`는 `{status, answer, evidence, meta, retrieval, scope, warnings, answer_mode}`를 반환하며 일부 규정을 확정하지 못하면 `unverified_topics`도 포함할 수 있다. `evidence`에는 검색 청크 필드와 함께 전체 원문 페이지인 `context_text`를 붙여 표 머리글·예외 조건을 확인할 수 있게 한다. `meta`는 파일명·URL·등록일·페이지·청크 ID·검색 방식 등 출처 식별 정보이며 원문 문맥을 대신하지 않는다. `retrieval`은 색인·검색 상태 요약, `warnings`는 대체 검색 등의 경고다. 원문 확인으로 보완한 인용의 `citation_origin="source_context"`와 점수는 순수 상위 검색 결과와 구분한다. 증거 없는 질문은 확인 필요로 남기고 자료 속 지시문은 실행하지 않는다.
+- `document_type`, `section`, `version_date_hint`를 검색 결과·evidence·meta에 추가했다. 조문은 실제 페이지 줄 시작에서 확인한 명확한 제목만 표시하며, 파일명 날짜 참고값은 등록일·작성일로 승격하지 않는다. 원문 text/context_text는 보존하고 검색·범위 비교는 NFC를 사용한다.
+- `build_index()`와 응답 retrieval의 `sources`는 문서별 `{source_id,file_name,sha256,chunk_count}`다. 모델·분할 정책은 보고서의 model/chunking을 함께 읽는다. 기존 FastAPI 출력의 evidence/meta dict 계약을 유지한다.
 - sources.json은 자료 메타데이터. ingestion은 sources만 처리하고 사용자 CSV는 색인 금지.
 - 벡터DB Chroma + 로컬 다국어 임베딩 FastEmbed를 사용한다. `chunking.TokenChunker`가 실제 토크나이저와 특수 토큰을 포함한 한도를 확인하며, 검색 조각과 전체 페이지 문맥을 분리한다. 모델 다운로드나 벡터 질의 실패에 따른 대체 어휘 검색은 `retrieval_backend`·`warnings`로 명시한다. Chroma의 내부 SQLite 저장과 학생 기록용 별도 SQL DB는 구분하며, MongoDB·Redis는 연결하지 않았다.
 
@@ -38,6 +40,8 @@
 - `jolup.agent.respond(query, profile=None, courses=None, context=None)->dict`: LangGraph 라우터, intents `regulation/diagnosis/planning/calendar/unsupported`; `{intent,requested_intents,sections?,answer,status,rows,plan?,events?,evidence,meta,timings,study_trace,memory?,ai_explanation?,llm?}`.
 - 목표 준비 상태를 주로 반환하는 계획 응답에서는 `current_status`에 현재 졸업요건 판정을 따로 유지한다. 선택적 AI 설명은 `ExplanationSelection.fact_ids`를 검증한 후 로컬 문장으로 조립하며 `answer/status/rows`를 바꾸지 않는다. 자세한 모델 계약은 [API.md](API.md)를 따른다.
 - app.py: Streamlit 샘플/CSV 업로드, 프로필, 채팅, 진단표/계산 trace/계획/출처/일정 미리보기·승인·다운로드. 공통 응답4요소 유지.
+- `jolup.ui_design`과 `assets/sujin/`은 수진님의 보라색 카드·토끼·진행 표시를 맡고, 학점 수치는 실제 진단 결과로 채운다. 원본 정적 학생 수치를 학적 사실로 사용하지 않는다.
+- `jolup.ui_calendar`는 `events.json`의 공식 일정으로 실제 요일·월별 표시·D-day를 만든다. 자료가 없는 달은 빈 달력이며 임의 일정을 만들지 않는다. 관심 과목 선택은 세션 탐색 목록으로, 확정 수강·이수학점·자동 계획을 변경하지 않는다. 학생 조건이 바뀌면 목록도 초기화한다.
 - 로컬 `context.conversation`은 `ConversationMemory` 객체다. 최근4턴, 입력·학교자료 내용 fingerprint 변경 시 무효화, 명시적 결과 재표시만 재사용한다. 새로운 후속 질문은 이전 intent를 참고하되 다시 계산한다. 혼합 질문의 `sections`는 영역별 판정·근거를 보존한다.
 - 로컬 메모리는 Streamlit session_state, HTTP 메모리는 API 프로세스의 session_id별 객체에 둔다. 초기화 시 학생자료·진단·기억·일정승인을 폐기한다. HTTP의 최대64세션 LRU 제거·프로세스 재시작으로 기억은 사라질 수 있다. 영구 학생DB를 의미하지 않는다.
 - `jolup.mcp_server`는 `parse_transcript`, `check_requirements`, `search_courses`, `search_scores`, `create_calendar_event`, `search_regulations`, `search_academic_events`, `plan_courses`, `answer_regulations`의 9개 도구를 노출한다. MCP stdio와 streamable-http 지원.
@@ -52,7 +56,7 @@
 - HTTP 채팅은 `use_llm=False`; 생성·LangSmith 키를 UI에서 서버로 보내지 않는다. 해당 기능은 로컬 모드에서만 제공한다. Compose 기본4서비스는 app→api→mcp→chroma다. 일부 별도 UI의 도메인 직접 호출은 유지한다.
 - 교수 예제의 lifespan MCP 연결 재사용과 달리 기존 `mcp_client.call_domain`은 호출별 연결·해제를 유지한다. API lifespan은 임시 세션 정리를 맡는다. 자유 ReAct 도구 반복이나 영구 사용자 저장소를 추가한 것으로 설명하지 않는다.
 
-[Swagger·Postman 안내](API_EXPLORER.md)의 실제 예제를 사용한다. 최신 로컬 HTTP 실측은 [Postman 21요청·60검증 결과](../reports/postman_validation_20261026.json)다.
+[Swagger·Postman 안내](API_EXPLORER.md)의 실제 예제를 사용한다. 최신 로컬 HTTP 실측은 [Postman 21요청·60검증 결과 · 공개 요약](검증결과.md)다.
 
 ## 학습 관찰: jolup.observability
 

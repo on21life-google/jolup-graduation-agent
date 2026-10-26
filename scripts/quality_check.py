@@ -73,9 +73,11 @@ def _sha256(path):
 
 
 def source_hashes(root):
-    """Only app.py and direct Python children of the three named directories."""
+    """Bind Python sources and the optional test-discovery configuration."""
     root = _project_root(root)
     names = ["app.py"]
+    if _checked_path(root, "pytest.ini").is_file():
+        names.append("pytest.ini")
     for directory in SOURCE_DIRS:
         folder = _checked_path(root, directory)
         if not folder.is_dir():

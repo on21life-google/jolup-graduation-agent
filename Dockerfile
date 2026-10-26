@@ -22,6 +22,7 @@ COPY --chown=jolup:jolup jolup ./jolup
 COPY --chown=jolup:jolup data ./data
 COPY --chown=jolup:jolup scripts ./scripts
 COPY --chown=jolup:jolup docs ./docs
+COPY --chown=jolup:jolup assets ./assets
 RUN mkdir -p /app/data/index /app/data/models \
     && chown -R jolup:jolup /app/data/index /app/data/models
 

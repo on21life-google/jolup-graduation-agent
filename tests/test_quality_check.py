@@ -87,6 +87,20 @@ def test_preparation_only_copies_allowed_sources_and_safe_config(project):
     assert json.loads((project / "reports/quality/prepared.json").read_text())["path"] == str(stage)
 
 
+def test_test_discovery_config_is_preserved_and_invalidates_changed_measurement(project):
+    config = project / "pytest.ini"
+    config.write_text("[pytest]\ntestpaths = tests\n")
+    _, runner = fake_runner(project)
+    measured = quality.run_coverage(project, runner=runner)
+    assert measured["status"] == "passed"
+    assert measured["input_hashes"]["pytest.ini"] == hashlib.sha256(config.read_bytes()).hexdigest()
+    stage = Path(quality.prepare_analysis(project)["path"])
+    assert (stage / "pytest.ini").read_bytes() == config.read_bytes()
+    config.write_text("[pytest]\ntestpaths = tests team_contributions\n")
+    with pytest.raises(ValueError, match="stale coverage"):
+        quality.prepare_analysis(project)
+
+
 @pytest.mark.parametrize("name", ["app.py", "jolup"])
 def test_symlink_in_analysis_input_is_rejected(project, tmp_path, name):
     path = project / name

@@ -1,6 +1,6 @@
 # 화면·에이전트·일정 연결
 
-담당 계획상 우수진의 모듈은 `app.py`, `jolup/agent.py`, `jolup/calendar.py`, `jolup/mcp_client.py`, `jolup/mcp_server.py`입니다. 학점 계산과 수강 후보 선택은 윤석현의 모듈을 그대로 호출하고, 결과를 화면에 표시합니다. 개인별 완료 기여는 팀원 자료 병합 후 확인합니다.
+담당 계획상 우수진의 모듈은 `app.py`, `jolup/agent.py`, `jolup/calendar.py`, `jolup/mcp_client.py`, `jolup/mcp_server.py`입니다. 학점 계산과 수강 후보 선택은 윤석현의 모듈을 그대로 호출하고, 결과를 화면에 표시합니다. 2026-10-26 우수진의 디자인·월간 일정·관심 목록 시안을 실제 엔진에 연결했습니다. 제출 기여와 통합 재구현은 [팀원 통합 결과](팀원_통합결과.md)에 구분했습니다.
 
 ## 실행과 시연 순서
 
@@ -69,4 +69,8 @@ HTTP 전송: `.venv/bin/python -m jolup.mcp_server --transport streamable-http`.
 관찰 기능은 `tests/test_observability.py`와 `tests/test_app.py`의 학습 기록 관련 시험을 함께 봅니다. 허용된 필드만 남기는지, 입력 변경·업로드·기록 변조를 차단하는지, 키 입력만으로 전송하지 않는지, 성공 후 중복 전송을 막는지 확인합니다. 실제 LangSmith 계정 전송·클라우드 화면 확인 여부는 [검증결과](검증결과.md)에 별도로 기록합니다.
 
 
-혼합 질문·4턴 기억은 `tests/test_agent_conversation.py`, HTTP 채팅·세션·오류는 `tests/test_chat_api.py`와 `tests/test_chat_client.py`, UI 모드·초기화는 `tests/test_app_conversation.py`를 읽습니다. [REQ-025·026 추적표](tdd/추적표.md)에서 기대값부터 코드로 따라갈 수 있습니다. 최신 로컬 HTTP 실측은 [Postman 21요청·60검증](../reports/postman_validation_20261026.json)이며 Docker 새 구성 기동과 외부 AI 시험은 별도로 구분합니다.
+혼합 질문·4턴 기억은 `tests/test_agent_conversation.py`, HTTP 채팅·세션·오류는 `tests/test_chat_api.py`와 `tests/test_chat_client.py`, UI 모드·초기화는 `tests/test_app_conversation.py`를 읽습니다. [REQ-025·026 추적표](tdd/추적표.md)에서 기대값부터 코드로 따라갈 수 있습니다. 최신 로컬 HTTP 실측은 [Postman 21요청·60검증 · 공개 요약](검증결과.md)이며 Docker 새 구성 기동과 외부 AI 시험은 별도로 구분합니다.
+
+## 팀원 통합 화면
+
+`assets/sujin/`의 토끼 PNG와 CSS, `jolup/ui_design.py`의 표현 함수, `jolup/ui_calendar.py`의 달력 함수를 사용합니다. 대화 탭은 5:7로 채팅과 결과를 배치하며 네 탭·CSV·AI 설정·LangSmith·근거/meta·승인 ICS는 유지합니다. 월간 달력의 D-day는 서울의 오늘 날짜와 공식 일정으로 계산합니다. 관심 과목은 교육과정 후보 목록이며 자동 계획이나 이수 학점을 바꾸지 않습니다. 파일명 날짜 참고는 등록일과 별도 표시합니다.

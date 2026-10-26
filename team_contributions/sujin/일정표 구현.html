@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniPath AI — 대학 졸업 지원 & 학사 일정 에이전트</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            bg: '#FAF6EA',
+                            card: '#FFFDE7',
+                            primary: '#FACC15',
+                            primaryHover: '#EAB308',
+                            accent: '#FEF08A',
+                            border: '#0F172A',
+                            badgeRed: '#FECDD3',
+                            badgeRedText: '#9F1239',
+                            badgeGreen: '#DCFCE7',
+                            badgeGreenText: '#166534',
+                            badgeBlue: '#E0F2FE',
+                            badgeBlueText: '#075985'
+                        }
+                    },
+                    boxShadow: {
+                        'retro': '4px 4px 0px 0px #0F172A',
+                        'retro-sm': '2px 2px 0px 0px #0F172A',
+                        'retro-lg': '6px 6px 0px 0px #0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+        
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 22s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-theme-bg text-slate-900 min-h-screen flex flex-col selection:bg-amber-300 antialiased">
+
+    <!-- Toast Notification Overlay -->
+    <div id="toastNotification" class="fixed top-20 right-5 z-50 transform translate-x-72 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl border-2 border-slate-900 shadow-retro flex items-center gap-3 text-sm font-semibold">
+        <span id="toastIcon">✨</span>
+        <span id="toastMessage">알림 메시지</span>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- NAVIGATION HEADER (공통 헤더)              -->
+    <!-- ========================================== -->
+    <header class="bg-white/90 backdrop-blur border-b-2 border-slate-900 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Logo & Brand Name -->
+            <button onclick="app.showPage('main')" class="flex items-center gap-2.5 group text-left">
+                <div class="w-9 h-9 rounded-xl bg-amber-300 border-2 border-slate-900 flex items-center justify-center font-bold text-xl shadow-retro-sm group-hover:rotate-6 transition-transform">
+                    🐰
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-1.5">
+                        UniPath AI
+                    </span>
+                    <span class="block text-[10px] text-slate-500 font-medium leading-none">대학 졸업 지원 에이전트</span>
+                </div>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-bold text-slate-700">
+                <button onclick="app.navigateToSection('service-section')" class="hover:text-amber-600 transition">서비스 소개</button>
+                <button onclick="app.navigateToSection('howitworks-section')" class="hover:text-amber-600 transition">이용 방법</button>
+                <button onclick="app.navigateToSection('faq-section')" class="hover:text-amber-600 transition">자주 묻는 질문</button>
+            </nav>
+
+            <!-- Top Right CTA Button -->
+            <div class="flex items-center gap-3">
+                <button id="btnNavStartConsulting" onclick="app.showPage('sub')" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold text-xs sm:text-sm rounded-xl border-2 border-slate-900 shadow-retro active:translate-x-0.5 active:translate-y-0.5 transition flex items-center gap-1.5">
+                    <span>🎓</span>
+                    <span>졸업 상담 시작</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- [VIEW 1] 메인 랜딩 페이지 (MAIN PAGE)      -->
+    <!-- ========================================== -->
+    <div id="page-main" class="flex-1 flex flex-col">
+        
+        <!-- HERO SECTION -->
+        <section class="py-12 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Hero Text -->
+                <div class="lg:col-span-7 space-y-6 text-left">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white rounded-full border-2 border-slate-900 text-xs font-bold text-slate-800 shadow-retro-sm">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                        <span>+ 대학 졸업 지원 에이전트</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.15] tracking-tight">
+                        졸업까지 남은 길,<br>
+                        <span class="relative inline-block px-2 bg-amber-300 border-b-4 border-slate-900 rounded-lg">토끼</span>가 같이 걸어줄게요
+                    </h1>
+
+                    <p class="text-slate-700 font-medium text-sm sm:text-base max-w-xl leading-relaxed">
+                        성적표 파일을 올리고 평소 말투로 물어보세요. 부족한 학점부터 다음 학기 수강 계획, 수강신청 일정 등록까지 한 곳에서 이어서 도와드려요.
+                    </p>
+
+                    <!-- Hero Action Buttons -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button onclick="app.showPage('sub', { action: 'upload' })" class="px-5 py-3 bg-amber-400 hover:bg-amber-500 font-extrabold text-sm text-slate-900 rounded-xl border-2 border-slate-900 shadow-retro hover:shadow-retro-lg active:translate-x-0.5 active:translate-y-0.5 transition flex items-center gap-2">
+                            <span>📌</span>
+                            <span>성적표 올리고 시작하기</span>
+                        </button>
+                        <button onclick="app.showPage('sub', { action: 'chat' })" class="px-5 py-3 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-900 rounded-xl border-2 border-slate-900 shadow-retro active:translate-x-0.5 active:translate-y-0.5 transition flex items-center gap-2">
+                            <span>💬</span>
+                            <span>대화로 물어보기</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Mascot Illustration Card (site_main.png) -->
+                <div class="lg:col-span-5 flex justify-center relative">
+                    <div class="relative w-full max-w-md bg-amber-200/50 rounded-3xl p-6 border-2 border-dashed border-slate-900/30 flex flex-col items-center justify-center">
+                        
+                        <!-- Floating Speech Bubble Top Left -->
+                        <div class="absolute -top-4 -left-2 bg-white px-3.5 py-2 rounded-2xl border-2 border-slate-900 shadow-retro-sm text-xs font-bold text-slate-900 animate-bounce">
+                            부족한 학점 알려줘! 💡
+                        </div>
+
+                        <!-- Rabbit Mascot Illustration -->
+                        <div class="relative w-64 h-64 sm:w-72 sm:h-72 my-4 flex items-center justify-center">
+                            <!-- SVG Mascot -->
+                            <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-[4px_4px_0px_rgba(15,23,42,1)]">
+                                <!-- Background Starburst -->
+                                <circle cx="100" cy="100" r="85" fill="#FEF08A" stroke="#0F172A" stroke-width="3"/>
+                                
+                                <!-- Graduation Cap -->
+                                <polygon points="100,25 155,45 100,65 45,45" fill="#0F172A" />
+                                <rect x="92" y="55" width="16" height="15" fill="#0F172A" />
+                                <path d="M145 48 L145 75" stroke="#FACC15" stroke-width="4" stroke-linecap="round"/>
+                                <circle cx="145" cy="78" r="4" fill="#FACC15" />
+
+                                <!-- Rabbit Head -->
+                                <ellipse cx="75" cy="70" rx="14" ry="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3" transform="rotate(-10 75 70)"/>
+                                <ellipse cx="75" cy="70" rx="7" ry="25" fill="#FECDD3" />
+                                
+                                <ellipse cx="125" cy="70" rx="14" ry="40" fill="#FFFFFF" stroke="#0F172A" stroke-width="3" transform="rotate(10 125 70)"/>
+                                <ellipse cx="125" cy="70" rx="7" ry="25" fill="#FECDD3" />
+
+                                <circle cx="100" cy="115" r="42" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+                                
+                                <!-- Cute Glasses -->
+                                <circle cx="85" cy="110" r="12" fill="none" stroke="#0F172A" stroke-width="3"/>
+                                <circle cx="115" cy="110" r="12" fill="none" stroke="#0F172A" stroke-width="3"/>
+                                <line x1="97" y1="110" x2="103" y2="110" stroke="#0F172A" stroke-width="3"/>
+
+                                <!-- Eyes -->
+                                <circle cx="85" cy="110" r="4" fill="#0F172A"/>
+                                <circle cx="115" cy="110" r="4" fill="#0F172A"/>
+
+                                <!-- Cheeks & Mouth -->
+                                <circle cx="75" cy="122" r="5" fill="#FECDD3"/>
+                                <circle cx="125" cy="122" r="5" fill="#FECDD3"/>
+                                <polygon points="100,118 96,123 104,123" fill="#0F172A"/>
+                                <path d="M96 126 Q100 130 104 126" fill="none" stroke="#0F172A" stroke-width="2"/>
+
+                                <!-- Rabbit Body & Uniform -->
+                                <path d="M68 150 Q100 140 132 150 L140 190 L60 190 Z" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+                                <path d="M80 150 L100 175 L120 150" fill="#FACC15" stroke="#0F172A" stroke-width="2"/>
+                            </svg>
+                        </div>
+
+                        <!-- Banner Banner Under Rabbit -->
+                        <div class="bg-amber-300 text-slate-900 border-2 border-slate-900 px-4 py-2 rounded-xl shadow-retro font-black text-sm flex items-center gap-2">
+                            <span>🎓</span>
+                            <span>15학점 더 들으면 졸업각!</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MARQUEE RUNNING TICKER -->
+        <div class="border-y-2 border-slate-900 bg-slate-900 text-amber-300 py-2.5 overflow-hidden font-mono text-xs font-extrabold uppercase tracking-widest">
+            <div class="animate-marquee whitespace-nowrap flex gap-8">
+                <span>✦ 성적표 분석</span>
+                <span>✦ 부족 학점 확인</span>
+                <span>✦ 수강 계획</span>
+                <span>✦ 캘린더 일정 자동 등록</span>
+                <span>✦ 성적표 분석</span>
+                <span>✦ 부족 학점 확인</span>
+                <span>✦ 수강 계획</span>
+                <span>✦ 캘린더 일정 자동 등록</span>
+                <span>✦ 성적표 분석</span>
+                <span>✦ 부족 학점 확인</span>
+                <span>✦ 수강 계획</span>
+                <span>✦ 캘린더 일정 자동 등록</span>
+            </div>
+        </div>
+
+        <!-- SERVICE SECTION (4개 기능 카드) -->
+        <section id="service-section" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
+            <div class="inline-block px-3 py-1 bg-white border-2 border-slate-900 rounded-full text-xs font-extrabold mb-3 shadow-retro-sm">
+                SERVICE
+            </div>
+            <h2 class="text-2xl sm:text-4xl font-black text-slate-900 mb-2">
+                졸업 준비에 필요한 네 가지
+            </h2>
+            <p class="text-slate-600 text-xs sm:text-sm font-medium mb-12">
+                읽고, 계산하고, 찾고, 등록하는 일을 대화 하나로 이어드려요.
+            </p>
+
+            <!-- 4 Grid Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-900 shadow-retro hover:-translate-y-1 transition text-left flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl border-2 border-slate-900 flex items-center justify-center text-2xl mb-4 shadow-retro-sm">
+                            📄
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-1">성적표 읽기</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            PDF·엑셀·CSV 성적표를 올리면 이수한 과목과 학점을 자동으로 정리해요.
+                        </p>
+                    </div>
+                    <span class="inline-block self-start font-mono text-[10px] bg-slate-100 border border-slate-300 px-2 py-0.5 rounded text-slate-500">parse_transcript</span>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-900 shadow-retro hover:-translate-y-1 transition text-left flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl border-2 border-slate-900 flex items-center justify-center text-2xl mb-4 shadow-retro-sm">
+                            📊
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-1">부족 학점 확인</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            교육과정 요건과 비교해 영역별로 몇 학점이 부족한지 한눈에 보여줘요.
+                        </p>
+                    </div>
+                    <span class="inline-block self-start font-mono text-[10px] bg-slate-100 border border-slate-300 px-2 py-0.5 rounded text-slate-500">check_requirements</span>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-900 shadow-retro hover:-translate-y-1 transition text-left flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl border-2 border-slate-900 flex items-center justify-center text-2xl mb-4 shadow-retro-sm">
+                            🔍
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-1">개설 과목 검색</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            부족한 영역을 채울 수 있는 과목을 학점·학기 기준으로 찾아줘요.
+                        </p>
+                    </div>
+                    <span class="inline-block self-start font-mono text-[10px] bg-slate-100 border border-slate-300 px-2 py-0.5 rounded text-slate-500">search_courses</span>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-slate-900 shadow-retro hover:-translate-y-1 transition text-left flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl border-2 border-slate-900 flex items-center justify-center text-2xl mb-4 shadow-retro-sm">
+                            📅
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-1">일정 등록</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            수강신청·논문 마감 일정을 미리 보고, 승인하면 캘린더 파일로 만들어줘요.
+                        </p>
+                    </div>
+                    <span class="inline-block self-start font-mono text-[10px] bg-slate-100 border border-slate-300 px-2 py-0.5 rounded text-slate-500">create_calendar_event</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS SECTION -->
+        <section id="howitworks-section" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+            <div class="bg-amber-100/60 rounded-3xl p-6 sm:p-10 border-2 border-slate-900 shadow-retro">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Steps Description -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="inline-block px-3 py-1 bg-white border-2 border-slate-900 rounded-full text-xs font-extrabold shadow-retro-sm">
+                            HOW IT WORKS
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">
+                            세 번이면 계획이 나와요
+                        </h2>
+
+                        <div class="space-y-4 text-xs sm:text-sm">
+                            <!-- Step 1 -->
+                            <div class="flex items-start gap-3 bg-white p-3.5 rounded-xl border-2 border-slate-900 shadow-retro-sm">
+                                <span class="w-6 h-6 rounded-full bg-amber-300 border-2 border-slate-900 font-extrabold flex items-center justify-center text-xs flex-shrink-0">1</span>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">성적표 올리기</h4>
+                                    <p class="text-slate-600 text-xs">파일을 끌어다 놓기만 하면 돼요.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="flex items-start gap-3 bg-white p-3.5 rounded-xl border-2 border-slate-900 shadow-retro-sm">
+                                <span class="w-6 h-6 rounded-full bg-amber-300 border-2 border-slate-900 font-extrabold flex items-center justify-center text-xs flex-shrink-0">2</span>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">자연어로 물어보기</h4>
+                                    <p class="text-slate-600 text-xs">"그럼 다음 학기에 뭐 들으면 돼?"처럼 편하게 물어보세요.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="flex items-start gap-3 bg-white p-3.5 rounded-xl border-2 border-slate-900 shadow-retro-sm">
+                                <span class="w-6 h-6 rounded-full bg-amber-300 border-2 border-slate-900 font-extrabold flex items-center justify-center text-xs flex-shrink-0">3</span>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">확인하고 승인하기</h4>
+                                    <p class="text-slate-600 text-xs">일정 등록처럼 저장이 필요한 일은 꼭 승인을 받아요.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="app.showPage('sub')" class="px-5 py-2.5 bg-amber-400 hover:bg-amber-500 font-extrabold text-xs sm:text-sm rounded-xl border-2 border-slate-900 shadow-retro transition">
+                            지금 체험해보기 →
+                        </button>
+                    </div>
+
+                    <!-- Right Visual Card Preview (Graduation Gauge Preview) -->
+                    <div class="lg:col-span-6 bg-white p-6 rounded-2xl border-2 border-slate-900 shadow-retro space-y-4">
+                        <div class="flex justify-between items-center pb-2 border-b-2 border-slate-100">
+                            <span class="font-extrabold text-lg">85 <span class="text-xs text-slate-400 font-normal">/ 130학점</span></span>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-extrabold text-xs rounded-full border border-emerald-300">65% 완료</span>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-slate-100 h-3.5 rounded-full border border-slate-300 overflow-hidden">
+                            <div class="bg-amber-400 h-full w-[65%] rounded-full"></div>
+                        </div>
+
+                        <div class="space-y-3 pt-2 text-xs">
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>전공핵심</span>
+                                    <span class="text-emerald-600">36/36학점 (충족)</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-500 h-full w-full"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>전공선택</span>
+                                    <span class="text-rose-600">15/24학점 (9학점 부족)</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-amber-400 h-full w-[62%]"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>일반교양</span>
+                                    <span class="text-rose-600">24/30학점 (6학점 부족)</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-amber-400 h-full w-[80%]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-[10px] text-slate-400 text-right pt-2">※ 예시 화면이에요</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- HIGHLIGHT STATS BAR -->
+        <section class="border-y-2 border-slate-900 bg-white py-8 px-4 sm:px-6">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div>
+                    <span class="text-3xl font-black text-slate-900 block">4가지</span>
+                    <span class="text-xs font-bold text-slate-500">졸업 준비 기능</span>
+                </div>
+                <div class="border-y sm:border-y-0 sm:border-x border-slate-200 py-4 sm:py-0">
+                    <span class="text-3xl font-black text-slate-900 block">3단계</span>
+                    <span class="text-xs font-bold text-slate-500">업로드부터 일정 등록까지</span>
+                </div>
+                <div>
+                    <span class="text-3xl font-black text-slate-900 block">승인 후 실행</span>
+                    <span class="text-xs font-bold text-slate-500">저장이 필요한 작업은 항상 확인</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq-section" class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full text-center">
+            <div class="inline-block px-3 py-1 bg-white border-2 border-slate-900 rounded-full text-xs font-extrabold mb-3 shadow-retro-sm">
+                FAQ
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mb-8">
+                자주 묻는 질문
+            </h2>
+
+            <div class="space-y-3 text-left">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white rounded-xl border-2 border-slate-900 shadow-retro overflow-hidden">
+                    <button onclick="app.toggleFaq(1)" class="w-full p-4 font-bold text-sm text-slate-900 flex justify-between items-center gap-2 hover:bg-slate-50">
+                        <span>어떤 파일을 올릴 수 있나요?</span>
+                        <span id="faq-icon-1" class="text-lg">＋</span>
+                    </button>
+                    <div id="faq-ans-1" class="hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3 bg-amber-50/50">
+                        학교 포털에서 받은 성적표 PDF, 엑셀, CSV 파일을 올릴 수 있도록 구성했어요.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white rounded-xl border-2 border-slate-900 shadow-retro overflow-hidden">
+                    <button onclick="app.toggleFaq(2)" class="w-full p-4 font-bold text-sm text-slate-900 flex justify-between items-center gap-2 hover:bg-slate-50">
+                        <span>졸업 판정 결과는 정확한가요?</span>
+                        <span id="faq-icon-2" class="text-lg">＋</span>
+                    </button>
+                    <div id="faq-ans-2" class="hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3 bg-amber-50/50">
+                        참고용 안내예요. 실제 졸업 가능 여부는 반드시 학과 사무실이나 학사 시스템에서 확인해주세요.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white rounded-xl border-2 border-slate-900 shadow-retro overflow-hidden">
+                    <button onclick="app.toggleFaq(3)" class="w-full p-4 font-bold text-sm text-slate-900 flex justify-between items-center gap-2 hover:bg-slate-50">
+                        <span>올린 파일은 어떻게 되나요?</span>
+                        <span id="faq-icon-3" class="text-lg">＋</span>
+                    </button>
+                    <div id="faq-ans-3" class="hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3 bg-amber-50/50">
+                        지금 보시는 화면은 시안이며 파일이 서버로 전송되지 않고, 예시 데이터로만 동작해요.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white rounded-xl border-2 border-slate-900 shadow-retro overflow-hidden">
+                    <button onclick="app.toggleFaq(4)" class="w-full p-4 font-bold text-sm text-slate-900 flex justify-between items-center gap-2 hover:bg-slate-50">
+                        <span>캘린더 등록은 바로 되나요?</span>
+                        <span id="faq-icon-4" class="text-lg">＋</span>
+                    </button>
+                    <div id="faq-ans-4" class="hidden px-4 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3 bg-amber-50/50">
+                        아니요. 일정을 미리 보여드리고, 승인하셔야 .ics 파일을 만들어드려요.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTTOM CTA BANNER -->
+        <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full my-6">
+            <div class="bg-amber-300 rounded-3xl p-6 sm:p-8 border-2 border-slate-900 shadow-retro flex flex-col sm:flex-row justify-between items-center gap-6">
+                <div class="text-center sm:text-left">
+                    <h3 class="text-xl sm:text-2xl font-black text-slate-900 mb-1">
+                        오늘 졸업 계획 세워볼까요?
+                    </h3>
+                    <p class="text-xs sm:text-sm font-medium text-slate-800">
+                        성적표 한 장이면 충분해요.
+                    </p>
+                </div>
+                <button onclick="app.showPage('sub')" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-amber-300 font-extrabold text-sm rounded-xl border-2 border-slate-900 shadow-retro-sm transition flex-shrink-0">
+                    상담 시작하기
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- [VIEW 2] 서브 상담 에이전트 (SUB PAGE)      -->
+    <!-- ========================================== -->
+    <div id="page-sub" class="hidden flex-1 flex flex-col">
+        
+        <!-- SUB-PAGE HEADER (Breadcrumb & Step Chips) -->
+        <div class="bg-amber-100/70 border-b-2 border-slate-900 py-3 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-white border-2 border-slate-900 flex items-center justify-center text-sm font-bold shadow-retro-sm">
+                        🐰
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-slate-500 font-bold">홈 &gt; 졸업 상담</div>
+                        <h2 class="font-black text-base text-slate-900 leading-none">졸업 상담 에이전트</h2>
+                    </div>
+                </div>
+
+                <!-- Step Buttons -->
+                <div class="flex items-center gap-1.5 overflow-x-auto text-xs font-bold py-1">
+                    <button onclick="app.handleQuickAction('upload')" class="px-2.5 py-1 bg-white hover:bg-amber-200 border-2 border-slate-900 rounded-lg shadow-retro-sm transition flex-shrink-0">
+                        ① 성적표 업로드
+                    </button>
+                    <button onclick="app.handleQuickAction('check')" class="px-2.5 py-1 bg-white hover:bg-amber-200 border-2 border-slate-900 rounded-lg shadow-retro-sm transition flex-shrink-0">
+                        ② 요건 확인
+                    </button>
+                    <button onclick="app.handleQuickAction('plan')" class="px-2.5 py-1 bg-white hover:bg-amber-200 border-2 border-slate-900 rounded-lg shadow-retro-sm transition flex-shrink-0">
+                        ③ 수강 계획
+                    </button>
+                    <button onclick="app.handleQuickAction('schedule')" class="px-2.5 py-1 bg-amber-300 hover:bg-amber-400 border-2 border-slate-900 rounded-lg shadow-retro-sm transition flex-shrink-0">
+                        ④ 일정 등록
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 2-COLUMN MAIN CONTENT WORKSPACE -->
+        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- [LEFT COLUMN] AI Chat UI (site_sub.png) -->
+            <section class="lg:col-span-5 bg-amber-50/30 rounded-2xl border-2 border-slate-900 shadow-retro flex flex-col h-[calc(100vh-170px)] min-h-[580px] overflow-hidden">
+                
+                <!-- Chat Panel Header -->
+                <div class="p-3.5 bg-white border-b-2 border-slate-900 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <h3 class="font-black text-sm text-slate-900">💬 AI 에이전트 채팅</h3>
+                    </div>
+                    <span class="text-[11px] text-slate-500 font-medium">질문 입력 및 대화 기록</span>
+                </div>
+
+                <!-- Chat Feed -->
+                <div id="chatFeed" class="flex-1 p-4 overflow-y-auto space-y-4 custom-scrollbar text-xs">
+                    <!-- Message 1 from Bot -->
+                    <div class="flex items-start gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-white border-2 border-slate-900 flex items-center justify-center text-xs font-bold flex-shrink-0 shadow-retro-sm">
+                            🐰
+                        </div>
+                        <div class="bg-white text-slate-900 rounded-2xl rounded-tl-none p-3 border-2 border-slate-900 shadow-retro-sm max-w-[85%] leading-relaxed">
+                            안녕하세요, 알렉스님! 졸업까지 남은 길을 같이 살펴볼게요. 먼저 아래에 성적표를 올려주세요.
+                        </div>
+                    </div>
+
+                    <!-- Message 2 from Bot with Button -->
+                    <div class="flex items-start gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-white border-2 border-slate-900 flex items-center justify-center text-xs font-bold flex-shrink-0 shadow-retro-sm">
+                            🐰
+                        </div>
+                        <div class="bg-white text-slate-900 rounded-2xl rounded-tl-none p-3 border-2 border-slate-900 shadow-retro-sm max-w-[85%] space-y-2">
+                            <div><strong>성적표_샘플.csv</strong>를 읽었어요. 이제 궁금한 걸 물어보세요.</div>
+                            <button onclick="app.sendMessage('성적표 분석해줘')" class="px-3 py-1 bg-amber-200 hover:bg-amber-300 font-bold rounded-lg border border-slate-900 text-[11px] transition">
+                                성적표 분석해줘
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attached File Summary Bar -->
+                <div class="px-3 py-2 bg-white border-t-2 border-slate-900 flex items-center justify-between text-xs">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">📄</span>
+                        <div>
+                            <span class="font-bold text-slate-800">성적표_샘플.csv</span>
+                            <span class="block text-[10px] text-slate-400">✓ 38과목 · 112학점을 읽었어요</span>
+                        </div>
+                    </div>
+                    <button onclick="app.removeFile()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg border border-slate-300 font-bold text-[10px]">
+                        삭제
+                    </button>
+                </div>
+
+                <!-- Chat Input Form -->
+                <div class="p-3 bg-white border-t-2 border-slate-900">
+                    <div class="flex items-center gap-2">
+                        <button onclick="app.triggerFileUpload()" class="w-9 h-9 bg-slate-100 hover:bg-slate-200 border-2 border-slate-900 rounded-xl flex items-center justify-center text-sm shadow-retro-sm transition flex-shrink-0" title="파일 첨부">
+                            📎
+                        </button>
+                        <input type="file" id="fileInputHidden" class="hidden" accept=".csv,.pdf,.xlsx" onchange="app.handleFileSelect(event)">
+                        
+                        <input type="text" id="chatInputText" placeholder="질문을 입력하세요 (예: 수강신청 일정 언제야?)" class="flex-1 bg-slate-50 border-2 border-slate-900 rounded-xl px-3 py-2 text-xs focus:outline-none focus:bg-white font-medium" onkeydown="if(event.key==='Enter') app.sendMessage()">
+                        
+                        <button onclick="app.sendMessage()" class="w-9 h-9 bg-amber-300 hover:bg-amber-400 border-2 border-slate-900 rounded-xl font-black text-sm flex items-center justify-center shadow-retro-sm transition flex-shrink-0">
+                            ↑
+                        </button>
+                    </div>
+                    <div class="text-[10px] text-slate-400 mt-1 pl-1">
+                        Enter 전송 · Shift+Enter 줄바꿈
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- [RIGHT COLUMN] DYNAMIC DASHBOARD (site_sub.png + Academic Schedule Table) -->
+            <section class="lg:col-span-7 bg-white rounded-2xl border-2 border-slate-900 shadow-retro flex flex-col h-[calc(100vh-170px)] min-h-[580px] overflow-hidden">
+                
+                <!-- Dashboard Top Bar & Mode Switcher -->
+                <div class="p-3.5 bg-amber-100/50 border-b-2 border-slate-900 flex justify-between items-center flex-wrap gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">📊</span>
+                        <h3 class="font-black text-sm text-slate-900">동적 대시보드</h3>
+                        <span class="text-[10px] text-slate-500 font-medium">대화 내용에 따라 실시간 변경</span>
+                    </div>
+
+                    <!-- View Switcher Tabs -->
+                    <div class="flex items-center gap-1 bg-white p-1 rounded-xl border-2 border-slate-900 text-xs font-bold shadow-retro-sm">
+                        <button id="tabGraduation" onclick="app.switchSubDashboard('graduation')" class="px-3 py-1 rounded-lg bg-amber-300 text-slate-900 transition">
+                            졸업 요건 & 수강플랜
+                        </button>
+                        <button id="tabSchedule" onclick="app.switchSubDashboard('schedule')" class="px-3 py-1 rounded-lg text-slate-600 hover:bg-slate-100 transition">
+                            📅 학사 일정표 (스케줄)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Content Container -->
+                <div id="subDashboardContent" class="flex-1 p-5 overflow-y-auto custom-scrollbar space-y-6">
+                    <!-- JS에 의해 졸업요건 상태 또는 학사일정표가 동적으로 주입됩니다 -->
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FOOTER (공통 푸터)                        -->
+    <!-- ========================================== -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-5 border-t-2 border-slate-900 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>
+                <span class="font-black text-slate-200">UniPath AI</span> — 대학 졸업 지원 에이전트 (시안)
+            </div>
+            <div class="text-right text-[11px]">
+                결과는 예시이며 실제 졸업 판정은 학과 사무실에서 확인하세요. © UniPath AI
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        /**
+         * UniPath AI Application Logic Engine
+         */
+        class UniPathApp {
+            constructor() {
+                this.currentPage = 'main'; // 'main' or 'sub'
+                this.subDashboardMode = 'graduation'; // 'graduation' or 'schedule'
+                
+                // Academic Schedule Database (2026 Academic Year Dummy Data)
+                this.academicSchedules = [
+                    { id: 1, title: '2026-2학기 예비 수강신청(장바구니)', category: '수강신청', date: '2026.08.10 ~ 08.12', dday: 'D-3', desc: '수강신청 포털 접속 후 과목 담기', status: 'upcoming' },
+                    { id: 2, title: '2026-2학기 본 수강신청 기간', category: '수강신청', date: '2026.08.18 ~ 08.20', dday: 'D-11', desc: '학년별 해당 일자 09:00 오픈', status: 'urgent' },
+                    { id: 3, title: '2026-2학기 등록금 납부 기간', category: '학무', date: '2026.08.21 ~ 08.28', dday: 'D-14', desc: '지정 은행 제출 및 원클릭 납부', status: 'normal' },
+                    { id: 4, title: '2026학년도 2학기 개강일', category: '학사일정', date: '2026.08.31 (월)', dday: 'D-24', desc: '15주 수업 정식 개강', status: 'normal' },
+                    { id: 5, title: '수강신청 변경 및 확인 기간', category: '수강신청', date: '2026.08.31 ~ 09.04', dday: 'D-24', desc: '여석 과목에 한해 수강 변경 가능', status: 'normal' },
+                    { id: 6, title: '졸업 논문 / 대체 자격증 최종 제출', category: '졸업요건', date: '2026.11.15 (일)', dday: 'D-100', desc: '학과 사무실 오프라인/온라인 동시 제출', status: 'normal' }
+                ];
+
+                this.init();
+            }
+
+            init() {
+                this.renderSubDashboard();
+            }
+
+            // Page Navigation (Main <-> Sub)
+            showPage(pageId, params = {}) {
+                this.currentPage = pageId;
+                const pageMain = document.getElementById('page-main');
+                const pageSub = document.getElementById('page-sub');
+
+                if (pageId === 'main') {
+                    pageMain.classList.remove('hidden');
+                    pageSub.classList.add('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    pageMain.classList.add('hidden');
+                    pageSub.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    if (params.action === 'upload') {
+                        this.addBotMessage('성적표 업로드 버튼을 누르셨군요! 파일(CSV, PDF)을 선택해 주시면 요건을 분석해 드려요.');
+                    } else if (params.action === 'chat') {
+                        this.addBotMessage('무엇이든 물어보세요! 예: "졸업까지 몇 학점 남았어?", "수강신청 일정 알려줘"');
+                    }
+                }
+            }
+
+            navigateToSection(sectionId) {
+                if (this.currentPage !== 'main') {
+                    this.showPage('main');
+                    setTimeout(() => {
+                        const el = document.getElementById(sectionId);
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                } else {
+                    const el = document.getElementById(sectionId);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            // FAQ Accordion Toggle
+            toggleFaq(index) {
+                const ans = document.getElementById(`faq-ans-${index}`);
+                const icon = document.getElementById(`faq-icon-${index}`);
+                if (ans.classList.contains('hidden')) {
+                    ans.classList.remove('hidden');
+                    icon.textContent = '－';
+                } else {
+                    ans.classList.add('hidden');
+                    icon.textContent = '＋';
+                }
+            }
+
+            // Toast Alert Notification
+            showToast(msg, icon = '✨') {
+                const toast = document.getElementById('toastNotification');
+                document.getElementById('toastMessage').textContent = msg;
+                document.getElementById('toastIcon').textContent = icon;
+                
+                toast.classList.remove('translate-x-72', 'opacity-0');
+                toast.classList.add('translate-x-0', 'opacity-100');
+
+                setTimeout(() => {
+                    toast.classList.add('translate-x-72', 'opacity-0');
+                    toast.classList.remove('translate-x-0', 'opacity-100');
+                }, 2500);
+            }
+
+            // Sub Dashboard Switcher ('graduation' or 'schedule')
+            switchSubDashboard(mode) {
+                this.subDashboardMode = mode;
+                const tabGrad = document.getElementById('tabGraduation');
+                const tabSched = document.getElementById('tabSchedule');
+
+                if (mode === 'graduation') {
+                    tabGrad.className = "px-3 py-1 rounded-lg bg-amber-300 text-slate-900 transition";
+                    tabSched.className = "px-3 py-1 rounded-lg text-slate-600 hover:bg-slate-100 transition";
+                } else {
+                    tabSched.className = "px-3 py-1 rounded-lg bg-amber-300 text-slate-900 transition";
+                    tabGrad.className = "px-3 py-1 rounded-lg text-slate-600 hover:bg-slate-100 transition";
+                }
+
+                this.renderSubDashboard();
+            }
+
+            // Render Right Dashboard Content
+            renderSubDashboard() {
+                const container = document.getElementById('subDashboardContent');
+
+                if (this.subDashboardMode === 'graduation') {
+                    // VIEW 1: Graduation Status + Next Semester Plan (site_sub.png)
+                    container.innerHTML = `
+                        <!-- Card 1: Graduation Requirement Status (사이트 시안 sub.png 복제) -->
+                        <div class="bg-amber-50/60 p-4 rounded-xl border-2 border-slate-900 shadow-retro-sm">
+                            <h4 class="font-extrabold text-sm text-slate-900 mb-2 flex items-center gap-2">
+                                <span>■ 졸업 요건 충족도 현황</span>
+                            </h4>
+                            
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-2xl font-black text-slate-900">85</span>
+                                <span class="text-xs text-slate-500 font-bold">/ 130학점 이수 완료</span>
+                                <span class="px-2 py-0.5 bg-emerald-100 border border-emerald-300 text-emerald-800 font-extrabold text-[10px] rounded-full ml-auto">65%</span>
+                            </div>
+
+                            <div class="w-full bg-white h-3 rounded-full border border-slate-900 overflow-hidden mb-4">
+                                <div class="bg-amber-400 h-full w-[65%]"></div>
+                            </div>
+
+                            <div class="space-y-3 text-xs">
+                                <!-- 전공핵심 -->
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-bold">전공핵심</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-slate-500 font-medium">36/36학점</span>
+                                            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full border border-emerald-300">충족</span>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-300">
+                                        <div class="bg-emerald-500 h-full w-full"></div>
+                                    </div>
+                                </div>
+
+                                <!-- 전공선택 -->
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-bold">전공선택</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-slate-500 font-medium">15/24학점</span>
+                                            <span class="px-2 py-0.5 bg-rose-100 text-rose-800 font-bold text-[10px] rounded-full border border-rose-300">9학점 부족</span>
+                                            <button onclick="app.sendMessage('부족한 전공선택 과목 보여줘')" class="px-2 py-0.5 bg-slate-900 text-amber-300 font-bold text-[10px] rounded-md">개설과목 검색</button>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-300">
+                                        <div class="bg-amber-400 h-full w-[62%]"></div>
+                                    </div>
+                                </div>
+
+                                <!-- 일반교양 -->
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-bold">일반교양</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-slate-500 font-medium">24/30학점</span>
+                                            <span class="px-2 py-0.5 bg-rose-100 text-rose-800 font-bold text-[10px] rounded-full border border-rose-300">6학점 부족</span>
+                                            <button onclick="app.sendMessage('부족한 교양 과목 보여줘')" class="px-2 py-0.5 bg-slate-900 text-amber-300 font-bold text-[10px] rounded-md">개설과목 검색</button>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-300">
+                                        <div class="bg-amber-400 h-full w-[80%]"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-3 border-t border-dashed border-slate-300 text-center">
+                                <a href="#" onclick="alert('2024학년도 컴퓨터공학과 요람 PDF를 다운로드합니다.'); return false;" class="text-[11px] text-slate-600 hover:underline flex items-center justify-center gap-1">
+                                    <span>📄</span> 2024학년도 컴퓨터공학과 교육과정 요람 원문 PDF 보기
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Recommended Course Plan for Next Semester (site_sub.png) -->
+                        <div class="bg-amber-50/60 p-4 rounded-xl border-2 border-slate-900 shadow-retro-sm">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-extrabold text-sm text-slate-900 flex items-center gap-1.5">
+                                    <span>💡 차학기 권장 수강 계획 초안</span>
+                                </h4>
+                                <span class="px-2 py-0.5 bg-blue-100 text-blue-800 border border-blue-300 font-extrabold text-[10px] rounded-full">최대 18학점 제한 반영</span>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs mb-3 pb-2 border-b border-slate-200">
+                                <span class="font-bold text-slate-600">선택한 학점</span>
+                                <span class="font-black text-amber-700 text-sm">9 / 18학점</span>
+                            </div>
+
+                            <!-- Course Recommendation Items -->
+                            <div class="space-y-2 text-xs">
+                                <div class="p-2.5 bg-white rounded-lg border border-slate-900 flex justify-between items-center">
+                                    <div>
+                                        <span class="font-bold block text-slate-900">1. 인공지능 및 머신러닝</span>
+                                        <span class="text-[10px] text-slate-500">전공선택 / 3학점</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[10px] rounded-md">✓ 추가됨</span>
+                                </div>
+
+                                <div class="p-2.5 bg-white rounded-lg border border-slate-900 flex justify-between items-center">
+                                    <div>
+                                        <span class="font-bold block text-slate-900">2. 디지털 마케팅</span>
+                                        <span class="text-[10px] text-slate-500">전공선택 / 3학점</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[10px] rounded-md">✓ 추가됨</span>
+                                </div>
+
+                                <div class="p-2.5 bg-white rounded-lg border border-slate-900 flex justify-between items-center">
+                                    <div>
+                                        <span class="font-bold block text-slate-900">3. 미술사의 이해</span>
+                                        <span class="text-[10px] text-slate-500">일반교양 / 3학점</span>
+                                    </div>
+                                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[10px] rounded-md">✓ 추가됨</span>
+                                </div>
+                            </div>
+
+                            <button onclick="app.sendMessage('일정 캘린더에 등록해줘')" class="w-full mt-4 py-2 bg-amber-300 hover:bg-amber-400 font-black text-xs text-slate-900 rounded-xl border-2 border-slate-900 shadow-retro-sm transition flex items-center justify-center gap-1.5">
+                                <span>📅</span>
+                                <span>일정 캘린더에 등록해줘</span>
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    // VIEW 2: Academic Schedule & Interactive Calendar Table (요청받은 일정표 대시보드!)
+                    let scheduleRows = this.academicSchedules.map(item => `
+                        <tr class="border-b border-slate-200 hover:bg-amber-50/50 transition">
+                            <td class="p-2.5 font-bold">
+                                <span class="px-2 py-0.5 rounded border text-[10px] ${item.category === '수강신청' ? 'bg-blue-100 text-blue-800 border-blue-300' : 'bg-amber-100 text-amber-800 border-amber-300'}">
+                                    ${item.category}
+                                </span>
+                            </td>
+                            <td class="p-2.5">
+                                <span class="font-bold text-slate-900 block">${item.title}</span>
+                                <span class="text-[10px] text-slate-500">${item.desc}</span>
+                            </td>
+                            <td class="p-2.5 font-semibold whitespace-nowrap">${item.date}</td>
+                            <td class="p-2.5 text-center">
+                                <span class="px-2 py-0.5 ${item.status === 'urgent' ? 'bg-rose-500 text-white' : 'bg-slate-900 text-amber-300'} font-extrabold text-[10px] rounded-full">
+                                    ${item.dday}
+                                </span>
+                            </td>
+                        </tr>
+                    `).join('');
+
+                    container.innerHTML = `
+                        <!-- Calendar & Schedule Banner -->
+                        <div class="bg-amber-100/80 p-4 rounded-xl border-2 border-slate-900 shadow-retro-sm flex justify-between items-center">
+                            <div>
+                                <h4 class="font-black text-base text-slate-900">📅 2026학년도 2학기 학사 일정표</h4>
+                                <p class="text-xs text-slate-600">수강신청, 학점인정, 기말고사 등 주요 마감 일정이 통합 관리됩니다.</p>
+                            </div>
+                            <button onclick="app.downloadIcsCalendar()" class="px-3 py-2 bg-slate-900 text-amber-300 font-extrabold text-xs rounded-xl border-2 border-slate-900 shadow-retro-sm hover:bg-slate-800 transition flex items-center gap-1.5">
+                                <span>📲</span>
+                                <span>.ics 캘린더 다운로드</span>
+                            </button>
+                        </div>
+
+                        <!-- 2026년 8월 Mini Calendar Grid -->
+                        <div class="bg-white p-4 rounded-xl border-2 border-slate-900 shadow-retro-sm">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="font-extrabold text-sm text-slate-900">2026년 8월 학사 달력</span>
+                                <span class="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">수강신청 특수 기간</span>
+                            </div>
+
+                            <div class="grid grid-cols-7 gap-1 text-center font-bold text-[11px] text-slate-500 mb-1">
+                                <div class="text-rose-500">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="text-blue-500">토</div>
+                            </div>
+
+                            <!-- Calendar Grid Items -->
+                            <div class="grid grid-cols-7 gap-1 text-xs text-center font-medium">
+                                <div class="p-1 text-slate-300">26</div><div class="p-1 text-slate-300">27</div><div class="p-1 text-slate-300">28</div><div class="p-1 text-slate-300">29</div><div class="p-1 text-slate-300">30</div><div class="p-1 text-slate-300">31</div><div class="p-1 bg-slate-50 rounded">1</div>
+                                <div class="p-1 bg-slate-50 rounded">2</div><div class="p-1 bg-slate-50 rounded">3</div><div class="p-1 bg-slate-50 rounded">4</div><div class="p-1 bg-slate-50 rounded">5</div><div class="p-1 bg-slate-50 rounded">6</div><div class="p-1 bg-slate-50 rounded">7</div><div class="p-1 bg-slate-50 rounded">8</div>
+                                <div class="p-1 bg-slate-50 rounded">9</div>
+                                <!-- 8/10 ~ 8/12 예비수강신청 -->
+                                <div class="p-1 bg-blue-200 font-bold border border-blue-400 rounded text-blue-900" title="예비수강신청">10</div>
+                                <div class="p-1 bg-blue-200 font-bold border border-blue-400 rounded text-blue-900">11</div>
+                                <div class="p-1 bg-blue-200 font-bold border border-blue-400 rounded text-blue-900">12</div>
+                                <div class="p-1 bg-slate-50 rounded">13</div><div class="p-1 bg-slate-50 rounded">14</div><div class="p-1 bg-slate-50 rounded">15</div>
+                                <div class="p-1 bg-slate-50 rounded">16</div><div class="p-1 bg-slate-50 rounded">17</div>
+                                <!-- 8/18 ~ 8/20 본 수강신청 -->
+                                <div class="p-1 bg-rose-400 font-black text-white rounded border-2 border-slate-900 animate-pulse" title="본 수강신청">18</div>
+                                <div class="p-1 bg-rose-400 font-black text-white rounded border-2 border-slate-900 animate-pulse">19</div>
+                                <div class="p-1 bg-rose-400 font-black text-white rounded border-2 border-slate-900 animate-pulse">20</div>
+                                <div class="p-1 bg-amber-200 font-bold border border-amber-400 rounded">21</div><div class="p-1 bg-amber-200 font-bold border border-amber-400 rounded">22</div>
+                                <div class="p-1 bg-slate-50 rounded">23</div><div class="p-1 bg-slate-50 rounded">24</div><div class="p-1 bg-slate-50 rounded">25</div><div class="p-1 bg-slate-50 rounded">26</div><div class="p-1 bg-slate-50 rounded">27</div><div class="p-1 bg-slate-50 rounded">28</div><div class="p-1 bg-slate-50 rounded">29</div>
+                                <div class="p-1 bg-slate-50 rounded">30</div>
+                                <!-- 8/31 개강 -->
+                                <div class="p-1 bg-emerald-200 font-bold border border-emerald-400 rounded text-emerald-900">31</div>
+                            </div>
+                        </div>
+
+                        <!-- Academic Schedule Table (표) -->
+                        <div class="bg-white rounded-xl border-2 border-slate-900 shadow-retro-sm overflow-hidden">
+                            <div class="p-3 bg-slate-100 border-b-2 border-slate-900 font-extrabold text-xs text-slate-800">
+                                📋 세부 학사 일정 상세 목록
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs text-left border-collapse">
+                                    <thead class="bg-slate-50 border-b border-slate-200 font-extrabold text-slate-600">
+                                        <tr>
+                                            <th class="p-2.5">구분</th>
+                                            <th class="p-2.5">일정 항목</th>
+                                            <th class="p-2.5">기간</th>
+                                            <th class="p-2.5 text-center">디데이</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${scheduleRows}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Chat Message System
+            sendMessage(presetText = null) {
+                const inputEl = document.getElementById('chatInputText');
+                const text = presetText || inputEl.value.trim();
+                if (!text) return;
+
+                if (!presetText) inputEl.value = '';
+
+                // Add User Bubble
+                this.addUserMessage(text);
+
+                // Natural Language Query Classification
+                setTimeout(() => {
+                    const query = text.toLowerCase();
+
+                    // 1. 일정 / 수강신청 관련 키워드 감지시 -> 오른쪽 대시보드를 일정표로 자동 전환!
+                    if (query.includes('일정') || query.includes('수강신청') || query.includes('마감') || query.includes('달력') || query.includes('등록') || query.includes('언제')) {
+                        this.addBotMessage(`📅 수강신청 및 주요 학사 일정을 정리했어요! 오른쪽 동적 대시보드에 <strong>2026학년도 학사 일정표</strong>를 띄워드렸습니다.<br><br>• 예비 수강신청: 8/10 ~ 8/12<br>• 본 수강신청: 8/18 ~ 8/20 (D-11)<br>• 개강일: 8/31 (월)`);
+                        this.switchSubDashboard('schedule');
+                        this.showToast('오른쪽 대시보드가 학사 일정표로 변경되었습니다!', '📅');
+                    }
+                    // 2. 졸업 / 학점 관련 키워드
+                    else if (query.includes('졸업') || query.includes('학점') || query.includes('분석') || query.includes('부족')) {
+                        this.addBotMessage(`🎓 성적표 분석 결과입니다.<br>현재 총 <strong>85학점</strong>을 이수하셨으며, 졸업 기준(130학점)까지 <strong>45학점</strong>이 더 필요해요.<br><br>• 전공선택 9학점 부족<br>• 일반교양 6학점 부족<br>자세한 그래프는 오른쪽 대시보드를 확인하세요!`);
+                        this.switchSubDashboard('graduation');
+                        this.showToast('졸업 요건 진단표가 업데이트되었습니다.', '🎓');
+                    }
+                    // 3. 과목 추천 관련
+                    else if (query.includes('들으면') || query.includes('과목') || query.includes('추천')) {
+                        this.addBotMessage(`💡 다음 학기에 들으면 좋은 권장 과목 3가지를 오른쪽 <strong>수강 계획 초안</strong>에 담아드렸어요!<br>1. 인공지능 및 머신러닝 (전선 3학점)<br>2. 디지털 마케팅 (전선 3학점)<br>3. 미술사의 이해 (교양 3학점)`);
+                        this.switchSubDashboard('graduation');
+                    }
+                    // 기본 응답
+                    else {
+                        this.addBotMessage(`질문하신 "<strong>${text}</strong>"에 대한 답변입니다.<br>"수강신청 일정 보여줘"라고 하시면 오른쪽 대시보드가 <strong>학사 일정표</strong>로 변경됩니다!`);
+                    }
+                }, 400);
+            }
+
+            addUserMessage(text) {
+                const feed = document.getElementById('chatFeed');
+                const html = `
+                    <div class="flex items-start justify-end gap-2 text-xs">
+                        <div class="bg-amber-300 text-slate-900 font-medium rounded-2xl rounded-tr-none p-3 border-2 border-slate-900 shadow-retro-sm max-w-[85%] leading-relaxed">
+                            ${text}
+                        </div>
+                    </div>
+                `;
+                feed.insertAdjacentHTML('beforeend', html);
+                feed.scrollTop = feed.scrollHeight;
+            }
+
+            addBotMessage(htmlContent) {
+                const feed = document.getElementById('chatFeed');
+                const html = `
+                    <div class="flex items-start gap-2.5 text-xs">
+                        <div class="w-7 h-7 rounded-full bg-white border-2 border-slate-900 flex items-center justify-center text-xs font-bold flex-shrink-0 shadow-retro-sm">
+                            🐰
+                        </div>
+                        <div class="bg-white text-slate-900 rounded-2xl rounded-tl-none p-3 border-2 border-slate-900 shadow-retro-sm max-w-[85%] leading-relaxed space-y-2">
+                            <div>${htmlContent}</div>
+                        </div>
+                    </div>
+                `;
+                feed.insertAdjacentHTML('beforeend', html);
+                feed.scrollTop = feed.scrollHeight;
+            }
+
+            handleQuickAction(type) {
+                if (type === 'upload') {
+                    this.triggerFileUpload();
+                } else if (type === 'check') {
+                    this.sendMessage('성적표 분석해줘');
+                } else if (type === 'plan') {
+                    this.sendMessage('그럼 다음 학기에 뭐 들으면 돼?');
+                } else if (type === 'schedule') {
+                    this.sendMessage('수강신청 일정 알려줘');
+                }
+            }
+
+            triggerFileUpload() {
+                document.getElementById('fileInputHidden').click();
+            }
+
+            handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    this.showToast(`파일 (${file.name}) 업로드 완료!`, '📄');
+                    this.addBotMessage(`새로운 성적표 파일 (<strong>${file.name}</strong>)을 성공적으로 분석했습니다! 요건 진단표를 갱신합니다.`);
+                    this.switchSubDashboard('graduation');
+                }
+            }
+
+            removeFile() {
+                this.showToast('파일이 삭제되었습니다.', '🗑️');
+                this.addBotMessage('성적표 파일이 삭제되었습니다. 새로운 성적표를 업로드해주세요.');
+            }
+
+            downloadIcsCalendar() {
+                // Generate simulated .ics file
+                const icsData = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//UniPath AI//Graduation Advisor Calendar//KO
+BEGIN:VEVENT
+SUMMARY:2026-2학기 본 수강신청
+DTSTART:20260818T090000
+DTEND:20260820T180000
+DESCRIPTION:UniPath AI 자동 등록 수강신청 일정
+END:VEVENT
+END:VCALENDAR`;
+
+                const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.setAttribute('download', 'UniPath_Academic_Schedule_2026.ics');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                this.showToast('UniPath_Academic_Schedule_2026.ics 캘린더 파일이 다운로드되었습니다!', '📲');
+            }
+        }
+
+        // Initialize App on Load
+        window.onload = function() {
+            window.app = new UniPathApp();
+        };
+    </script>
+</body>
+</html>

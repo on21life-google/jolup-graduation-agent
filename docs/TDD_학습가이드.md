@@ -2,12 +2,13 @@
 
 이 문서의 목표는 **정답을 먼저 설명하고, 그 정답을 검사하는 테스트를 읽은 뒤, 실제 구현과 실행 기록을 연결하는 것**이다. 처음부터 모든 코드를 읽을 필요는 없다. 한 기능에서 “어떤 입력이면 어떤 결과가 나와야 하는가?”를 답하고 다음 기능으로 넘어간다.
 
-이번 자료에는 서로 다른 두 작업이 있다.
+이번 자료에는 기존 기능의 학습 재구성, 새 학습 어댑터, 팀원 통합의 테스트 우선 개선이 있다.
 
 | 구분 | 실제로 한 일 | 이 자료로 말할 수 있는 것 |
 |---|---|---|
 | 기존 완성 앱 | 기존 기능을24개 요구사항으로 정리하고 기존 테스트·구현에 연결 | 완료 앱을 테스트부터 읽을 수 있다. 과거 전체 개발이 TDD였다는 증거는 아니다. |
 | 이번에 추가한 학습 어댑터 | 같은21개 검사 사례를 먼저 작성하고 Red 실패 확인 → Green 구현 → Refactor 정리를 진행 | 새 학습 어댑터에는 실제 테스트 우선 개발을 적용했다. 기존 앱의 계산·검색·일정 함수를 재사용한다. |
+| 10/26 팀원 통합 | 주미님의 테스트 명세로 NFD 검색·범위 검사 실패를 재현하고 출처 메타를 구현. 수진님의 디자인·달력·관심 과목을 기존 계약에 연결 | 기존 REQ-014·015·019·020에 새 회귀를 연결한다. 팀원 원본 전체가 TDD였다고 추정하지 않는다. |
 
 어댑터는 결과를 학습하기 쉽게 묶는 작은 연결 코드다. 학교 규칙을 새로 계산하거나 정답90·105·123을 반환하도록 외워 둔 코드가 아니다. 기존 앱의 과거 개발 순서를 재현한 것처럼 날짜나 실패 기록을 꾸미지 않았다.
 
@@ -24,7 +25,6 @@ CSTS·ISTQB 관점의 테스트 학습과 TDD 개발 순서도 구분한다. 전
 Mac:
 
 ```bash
-# ZIP을 푼 폴더 이름에 맞춰 이동합니다.
 cd "$HOME/Downloads/jolup-graduation-agent-main"
 .venv/bin/python scripts/tdd_study.py list
 .venv/bin/python scripts/tdd_study.py show REQ-008
@@ -232,6 +232,12 @@ sequenceDiagram
 
 **자기확인:** 같은 질문의 정답 검사와 실제 벡터 검색 경로 검사가 다른 이유를 설명한다. 테스트 이름에 `vector`가 있어도 실행 옵션이 없으면 실제 벡터 부분까지 검증한 것으로 보고하지 않는다. 학생 업로드 CSV가 공개 규정 색인에 들어가지 않는 위치를 찾는다.
 
+**팀원 통합 추가 실습:** [test_source_metadata.py](../tests/test_source_metadata.py)의 `test_decomposed_korean_has_the_same_topics_and_terms`부터 읽는다. `졸업학점`을 NFD로 표현하면 이전 코드에서는 주제를 못 찾았고, 타학교·타학과 이름도 범위 검사에서 누락됐다. 이제 비교만 NFC로 맞추며 `test_raw_decomposed_source_text_stays_traceable`에서 인용 원문을 그대로 두는지 확인한다. 이어 [source_metadata.py](../jolup/source_metadata.py)의 `classify_document_type`, `section_for_chunk`, `filename_date_hint`를 읽고 파일명 날짜가 등록일로 바뀌지 않는 이유를 설명한다. 주미님 ZIP에는 `rag/` 구현이 없어 원본 테스트 명세로 구현했으며 [제출 자료](../team_contributions/README.md)는 실행 제품과 구분해 보존한다.
+
+```bash
+.venv/bin/python -m pytest tests/test_source_metadata.py -q
+```
+
 ### E. 공통 AI 연결과 판정 권한: REQ-016·017
 
 **기대 결과:** 공식 LangChain `ChatOpenAI`·`ChatAnthropic` 통합을 공통 설정으로 사용한다. `ExplanationSelection.fact_ids`는 로컬에서 검증된 문장 ID만 선택한다. 현재 판정·위험·확인 조건은 선택에서 빠져도 유지하며, 임의 ID·중복·잘못된 형식은 거절한다. 키·질문 원문·학생 식별정보를 입력과 오류에 노출하지 않는다. 모델 목록 조회와 생성은 별도 동작이다.
@@ -262,6 +268,8 @@ sequenceDiagram
 
 **자기확인:** LangGraph가 흐름, Python 함수가 계산, MCP가 호출 통로, Streamlit이 화면을 담당한다는 것을 하나의 질문으로 설명한다. 실제 MCP HTTP 검사는 로컬 서버 포트 사용이 필요하다. 포트 권한 때문에 실행하지 못한 경우 테스트 성공으로 바꾸지 말고 환경 제한을 기록한다.
 
+**수진 디자인을 코드에 연결하기:** [test_ui_design.py](../tests/test_ui_design.py)의 `test_design_reuses_teammate_assets_without_static_student_statistics`·`test_requirement_progress_never_claims_unknown_as_earned_or_overflows` → [ui_design.py](../jolup/ui_design.py)의 `requirement_cards` → [화면 자산](../assets/sujin/theme.css) 순서로 읽는다. 관심 과목 테스트에서는 목록 추가·삭제 후 실제 학점 합계를 보고, 자동 수강 계획·현재 이수학점이 바뀌지 않는지 확인한다. 원본 HTML의 고정 숫자를 제품의 사실로 쓰지 않는다.
+
 ### G. 일정 승인과 ICS: REQ-020
 
 **기대 결과:** 명시적 승인 전에는 만들지 않고 선택 일정이 바뀌면 재승인이 필요하다.12월31일까지인 종일 일정의 ICS 종료일은 다음 날1월1일이다. 조작한 날짜·일정ID는 거부하고, 동일 일정의 반복 생성은 안정적인 UID와 중복 제거를 유지한다. ‘2028년’처럼 요청한 연도에 자료가 없으면 2026년 일정을 대신 반환하지 않는다.
@@ -278,6 +286,8 @@ sequenceDiagram
 ```
 
 **자기확인:** 승인 체크가 있었다는 사실과 지금 선택한 일정이 승인됐다는 사실을 구분한다. 결과는 ICS 파일이며 외부 Google Calendar에 실제 등록하는 기능은 이번 범위가 아니다.
+
+**월별 달력 추가 실습:** [test_ui_design.py](../tests/test_ui_design.py)의 `test_month_filter_keeps_cross_year_period_and_one_day_event`·`test_dday_uses_inclusive_official_period` → [ui_calendar.py](../jolup/ui_calendar.py)의 `month_events`, `event_status`, `calendar_html`을 읽는다. 실제 요일, 연도를 넘는 기간, 당일·진행·종료·미래 상태를 확인한다. 빈 달을 채우기 위해 새 학사일정을 만들지 않으며 ICS 승인 계약은 그대로 유지한다.
 
 ### H. 실행 관찰과 LangSmith: REQ-021·022
 
@@ -315,7 +325,7 @@ sequenceDiagram
 .venv/bin/python scripts/package_project.py
 ```
 
-**자기확인:** 파일 무결성과 실제 앱 실행은 다른 검증임을 설명한다. Windows 실기 검증과 시연 영상은 제외한다. 실제 키가 든 `.env`의 명시적 별도 전달은 기본 ZIP의 제외 정책과 구분한다. 교수님 이론·실습 자료는 수령해 대조했다. 팀원 개별 자료 통합은 자료를 받은 뒤 진행한다. 팀원은 [실행·로컬 통합 안내](RUN.md)에 따라 자신의 가상환경을 만들고 담당 변경 파일·이유·실행 결과를 함께 전달한다.
+**자기확인:** 파일 무결성과 실제 앱 실행은 다른 검증임을 설명한다. Windows 실기 검증과 시연 영상은 제외한다. 실제 키가 든 `.env`의 명시적 별도 전달은 기본 ZIP의 제외 정책과 구분한다. 교수님 이론·실습 자료는 수령해 대조했다. 10/26 팀원 제출본을 통합했으며, 구현 폴더가 빠진 주미 자료는 시험 명세를 기존 코드에 재현했다. 실제 반영과 원본 보존은 [통합 결과](팀원_통합결과.md)에 구분한다. 팀원은 [실행·로컬 통합 안내](RUN.md)에 따라 자신의 가상환경을 만들고 담당 변경 파일·이유·실행 결과를 함께 전달한다.
 
 ### J. 혼합 질문·최근4턴·HTTP 채팅: REQ-025·026
 
@@ -328,7 +338,7 @@ sequenceDiagram
 .venv/bin/python scripts/tdd_study.py run REQ-025 REQ-026
 ```
 
-화면에서는 규정·진단·일정을 함께 묻고 “아까 진단 다시 보여줘”를 입력한다. 이어 프로필을 바꾸어 이전 결과를 그대로 가져오지 않는지 확인한다. [실행 안내](RUN.md)의 HTTP모드로 바꾸면 생성AI 선택은 비활성화되고 서버 단계만 열람한다. [Postman 실측](../reports/postman_validation_20261026.json)은 21요청·60검증 통과이며, 새로운 Docker구성 실행이나 외부LLM 검증과는 별개다.
+화면에서는 규정·진단·일정을 함께 묻고 “아까 진단 다시 보여줘”를 입력한다. 이어 프로필을 바꾸어 이전 결과를 그대로 가져오지 않는지 확인한다. [실행 안내](RUN.md)의 HTTP모드로 바꾸면 생성AI 선택은 비활성화되고 서버 단계만 열람한다. [Postman 실측 · 공개 요약](검증결과.md)은 21요청·60검증 통과이며, 새로운 Docker구성 실행이나 외부LLM 검증과는 별개다.
 
 **자기확인:** 화면의 전체 대화기록, 최근4턴의 검증결과 기억, 외부전송이 가능한 요약 실행기록은 서로 다르다. 최대64세션은 API프로세스의 임시 수용 범위이며 영구학생DB가 아니다. 삭제 실패가 표시돼도 UI가 이전ID를 재사용하지 않는 이유를 설명한다.
 

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ROOT_FILES = {
     "README.md", "app.py", "requirements.txt", "requirements.lock", "Dockerfile",
     "compose.yaml", ".dockerignore", ".gitignore", ".env.example", ".streamlit/config.toml",
-    "compose.quality.yaml", ".coveragerc", "requirements-quality.txt", "sonar-project.properties",
+    "compose.quality.yaml", ".coveragerc", "requirements-quality.txt", "sonar-project.properties", "pytest.ini",
 }
 TREE_RULES = {
     "jolup": {".py"}, "tests": {".py"}, "docs": {".md", ".txt", ".json"},
@@ -24,25 +24,32 @@ TREE_RULES = {
     "learning/tdd": {".py", ".md", ".json"},
     "data/rules": {".json"}, "data/samples": {".csv", ".json"},
     "data/sources": {".pdf", ".txt"},
+    "assets/sujin": {".png", ".css"},
+    "team_contributions": {".py", ".html", ".txt", ".md", "index_manifest.json"},
 }
 DATA_FILES = {"data/courses.json", "data/events.json", "data/sources.json"}
-EXCLUDED_PARTS = {".env", ".venv", ".cache", ".build", ".git", "__pycache__", ".pytest_cache", "node_modules"}
+EXCLUDED_PARTS = {".env", ".venv", ".cache", ".build", ".git", "__pycache__", ".pytest_cache", "node_modules",
+                  "venv", "cache", "caches", "logs", "rawzips"}
 REQUIRED = {"README.md", "app.py", "requirements.txt", "requirements.lock", "Dockerfile", "compose.yaml",
             "docs/RUN.md", "scripts/run.command", "scripts/run.bat", "data/sources.json",
             "docs/TDD_학습가이드.md", "docs/tdd/requirements.json", "docs/tdd/추적표.md",
             "scripts/tdd_study.py", "tests/test_tdd_study.py", "learning/tdd/checks.py",
             "learning/tdd/replay_spec.json", "learning/tdd/README.md",
             "learning/tdd/stages/red.py", "learning/tdd/stages/green.py", "learning/tdd/stages/refactor.py"}
-REQUIRED |= {"compose.quality.yaml", ".coveragerc", "requirements-quality.txt", "sonar-project.properties",
+REQUIRED |= {"compose.quality.yaml", ".coveragerc", "requirements-quality.txt", "sonar-project.properties", "pytest.ini",
              "scripts/quality_check.py", "scripts/sonar_local.py", "docs/SONARQUBE.md", "docs/SONARQUBE_코드읽기.md"}
+REQUIRED |= {"assets/sujin/rabbit-hero.png", "assets/sujin/rabbit-avatar.png", "assets/sujin/theme.css"}
+REQUIRED |= {"team_contributions/README.md", "team_contributions/sujin/일정표 구현.html",
+             "team_contributions/sujin/졸업각site - 복사본 (2).html",
+             "team_contributions/jumi/tests/test_rag_meta.py", "team_contributions/jumi/tests/test_text_splitter.py"}
 
 
-def _tree_files(tree, extensions):
+def _tree_files(tree, allowed):
     for path in (ROOT / tree).rglob("*"):
         relative = path.relative_to(ROOT)
         if any(part in EXCLUDED_PARTS or part.startswith(".") for part in relative.parts):
             continue
-        if path.is_file() and path.suffix.lower() in extensions:
+        if path.is_file() and (path.suffix.lower() in allowed or path.name in allowed):
             yield path
 
 

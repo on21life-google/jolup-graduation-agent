@@ -129,7 +129,7 @@ JOLUP_AGENT_API_URL=http://127.0.0.1:8001 .venv/bin/python -m streamlit run app.
 
 새 질문에서 서버 세션 ID를 받고 이후 질문에 같은 ID를 사용한다. 세션마다 최근 4턴만 보관하며 API 전체는 최대 64세션이다. 학생 자료나 학교 근거가 바뀌면 해당 기억을 무효화한다. 사례/프로필/성적표 변경과 세션 초기화 시 서버의 `DELETE /sessions/{session_id}`를 호출한다. 삭제 실패는 표시하고 이전 ID는 재사용하지 않는다. 서버 재시작·오래 사용하지 않은 세션의 제거로 기억이 사라질 수 있다. 영구 학생 DB는 추가하지 않았다.
 
-[Postman 실측 보고서](../reports/postman_validation_20261026.json)는 로컬 API의 21요청·60검증 통과 기록이다. 이 실측은 lexical 검색·AI off·일정 승인 false로 수행했으며 Docker 새 4서비스의 기동 성공을 의미하지 않는다. 최신 Docker 실행 상태는 [검증결과](검증결과.md)를 따른다. 공유 ZIP에서 reports가 제외되면 로컬 실행으로 다시 확인한다.
+[Postman 실측 보고서 · 공개 요약](검증결과.md)는 로컬 API의 21요청·60검증 통과 기록이다. 이 실측은 lexical 검색·AI off·일정 승인 false로 수행했으며 Docker 새 4서비스의 기동 성공을 의미하지 않는다. 최신 Docker 실행 상태는 [검증결과](검증결과.md)를 따른다. 공유 ZIP에서 reports가 제외되면 로컬 실행으로 다시 확인한다.
 
 ## GitHub 없이 팀원 작업 합치기
 

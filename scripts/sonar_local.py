@@ -233,8 +233,10 @@ def _hash(path):
 
 
 def _source_inventory(location):
-    """Match the scanner's Python scope, including any newly added nested files."""
+    """Match measured Python files and the optional test-discovery contract."""
     names = {"app.py"} if (location / "app.py").is_file() else set()
+    if (location / "pytest.ini").is_file():
+        names.add("pytest.ini")
     for folder in ("jolup", "scripts", "tests"):
         names.update(path.relative_to(location).as_posix() for path in (location / folder).rglob("*.py"))
     return names

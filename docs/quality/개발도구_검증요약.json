@@ -1,99 +1,4 @@
 {
-  "schema_version": 2,
-  "created_at": "2026-10-26T06:28:07.339355+09:00",
-  "review_date": "2026-10-26",
-  "status": "tests_and_complexity_verified_quality_gate_error_docker_pending",
-  "tests": {
-    "status": "passed",
-    "exit_code": 0,
-    "total": 777,
-    "passed": 777,
-    "failed": 0,
-    "errors": 0,
-    "skipped": 0
-  },
-  "measured_at": "20261026_015233_848799",
-  "coverage": {
-    "statements_covered": 4445,
-    "statements_total": 4445,
-    "statement_percent": 100.0,
-    "branches_covered": 1498,
-    "branches_total": 1498,
-    "branch_percent": 100.0,
-    "combined_percent": 100.0,
-    "full_100_percent": true,
-    "excluded_source_lines": 0,
-    "scope": "Unchanged: app.py, jolup/*.py, scripts/*.py; tests, teaching examples and external libraries excluded; no product source-line exclusions",
-    "source_unchanged_during_measurement": true,
-    "changed_inputs_during_measurement": [],
-    "changed_inputs_at_summary": [],
-    "xml_sha256": "df39ed9fc07939cd2a23ef1b50559605ddcd607823fe4b3aac2e41c8ee298b08",
-    "actual_local_vector_and_mcp_processes": true,
-    "report": "reports/quality/manifest.json"
-  },
-  "source_hashes": {
-    "app.py": "1c0bd2f81dc1a41d3f4d33d966311f40886b3070df177f61d57b1fb14531d315",
-    "jolup/__init__.py": "e061714474e0d981de79da74815b72639b35ca3068b8c6d52a5723c494822ab6",
-    "jolup/academic.py": "99bf5aff2e8c8639bc82fd829306aeb0556346b3ec329439433ff5733dcf1dfb",
-    "jolup/agent.py": "feafff033e10db42377d4d1d0d4aa769fb25f4092b509cef1d3c45df5f470dcc",
-    "jolup/calendar.py": "8bdb0ebdae759c328e7666c18287b9e455df8562d980be057a28ef21bc0fd853",
-    "jolup/chat_client.py": "b6c73a89577d14cd5f8e0806102b1ee8cff79bb1cf9a854a01cf63ef75a0f964",
-    "jolup/chunking.py": "e112588bbf20edfbddc9b45080dbf6abd0152d8b9452e2d33d1d98b31f018829",
-    "jolup/conversation.py": "aed072a8840db67c683c57bcd147c7c81552a7966c3f0d040de365cf15ae9c4b",
-    "jolup/course_solver.py": "f08f84bc73218d3fd112e9f32ef474110c0d0acce8cf75498baf8404d6c4a59d",
-    "jolup/env_export.py": "709a3f7a33e7384f1325a649cd3b7587e9d34ff15998c7bbbbe1d7c79fe11124",
-    "jolup/evidence.py": "ea6960a2bd5b582a541615dd5fd2759e8c4ce76c37af1eafaa7a7369c989bbc8",
-    "jolup/llm.py": "b89183aa296030b5f2417e4c12bb4f7d6e58b3f2c9cc0eda3bdacb672c947271",
-    "jolup/mcp_client.py": "d1f601753b829ce5753b7ad28b09a088dd3d5c89db8a51ecef63794577f615c5",
-    "jolup/mcp_server.py": "0856113c5862a08e676eb8303fbdf8c4f66300113c98acdfa191b81fb28e1099",
-    "jolup/observability.py": "616c37cd0aee2fcd54c6da474a7209cc2b9bfa18a052f27194ba5ce7c0fe6453",
-    "jolup/planner.py": "ebae3733603c353508a91df79d13c6f6555f732d6a6cad516fd9fda41820e54a",
-    "jolup/rag.py": "8ed07ebde960bcb7b18f0180d9570e2f3c20c54c6b79f4a7933739c4a370e66a",
-    "jolup/samples.py": "668f715601fc291268f0271081e1a77b01d6508d6ca81031b941fdcc2d152a40",
-    "jolup/settings.py": "92bd1ff09d4ee335cd7ec6beb5302c75923edd278b3de03f7adfce65cef855fe",
-    "jolup/study_api.py": "6767ad6b0d42c4515e3ac129c33c1d9ba5798e257d16bc34465357f7622b7d3e",
-    "scripts/build_index.py": "dbc8fa9168d5dbeadf2d4ee79a621f50149c06549f72669664ed0ebf7b98103b",
-    "scripts/export_api_contract.py": "e97e038554cd9d72b2c7d2ebc2e8dca0791d37eb8bf3c72f4f9216f9b169f2be",
-    "scripts/export_samples.py": "762469c3eb16f67234459861fafe46a176b3f2a778e05c53d7dfb7251e853ab7",
-    "scripts/package_project.py": "20ded06ff00b00e10831d9870e467f161572c2dd6e23a0fc4a7ecae1e56e29ce",
-    "scripts/prepare_data.py": "0538da2f1eed86ba77e0280e8ab5f1681505a89db946f104b4d82a7ec6a00c18",
-    "scripts/profile_study.py": "4bf86f86c89eda04d83d44c6bc605a193c94e50015420e9cbb37c88f08638225",
-    "scripts/quality_check.py": "eab72ef8a44f6908561239dedef59db76545c5ee19f4cb45004f19fe1a68e86d",
-    "scripts/sonar_local.py": "9ebe1e7b224fac128befe09037c282ee2fbe6cacb213dc5794d7b3aebd6d444e",
-    "scripts/tdd_study.py": "b64f976dab2b9bf9f50c74cd3e9116b571015f440e9eb6449a9f5e19b21cbad8",
-    "tests/test_academic.py": "4f2a3ef3e730e2b7237041ea4f7a0ac30812737b834af2c82fda3e42ed41f322",
-    "tests/test_academic_review.py": "ebe6490b5dbe1f60844e537560b634bdb67168da2124bc1bcf04f66b29564d64",
-    "tests/test_agent.py": "7c0dac34429a74f0167ed48a7725a796cfa7bc7b047a04d5e52e772bb08bd83f",
-    "tests/test_agent_conversation.py": "833a2f2ce861c466552607e4c3bb971a2f60beb84e42e91bdadfcbd3a03a9ce7",
-    "tests/test_api_contract_export.py": "48facd869d6a66e68c7ef79faedc2b3f4b9b135c2f182fc11b0c5d11a2279ede",
-    "tests/test_app.py": "6fb26f73a3669a6baeb405b369490cdca45c89251f4324f3ab77b368c5fb723f",
-    "tests/test_app_conversation.py": "88c7371a6e8e688bc50d9de1317c9b6ca9748ac51af9811b749b4f1a4134e12e",
-    "tests/test_app_edges.py": "e2a5ac717884375fb49ead360fcee3f9a4e4f8f7418fd01deae83e09b6c16ecf",
-    "tests/test_app_study.py": "7235d126296b0b1cb8cad424aefd186f300e9b60c5f25b78efa2c1a15ca332c8",
-    "tests/test_calendar.py": "037da0933e6fe5b3d75d781a196dad544d1cfe4504802e856f4bd3c5f2783472",
-    "tests/test_chat_api.py": "b5fe7900bac63e8a449005d5708e9cdccbea193e3556d2195e959b63d9416f9c",
-    "tests/test_chat_client.py": "d9b282f5daea1594c47513375da5149b02b71d01f1aa1900199bc2f670a180ba",
-    "tests/test_chunking.py": "f5265faba4af8b23481436aa0fd4cbd77db46352b6c48350df4e40e8041897f8",
-    "tests/test_domain_edges.py": "6cc3ac34aed673b93e0742fccfd7682a5a1fd6b6a45b7f67a3640999359df14b",
-    "tests/test_domain_guard.py": "44ec43bc56d07018d5300f683f9156e6558d1fc866274d47f80f4c30506c8f72",
-    "tests/test_domain_transport_edges.py": "8c2b4db6d0665104bcafcb8cab629c372e2fe0133290cec28a950ffeec75276f",
-    "tests/test_env_export.py": "0f52ce8fcd4db6ab48f39af90b729df5ec6c0d078378a8dccd8ddf267c6bb5b0",
-    "tests/test_explanation_facts.py": "ac44c8b58c7f836888916c955e073ad254ce90d1bb2f2ef8fdfc3f090610b387",
-    "tests/test_llm.py": "236749eb2970ba51370d5dacf5564e0d7a357c310485c81873ab63b1c25ccc77",
-    "tests/test_llm_routing.py": "d472d84d32be373bd69eb530522f205c30bef8a5cdc14a75f05b136ac21ce694",
-    "tests/test_observability.py": "bd7a120f89c7d0b1bc9329cd43b2c1fa68c5a58f0880b7e2beb33397250b1c0a",
-    "tests/test_observability_edges.py": "3305d31fe43a9453a7cb53dfc1da98f310637aedfe576ddee303a28a0ac804fc",
-    "tests/test_profile_study.py": "52b5cb50956b6a5d9cdb7f5b4378b92805a71c5fed65f924e9b5e60dabda4554",
-    "tests/test_quality_check.py": "ed079426931610c5cfbf77eb5a7a5224e2e43ee74f49991473b414d3b5df73c3",
-    "tests/test_rag.py": "fc0e21adc0fe3572b31dc7d086b64441afd75961cb0d799bdde5e1bf1bd9e9ac",
-    "tests/test_rag_edges.py": "53d0e6ec614bfff85610762503581cfa66757ae16d83c58fcba860ffffb0751b",
-    "tests/test_release_scripts.py": "fa872a3d2c6c45cae52bdd4f0dddc7fc019f673fd5771afd8c49fc5bc7d9dc8d",
-    "tests/test_sonar_local.py": "7c81b28cc7ece23a451dab017a6e22414b72ac6b9e59a253b2d3feac15fe3e61",
-    "tests/test_study_agent.py": "bd553c7d0d6f55649e1c6145de4483f263007c950bcd2669e48c8de4240d081a",
-    "tests/test_study_api.py": "b5454862bfd43e07af5ceb72a2cec81fe150606fa4ba1096a5d2f349b8788920",
-    "tests/test_tdd_cli.py": "80f0c22bb2bf2acd1175167b779aa13d22b958cfa3e9745ba9d612d1a6b41cc7",
-    "tests/test_tdd_study.py": "0cb0242667c59e2c8f69acd7dff2dc75775aa5a7181661d4ae75f5f8bd2d19cb"
-  },
   "langchain": {
     "packages": {
       "langchain-openai": "1.7.2",
@@ -281,201 +186,6 @@
     ],
     "response_hashes_rechecked": true
   },
-  "tdd": {
-    "report": "reports/tdd_study/20261026_015458_005907/summary.json",
-    "status": "verified",
-    "historical_tdd_claim": false,
-    "expected_case_count": 21,
-    "same_contract_verified": true,
-    "phases": [
-      {
-        "status": "expected_red",
-        "exit_code": 1,
-        "total": 21,
-        "passed": 0,
-        "failed": 21,
-        "errors": 0,
-        "skipped": 0,
-        "phase": "red"
-      },
-      {
-        "status": "passed",
-        "exit_code": 0,
-        "total": 21,
-        "passed": 21,
-        "failed": 0,
-        "errors": 0,
-        "skipped": 0,
-        "phase": "green"
-      },
-      {
-        "status": "passed",
-        "exit_code": 0,
-        "total": 21,
-        "passed": 21,
-        "failed": 0,
-        "errors": 0,
-        "skipped": 0,
-        "phase": "refactor"
-      }
-    ],
-    "requirements": 26,
-    "unique_referenced_test_functions": 158,
-    "referenced_symbols_exist": true,
-    "implementation_references": 107,
-    "unique_implementation_symbols": 82,
-    "latest_replay_report": "reports/tdd_study/20261026_015458_005907/summary.json",
-    "latest_replay": {
-      "kind": "reconstructed_tdd_exercise",
-      "historical_tdd_claim": false,
-      "expected_case_count": 21,
-      "same_contract_verified": true,
-      "status": "verified",
-      "results": [
-        {
-          "status": "expected_red",
-          "exit_code": 1,
-          "total": 21,
-          "passed": 0,
-          "failed": 21,
-          "errors": 0,
-          "skipped": 0,
-          "test_ids": [
-            "learning.tdd.checks::test_current_and_pass_projection_are_separate",
-            "learning.tdd.checks::test_three_in_progress_credits_do_not_create_current_pass",
-            "learning.tdd.checks::test_all_requirements_met_is_still_not_official_graduation",
-            "learning.tdd.checks::test_large_shortfall_does_not_become_a_positive_plan",
-            "learning.tdd.checks::test_missing_record_stays_unknown_instead_of_zero",
-            "learning.tdd.checks::test_total_123_does_not_replace_a_required_course",
-            "learning.tdd.checks::test_timeline_uses_each_real_semester_and_labels_assumptions",
-            "learning.tdd.checks::test_noncredit_values_are_not_automatically_completed",
-            "learning.tdd.checks::test_report_does_not_mutate_or_alias_student_inputs",
-            "learning.tdd.checks::test_real_lexical_rag_citations_and_unknown_dates_are_preserved",
-            "learning.tdd.checks::test_missing_rag_sources_remain_unconfirmed",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[False]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[None]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[1]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[true]",
-            "learning.tdd.checks::test_calendar_inclusive_last_day_has_exclusive_ics_end",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration0]",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration1]",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration2]",
-            "learning.tdd.checks::test_repeated_calendar_export_is_stable_and_deduplicated",
-            "learning.tdd.checks::test_calendar_empty_selection_is_not_exported"
-          ],
-          "phase": "red",
-          "junit": "reports/tdd_study/20261026_015458_005907/red.xml",
-          "log": "reports/tdd_study/20261026_015458_005907/red.txt"
-        },
-        {
-          "status": "passed",
-          "exit_code": 0,
-          "total": 21,
-          "passed": 21,
-          "failed": 0,
-          "errors": 0,
-          "skipped": 0,
-          "test_ids": [
-            "learning.tdd.checks::test_current_and_pass_projection_are_separate",
-            "learning.tdd.checks::test_three_in_progress_credits_do_not_create_current_pass",
-            "learning.tdd.checks::test_all_requirements_met_is_still_not_official_graduation",
-            "learning.tdd.checks::test_large_shortfall_does_not_become_a_positive_plan",
-            "learning.tdd.checks::test_missing_record_stays_unknown_instead_of_zero",
-            "learning.tdd.checks::test_total_123_does_not_replace_a_required_course",
-            "learning.tdd.checks::test_timeline_uses_each_real_semester_and_labels_assumptions",
-            "learning.tdd.checks::test_noncredit_values_are_not_automatically_completed",
-            "learning.tdd.checks::test_report_does_not_mutate_or_alias_student_inputs",
-            "learning.tdd.checks::test_real_lexical_rag_citations_and_unknown_dates_are_preserved",
-            "learning.tdd.checks::test_missing_rag_sources_remain_unconfirmed",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[False]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[None]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[1]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[true]",
-            "learning.tdd.checks::test_calendar_inclusive_last_day_has_exclusive_ics_end",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration0]",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration1]",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration2]",
-            "learning.tdd.checks::test_repeated_calendar_export_is_stable_and_deduplicated",
-            "learning.tdd.checks::test_calendar_empty_selection_is_not_exported"
-          ],
-          "phase": "green",
-          "junit": "reports/tdd_study/20261026_015458_005907/green.xml",
-          "log": "reports/tdd_study/20261026_015458_005907/green.txt"
-        },
-        {
-          "status": "passed",
-          "exit_code": 0,
-          "total": 21,
-          "passed": 21,
-          "failed": 0,
-          "errors": 0,
-          "skipped": 0,
-          "test_ids": [
-            "learning.tdd.checks::test_current_and_pass_projection_are_separate",
-            "learning.tdd.checks::test_three_in_progress_credits_do_not_create_current_pass",
-            "learning.tdd.checks::test_all_requirements_met_is_still_not_official_graduation",
-            "learning.tdd.checks::test_large_shortfall_does_not_become_a_positive_plan",
-            "learning.tdd.checks::test_missing_record_stays_unknown_instead_of_zero",
-            "learning.tdd.checks::test_total_123_does_not_replace_a_required_course",
-            "learning.tdd.checks::test_timeline_uses_each_real_semester_and_labels_assumptions",
-            "learning.tdd.checks::test_noncredit_values_are_not_automatically_completed",
-            "learning.tdd.checks::test_report_does_not_mutate_or_alias_student_inputs",
-            "learning.tdd.checks::test_real_lexical_rag_citations_and_unknown_dates_are_preserved",
-            "learning.tdd.checks::test_missing_rag_sources_remain_unconfirmed",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[False]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[None]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[1]",
-            "learning.tdd.checks::test_calendar_requires_explicit_boolean_approval[true]",
-            "learning.tdd.checks::test_calendar_inclusive_last_day_has_exclusive_ics_end",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration0]",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration1]",
-            "learning.tdd.checks::test_calendar_rejects_modified_or_unknown_events[alteration2]",
-            "learning.tdd.checks::test_repeated_calendar_export_is_stable_and_deduplicated",
-            "learning.tdd.checks::test_calendar_empty_selection_is_not_exported"
-          ],
-          "phase": "refactor",
-          "junit": "reports/tdd_study/20261026_015458_005907/refactor.xml",
-          "log": "reports/tdd_study/20261026_015458_005907/refactor.txt"
-        }
-      ]
-    }
-  },
-  "mermaid": {
-    "status": "current_both_themes_render_passed_visual_review_separate",
-    "mermaid_version": "11.14.0",
-    "block_count": 54,
-    "diagram_types": {
-      "flowchart": 19,
-      "sequenceDiagram": 13,
-      "stateDiagram-v2": 8,
-      "mindmap": 2,
-      "treeView-beta": 7,
-      "block-beta": 2,
-      "pie": 1,
-      "venn-beta": 1,
-      "xychart-beta": 1
-    },
-    "total_render_attempts": 108,
-    "failures": [],
-    "all_current_block_hashes_match": true,
-    "tree_static_audit": {
-      "scope": "프로젝트 TreeView의 소스·설정·공개자료·테스트·docs·scripts·learning. 생성물·캐시·보고서·output·.build 제외. .env는 파일명과 존재 여부만 확인하고 내용은 읽지 않음.",
-      "tree_blocks": 7,
-      "listed_files": 154,
-      "actual_scope_files": 154,
-      "missing_from_tree": [],
-      "listed_but_missing": [],
-      "outside_allowlisted_scope": [],
-      "duplicate_file_entries": [],
-      "syntax_static_errors": [],
-      "parser_or_visual_claim": false
-    },
-    "report": "reports/mermaid_validation_20261026.json",
-    "claim_boundary": [
-      "54 current blocks rendered in both light and dark with Mermaid11.14.0.",
-      "All-type earlier visual samples plus current TreeView/state/sequence viewport samples; not every pixel or every renderer."
-    ]
-  },
   "chunking": {
     "report": "docs/quality/청크_실측요약.json",
     "sources": 7,
@@ -592,956 +302,6 @@
     },
     "scope": "Current exported contract examples and /chat/session reset exercised by the777-test suite and21-request Postman CLI run; prior browser screenshot remains historical."
   },
-  "sonarqube": {
-    "recorded_at": "2026-10-26T02:00:32+09:00",
-    "status": "analyzed_and_reported_same_frozen_source",
-    "server_version": "26.10.0.133078",
-    "analysis_id": "bb766df6-27aa-40b1-8585-0f6eeba19368",
-    "task_id": "019403cf-0c9d-4ccc-8299-764a693f0221",
-    "profile": {
-      "key": "2ac4a1d9-c3b6-42e2-a678-aea5fb20fb9d",
-      "name": "Sonar way extended",
-      "language": "py",
-      "rulesUpdatedAt": "2026-10-23T00:46:02+0000",
-      "activeRuleCount": 266
-    },
-    "complexity_rule": {
-      "key": "python:S3776",
-      "threshold": 15
-    },
-    "quality_gate": {
-      "status": "ERROR",
-      "conditions": [
-        {
-          "status": "OK",
-          "metricKey": "new_coverage",
-          "comparator": "LT",
-          "errorThreshold": "80",
-          "actualValue": "100.0"
-        },
-        {
-          "status": "OK",
-          "metricKey": "new_duplicated_lines_density",
-          "comparator": "GT",
-          "errorThreshold": "3",
-          "actualValue": "0.0"
-        },
-        {
-          "status": "ERROR",
-          "metricKey": "new_violations",
-          "comparator": "GT",
-          "errorThreshold": "0",
-          "actualValue": "12"
-        }
-      ],
-      "ignoredConditions": false,
-      "period": {
-        "mode": "PREVIOUS_VERSION",
-        "date": "2026-10-23T01:04:17+0000"
-      },
-      "caycStatus": "compliant"
-    },
-    "metrics": {
-      "cognitive_complexity": "1514",
-      "complexity": "1681",
-      "ncloc": "5214",
-      "coverage": "100.0",
-      "branch_coverage": "100.0",
-      "duplicated_lines_density": "0.0",
-      "bugs": "0",
-      "vulnerabilities": "1",
-      "code_smells": "38"
-    },
-    "open_issue_count": 39,
-    "open_rule_counts": {
-      "python:S1192": 28,
-      "python:S8415": 5,
-      "python:S8786": 3,
-      "python:S7519": 2,
-      "python:S2068": 1
-    },
-    "new_open_issue_count": 12,
-    "new_open_rule_counts": {
-      "python:S1192": 7,
-      "python:S8415": 5
-    },
-    "new_open_issues": [
-      {
-        "key": "e77f7ec8-c9bd-412d-9dfb-822a520bf4b7",
-        "rule": "python:S1192",
-        "severity": "CRITICAL",
-        "component": "jolup-roadmap:app.py",
-        "project": "jolup-roadmap",
-        "line": 493,
-        "hash": "046237bd091c12ff075cc27db3886a85",
-        "textRange": {
-          "startLine": 493,
-          "endLine": 493,
-          "startOffset": 87,
-          "endOffset": 94
-        },
-        "flows": [
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:app.py",
-                "textRange": {
-                  "startLine": 504,
-                  "endLine": 504,
-                  "startOffset": 96,
-                  "endOffset": 103
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:app.py",
-                "textRange": {
-                  "startLine": 539,
-                  "endLine": 539,
-                  "startOffset": 84,
-                  "endOffset": 91
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          }
-        ],
-        "status": "OPEN",
-        "message": "Define a constant instead of duplicating this literal \"마지막 날\" 3 times.",
-        "effort": "6min",
-        "debt": "6min",
-        "author": "",
-        "tags": [
-          "design"
-        ],
-        "creationDate": "2026-10-25T16:55:18+0000",
-        "updateDate": "2026-10-25T16:55:18+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "DISTINCT",
-        "cleanCodeAttributeCategory": "ADAPTABLE",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "13dfc38a-01e6-4375-a092-e504183650fc",
-        "rule": "python:S1192",
-        "severity": "CRITICAL",
-        "component": "jolup-roadmap:jolup/agent.py",
-        "project": "jolup-roadmap",
-        "line": 53,
-        "hash": "053a0a7214ea8a8e3fa711ef42824d24",
-        "textRange": {
-          "startLine": 53,
-          "endLine": 53,
-          "startOffset": 37,
-          "endOffset": 44
-        },
-        "flows": [
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/agent.py",
-                "textRange": {
-                  "startLine": 175,
-                  "endLine": 175,
-                  "startOffset": 61,
-                  "endOffset": 68
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/agent.py",
-                "textRange": {
-                  "startLine": 272,
-                  "endLine": 272,
-                  "startOffset": 66,
-                  "endOffset": 73
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          }
-        ],
-        "status": "OPEN",
-        "message": "Define a constant instead of duplicating this literal \"확인 필요\" 3 times.",
-        "effort": "6min",
-        "debt": "6min",
-        "author": "",
-        "tags": [
-          "design"
-        ],
-        "creationDate": "2026-10-25T16:55:18+0000",
-        "updateDate": "2026-10-25T16:55:18+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "DISTINCT",
-        "cleanCodeAttributeCategory": "ADAPTABLE",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "6578e5b6-6a65-4624-81c4-8df7974e4ebb",
-        "rule": "python:S1192",
-        "severity": "CRITICAL",
-        "component": "jolup-roadmap:jolup/study_api.py",
-        "project": "jolup-roadmap",
-        "line": 45,
-        "hash": "731f59ee8091b772fcee3b025bf9ae09",
-        "textRange": {
-          "startLine": 45,
-          "endLine": 45,
-          "startOffset": 41,
-          "endOffset": 70
-        },
-        "flows": [
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/study_api.py",
-                "textRange": {
-                  "startLine": 114,
-                  "endLine": 114,
-                  "startOffset": 64,
-                  "endOffset": 93
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/study_api.py",
-                "textRange": {
-                  "startLine": 262,
-                  "endLine": 262,
-                  "startOffset": 38,
-                  "endOffset": 67
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          }
-        ],
-        "status": "OPEN",
-        "message": "Define a constant instead of duplicating this literal \"2024학번 컴퓨터공학과 전공심화 졸업 총학점은?\" 3 times.",
-        "effort": "6min",
-        "debt": "6min",
-        "author": "",
-        "tags": [
-          "design"
-        ],
-        "creationDate": "2026-10-25T16:55:18+0000",
-        "updateDate": "2026-10-25T16:55:18+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "DISTINCT",
-        "cleanCodeAttributeCategory": "ADAPTABLE",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "5716cff8-decb-459c-9961-6272ccbfb084",
-        "rule": "python:S8415",
-        "severity": "MAJOR",
-        "component": "jolup-roadmap:jolup/study_api.py",
-        "project": "jolup-roadmap",
-        "line": 323,
-        "hash": "f6365e65cc4a1a8d7611ea4237118b19",
-        "textRange": {
-          "startLine": 323,
-          "endLine": 323,
-          "startOffset": 18,
-          "endOffset": 31
-        },
-        "flows": [],
-        "status": "OPEN",
-        "message": "Document this HTTPException with status code 503 in the \"responses\" parameter.",
-        "effort": "5min",
-        "debt": "5min",
-        "author": "",
-        "tags": [
-          "fastapi",
-          "openapi",
-          "documentation"
-        ],
-        "creationDate": "2026-10-25T16:55:18+0000",
-        "updateDate": "2026-10-25T16:55:18+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "COMPLETE",
-        "cleanCodeAttributeCategory": "INTENTIONAL",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "8ba0dd6e-55ec-4655-88a3-8082eef57974",
-        "rule": "python:S8415",
-        "severity": "MAJOR",
-        "component": "jolup-roadmap:jolup/study_api.py",
-        "project": "jolup-roadmap",
-        "line": 325,
-        "hash": "02e2bf6a0f215478c5e6969974601737",
-        "textRange": {
-          "startLine": 325,
-          "endLine": 325,
-          "startOffset": 14,
-          "endOffset": 27
-        },
-        "flows": [],
-        "status": "OPEN",
-        "message": "Document this HTTPException with status code 503 in the \"responses\" parameter.",
-        "effort": "5min",
-        "debt": "5min",
-        "author": "",
-        "tags": [
-          "fastapi",
-          "openapi",
-          "documentation"
-        ],
-        "creationDate": "2026-10-25T16:55:18+0000",
-        "updateDate": "2026-10-25T16:55:18+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "COMPLETE",
-        "cleanCodeAttributeCategory": "INTENTIONAL",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "a23666cb-6cee-4583-81f6-24617dc5861b",
-        "rule": "python:S1192",
-        "severity": "CRITICAL",
-        "component": "jolup-roadmap:scripts/export_api_contract.py",
-        "project": "jolup-roadmap",
-        "line": 81,
-        "hash": "1bfb891c5353e41ddc41ad01c5d8f772",
-        "textRange": {
-          "startLine": 81,
-          "endLine": 81,
-          "startOffset": 17,
-          "endOffset": 53
-        },
-        "flows": [
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:scripts/export_api_contract.py",
-                "textRange": {
-                  "startLine": 101,
-                  "endLine": 101,
-                  "startOffset": 31,
-                  "endOffset": 67
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:scripts/export_api_contract.py",
-                "textRange": {
-                  "startLine": 109,
-                  "endLine": 109,
-                  "startOffset": 31,
-                  "endOffset": 67
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          }
-        ],
-        "status": "OPEN",
-        "message": "Define a constant instead of duplicating this literal 'const result = pm.response.json();' 3 times.",
-        "effort": "6min",
-        "debt": "6min",
-        "author": "",
-        "tags": [
-          "design"
-        ],
-        "creationDate": "2026-10-25T16:55:18+0000",
-        "updateDate": "2026-10-25T16:55:18+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "DISTINCT",
-        "cleanCodeAttributeCategory": "ADAPTABLE",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "a88abc07-ef32-41a8-840f-be9059efc7b0",
-        "rule": "python:S1192",
-        "severity": "CRITICAL",
-        "component": "jolup-roadmap:jolup/llm.py",
-        "project": "jolup-roadmap",
-        "line": 430,
-        "hash": "f7f9d78ae656d40a14869cd163ecf455",
-        "textRange": {
-          "startLine": 430,
-          "endLine": 430,
-          "startOffset": 65,
-          "endOffset": 72
-        },
-        "flows": [
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/llm.py",
-                "textRange": {
-                  "startLine": 474,
-                  "endLine": 474,
-                  "startOffset": 51,
-                  "endOffset": 58
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/llm.py",
-                "textRange": {
-                  "startLine": 514,
-                  "endLine": 514,
-                  "startOffset": 8,
-                  "endOffset": 15
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/llm.py",
-                "textRange": {
-                  "startLine": 518,
-                  "endLine": 518,
-                  "startOffset": 50,
-                  "endOffset": 57
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/llm.py",
-                "textRange": {
-                  "startLine": 518,
-                  "endLine": 518,
-                  "startOffset": 76,
-                  "endOffset": 83
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          }
-        ],
-        "status": "OPEN",
-        "message": "Define a constant instead of duplicating this literal \"확인 필요\" 5 times.",
-        "effort": "10min",
-        "debt": "10min",
-        "author": "",
-        "tags": [
-          "design"
-        ],
-        "creationDate": "2026-10-25T13:35:14+0000",
-        "updateDate": "2026-10-25T13:35:14+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "DISTINCT",
-        "cleanCodeAttributeCategory": "ADAPTABLE",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "abb11666-0b04-43d1-bbc6-d1a325d0d4c4",
-        "rule": "python:S1192",
-        "severity": "CRITICAL",
-        "component": "jolup-roadmap:jolup/rag.py",
-        "project": "jolup-roadmap",
-        "line": 232,
-        "hash": "65f5fa0fcab45a855e984597fee04af6",
-        "textRange": {
-          "startLine": 232,
-          "endLine": 232,
-          "startOffset": 36,
-          "endOffset": 43
-        },
-        "flows": [
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/rag.py",
-                "textRange": {
-                  "startLine": 232,
-                  "endLine": 232,
-                  "startOffset": 48,
-                  "endOffset": 55
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/rag.py",
-                "textRange": {
-                  "startLine": 398,
-                  "endLine": 398,
-                  "startOffset": 30,
-                  "endOffset": 37
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/rag.py",
-                "textRange": {
-                  "startLine": 510,
-                  "endLine": 510,
-                  "startOffset": 23,
-                  "endOffset": 30
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          }
-        ],
-        "status": "OPEN",
-        "message": "Define a constant instead of duplicating this literal \"성결대학교\" 4 times.",
-        "effort": "8min",
-        "debt": "8min",
-        "author": "",
-        "tags": [
-          "design"
-        ],
-        "creationDate": "2026-10-25T13:35:14+0000",
-        "updateDate": "2026-10-25T13:35:14+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "DISTINCT",
-        "cleanCodeAttributeCategory": "ADAPTABLE",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "7ae100a1-a8ff-4ec3-9fed-e59ef4b5a660",
-        "rule": "python:S1192",
-        "severity": "CRITICAL",
-        "component": "jolup-roadmap:jolup/rag.py",
-        "project": "jolup-roadmap",
-        "line": 234,
-        "hash": "17a31ba0e496af7ec4917d18ea210795",
-        "textRange": {
-          "startLine": 234,
-          "endLine": 234,
-          "startOffset": 48,
-          "endOffset": 56
-        },
-        "flows": [
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/rag.py",
-                "textRange": {
-                  "startLine": 398,
-                  "endLine": 398,
-                  "startOffset": 53,
-                  "endOffset": 61
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          },
-          {
-            "locations": [
-              {
-                "component": "jolup-roadmap:jolup/rag.py",
-                "textRange": {
-                  "startLine": 507,
-                  "endLine": 507,
-                  "startOffset": 28,
-                  "endOffset": 36
-                },
-                "msg": "Duplication",
-                "msgFormattings": []
-              }
-            ]
-          }
-        ],
-        "status": "OPEN",
-        "message": "Define a constant instead of duplicating this literal \"컴퓨터공학과\" 3 times.",
-        "effort": "6min",
-        "debt": "6min",
-        "author": "",
-        "tags": [
-          "design"
-        ],
-        "creationDate": "2026-10-25T13:35:14+0000",
-        "updateDate": "2026-10-25T13:35:14+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "DISTINCT",
-        "cleanCodeAttributeCategory": "ADAPTABLE",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "d519aa9d-f05a-47b2-ba48-ee18e8a7c257",
-        "rule": "python:S8415",
-        "severity": "MAJOR",
-        "component": "jolup-roadmap:jolup/study_api.py",
-        "project": "jolup-roadmap",
-        "line": 299,
-        "hash": "9aee4eb0a44a8a971784e285aae9cc18",
-        "textRange": {
-          "startLine": 299,
-          "endLine": 299,
-          "startOffset": 14,
-          "endOffset": 27
-        },
-        "flows": [],
-        "status": "OPEN",
-        "message": "Document this HTTPException with status code 403 in the \"responses\" parameter.",
-        "effort": "5min",
-        "debt": "5min",
-        "author": "",
-        "tags": [
-          "fastapi",
-          "openapi",
-          "documentation"
-        ],
-        "creationDate": "2026-10-25T13:35:14+0000",
-        "updateDate": "2026-10-25T13:35:14+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "COMPLETE",
-        "cleanCodeAttributeCategory": "INTENTIONAL",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "dae71364-6fd1-4632-aeb6-dad45afb176e",
-        "rule": "python:S8415",
-        "severity": "MAJOR",
-        "component": "jolup-roadmap:jolup/study_api.py",
-        "project": "jolup-roadmap",
-        "line": 301,
-        "hash": "7349790362c994174093922cda373224",
-        "textRange": {
-          "startLine": 301,
-          "endLine": 301,
-          "startOffset": 14,
-          "endOffset": 27
-        },
-        "flows": [],
-        "status": "OPEN",
-        "message": "Document this HTTPException with status code 422 in the \"responses\" parameter.",
-        "effort": "5min",
-        "debt": "5min",
-        "author": "",
-        "tags": [
-          "fastapi",
-          "openapi",
-          "documentation"
-        ],
-        "creationDate": "2026-10-25T13:35:14+0000",
-        "updateDate": "2026-10-25T13:35:14+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "COMPLETE",
-        "cleanCodeAttributeCategory": "INTENTIONAL",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      },
-      {
-        "key": "d626a152-3e44-4b75-b56b-badbf32596aa",
-        "rule": "python:S8415",
-        "severity": "MAJOR",
-        "component": "jolup-roadmap:jolup/study_api.py",
-        "project": "jolup-roadmap",
-        "line": 303,
-        "hash": "70b1df47da428a9c70d8250b4f43ec39",
-        "textRange": {
-          "startLine": 303,
-          "endLine": 303,
-          "startOffset": 14,
-          "endOffset": 27
-        },
-        "flows": [],
-        "status": "OPEN",
-        "message": "Document this HTTPException with status code 503 in the \"responses\" parameter.",
-        "effort": "5min",
-        "debt": "5min",
-        "author": "",
-        "tags": [
-          "fastapi",
-          "openapi",
-          "documentation"
-        ],
-        "creationDate": "2026-10-25T13:35:14+0000",
-        "updateDate": "2026-10-25T13:35:14+0000",
-        "type": "CODE_SMELL",
-        "scope": "MAIN",
-        "quickFixAvailable": false,
-        "messageFormattings": [],
-        "codeVariants": [],
-        "cleanCodeAttribute": "COMPLETE",
-        "cleanCodeAttributeCategory": "INTENTIONAL",
-        "impacts": [
-          {
-            "softwareQuality": "MAINTAINABILITY",
-            "severity": "HIGH"
-          }
-        ],
-        "issueStatus": "OPEN",
-        "prioritizedRule": false,
-        "fromSonarQubeUpdate": false,
-        "internalTags": [],
-        "linkedTicketStatus": "NOT_LINKED"
-      }
-    ],
-    "open_s3776_count": 0,
-    "open_s3776_issues": [],
-    "all_issue_count_including_resolved": 63,
-    "source_snapshot": ".build/sonar-analysis-20261026_015345_354853",
-    "source_hashes": {
-      "app.py": "1c0bd2f81dc1a41d3f4d33d966311f40886b3070df177f61d57b1fb14531d315",
-      "jolup/__init__.py": "e061714474e0d981de79da74815b72639b35ca3068b8c6d52a5723c494822ab6",
-      "jolup/academic.py": "99bf5aff2e8c8639bc82fd829306aeb0556346b3ec329439433ff5733dcf1dfb",
-      "jolup/agent.py": "feafff033e10db42377d4d1d0d4aa769fb25f4092b509cef1d3c45df5f470dcc",
-      "jolup/calendar.py": "8bdb0ebdae759c328e7666c18287b9e455df8562d980be057a28ef21bc0fd853",
-      "jolup/chat_client.py": "b6c73a89577d14cd5f8e0806102b1ee8cff79bb1cf9a854a01cf63ef75a0f964",
-      "jolup/chunking.py": "e112588bbf20edfbddc9b45080dbf6abd0152d8b9452e2d33d1d98b31f018829",
-      "jolup/conversation.py": "aed072a8840db67c683c57bcd147c7c81552a7966c3f0d040de365cf15ae9c4b",
-      "jolup/course_solver.py": "f08f84bc73218d3fd112e9f32ef474110c0d0acce8cf75498baf8404d6c4a59d",
-      "jolup/env_export.py": "709a3f7a33e7384f1325a649cd3b7587e9d34ff15998c7bbbbe1d7c79fe11124",
-      "jolup/evidence.py": "ea6960a2bd5b582a541615dd5fd2759e8c4ce76c37af1eafaa7a7369c989bbc8",
-      "jolup/llm.py": "b89183aa296030b5f2417e4c12bb4f7d6e58b3f2c9cc0eda3bdacb672c947271",
-      "jolup/mcp_client.py": "d1f601753b829ce5753b7ad28b09a088dd3d5c89db8a51ecef63794577f615c5",
-      "jolup/mcp_server.py": "0856113c5862a08e676eb8303fbdf8c4f66300113c98acdfa191b81fb28e1099",
-      "jolup/observability.py": "616c37cd0aee2fcd54c6da474a7209cc2b9bfa18a052f27194ba5ce7c0fe6453",
-      "jolup/planner.py": "ebae3733603c353508a91df79d13c6f6555f732d6a6cad516fd9fda41820e54a",
-      "jolup/rag.py": "8ed07ebde960bcb7b18f0180d9570e2f3c20c54c6b79f4a7933739c4a370e66a",
-      "jolup/samples.py": "668f715601fc291268f0271081e1a77b01d6508d6ca81031b941fdcc2d152a40",
-      "jolup/settings.py": "92bd1ff09d4ee335cd7ec6beb5302c75923edd278b3de03f7adfce65cef855fe",
-      "jolup/study_api.py": "6767ad6b0d42c4515e3ac129c33c1d9ba5798e257d16bc34465357f7622b7d3e",
-      "scripts/build_index.py": "dbc8fa9168d5dbeadf2d4ee79a621f50149c06549f72669664ed0ebf7b98103b",
-      "scripts/export_api_contract.py": "e97e038554cd9d72b2c7d2ebc2e8dca0791d37eb8bf3c72f4f9216f9b169f2be",
-      "scripts/export_samples.py": "762469c3eb16f67234459861fafe46a176b3f2a778e05c53d7dfb7251e853ab7",
-      "scripts/package_project.py": "20ded06ff00b00e10831d9870e467f161572c2dd6e23a0fc4a7ecae1e56e29ce",
-      "scripts/prepare_data.py": "0538da2f1eed86ba77e0280e8ab5f1681505a89db946f104b4d82a7ec6a00c18",
-      "scripts/profile_study.py": "4bf86f86c89eda04d83d44c6bc605a193c94e50015420e9cbb37c88f08638225",
-      "scripts/quality_check.py": "eab72ef8a44f6908561239dedef59db76545c5ee19f4cb45004f19fe1a68e86d",
-      "scripts/sonar_local.py": "9ebe1e7b224fac128befe09037c282ee2fbe6cacb213dc5794d7b3aebd6d444e",
-      "scripts/tdd_study.py": "b64f976dab2b9bf9f50c74cd3e9116b571015f440e9eb6449a9f5e19b21cbad8",
-      "tests/test_academic.py": "4f2a3ef3e730e2b7237041ea4f7a0ac30812737b834af2c82fda3e42ed41f322",
-      "tests/test_academic_review.py": "ebe6490b5dbe1f60844e537560b634bdb67168da2124bc1bcf04f66b29564d64",
-      "tests/test_agent.py": "7c0dac34429a74f0167ed48a7725a796cfa7bc7b047a04d5e52e772bb08bd83f",
-      "tests/test_agent_conversation.py": "833a2f2ce861c466552607e4c3bb971a2f60beb84e42e91bdadfcbd3a03a9ce7",
-      "tests/test_api_contract_export.py": "48facd869d6a66e68c7ef79faedc2b3f4b9b135c2f182fc11b0c5d11a2279ede",
-      "tests/test_app.py": "6fb26f73a3669a6baeb405b369490cdca45c89251f4324f3ab77b368c5fb723f",
-      "tests/test_app_conversation.py": "88c7371a6e8e688bc50d9de1317c9b6ca9748ac51af9811b749b4f1a4134e12e",
-      "tests/test_app_edges.py": "e2a5ac717884375fb49ead360fcee3f9a4e4f8f7418fd01deae83e09b6c16ecf",
-      "tests/test_app_study.py": "7235d126296b0b1cb8cad424aefd186f300e9b60c5f25b78efa2c1a15ca332c8",
-      "tests/test_calendar.py": "037da0933e6fe5b3d75d781a196dad544d1cfe4504802e856f4bd3c5f2783472",
-      "tests/test_chat_api.py": "b5fe7900bac63e8a449005d5708e9cdccbea193e3556d2195e959b63d9416f9c",
-      "tests/test_chat_client.py": "d9b282f5daea1594c47513375da5149b02b71d01f1aa1900199bc2f670a180ba",
-      "tests/test_chunking.py": "f5265faba4af8b23481436aa0fd4cbd77db46352b6c48350df4e40e8041897f8",
-      "tests/test_domain_edges.py": "6cc3ac34aed673b93e0742fccfd7682a5a1fd6b6a45b7f67a3640999359df14b",
-      "tests/test_domain_guard.py": "44ec43bc56d07018d5300f683f9156e6558d1fc866274d47f80f4c30506c8f72",
-      "tests/test_domain_transport_edges.py": "8c2b4db6d0665104bcafcb8cab629c372e2fe0133290cec28a950ffeec75276f",
-      "tests/test_env_export.py": "0f52ce8fcd4db6ab48f39af90b729df5ec6c0d078378a8dccd8ddf267c6bb5b0",
-      "tests/test_explanation_facts.py": "ac44c8b58c7f836888916c955e073ad254ce90d1bb2f2ef8fdfc3f090610b387",
-      "tests/test_llm.py": "236749eb2970ba51370d5dacf5564e0d7a357c310485c81873ab63b1c25ccc77",
-      "tests/test_llm_routing.py": "d472d84d32be373bd69eb530522f205c30bef8a5cdc14a75f05b136ac21ce694",
-      "tests/test_observability.py": "bd7a120f89c7d0b1bc9329cd43b2c1fa68c5a58f0880b7e2beb33397250b1c0a",
-      "tests/test_observability_edges.py": "3305d31fe43a9453a7cb53dfc1da98f310637aedfe576ddee303a28a0ac804fc",
-      "tests/test_profile_study.py": "52b5cb50956b6a5d9cdb7f5b4378b92805a71c5fed65f924e9b5e60dabda4554",
-      "tests/test_quality_check.py": "ed079426931610c5cfbf77eb5a7a5224e2e43ee74f49991473b414d3b5df73c3",
-      "tests/test_rag.py": "fc0e21adc0fe3572b31dc7d086b64441afd75961cb0d799bdde5e1bf1bd9e9ac",
-      "tests/test_rag_edges.py": "53d0e6ec614bfff85610762503581cfa66757ae16d83c58fcba860ffffb0751b",
-      "tests/test_release_scripts.py": "fa872a3d2c6c45cae52bdd4f0dddc7fc019f673fd5771afd8c49fc5bc7d9dc8d",
-      "tests/test_sonar_local.py": "7c81b28cc7ece23a451dab017a6e22414b72ac6b9e59a253b2d3feac15fe3e61",
-      "tests/test_study_agent.py": "bd553c7d0d6f55649e1c6145de4483f263007c950bcd2669e48c8de4240d081a",
-      "tests/test_study_api.py": "b5454862bfd43e07af5ceb72a2cec81fe150606fa4ba1096a5d2f349b8788920",
-      "tests/test_tdd_cli.py": "80f0c22bb2bf2acd1175167b779aa13d22b958cfa3e9745ba9d612d1a6b41cc7",
-      "tests/test_tdd_study.py": "0cb0242667c59e2c8f69acd7dff2dc75775aa5a7181661d4ae75f5f8bd2d19cb"
-    },
-    "source_matches_current_after_report": true,
-    "coverage_included": true,
-    "coverage_xml_sha256": "df39ed9fc07939cd2a23ef1b50559605ddcd607823fe4b3aac2e41c8ee298b08",
-    "coverage_manifest": "reports/quality/manifest.json",
-    "details": "reports/quality/sonar-after.json",
-    "source_tests_settings_mutated": false,
-    "scope": "No thresholds, profiles, tokens, issue disposition or source changes during this final scan. Quality Gate is separate from tests/coverage and S3776 count."
-  },
   "compose": {
     "config_quiet_valid": true,
     "services": [
@@ -1570,184 +330,6 @@
     "user_services_changed": false,
     "api_default_service": true
   },
-  "presentation": {
-    "path": "artifacts/jolup-presentation-20261026.pptx",
-    "sha256": "eda64213de9db07857030afee9a1689a4b81d521caa6e86300e4a3df14751709",
-    "slides": 14,
-    "validation_path": "private publication receipt; summarized here",
-    "validation": {
-      "schemaVersion": "presentation-finalization.v1",
-      "finalSha256": "eda64213de9db07857030afee9a1689a4b81d521caa6e86300e4a3df14751709",
-      "byteCount": 1441379,
-      "packageIntegrity": {
-        "chart_count": 0,
-        "claim_boundary": "Structural package checks only; no slide text, notes, formulas, chart values, or native PowerPoint execution were inspected.",
-        "finding_count": 0,
-        "findings": [],
-        "notes_parts_skipped": 14,
-        "relationship_part_count": 34,
-        "slide_count": 14,
-        "status": "pass",
-        "exitCode": 0,
-        "findingCount": 0,
-        "warnings": []
-      },
-      "presentationLayout": {
-        "finding_count": 0,
-        "findings": [],
-        "font_policy": {
-          "checked_text_script_count": 428,
-          "native_font_rendering_verified": false,
-          "observed_font_families": [
-            "IBM Plex Sans KR"
-          ],
-          "observed_font_use_counts": {
-            "IBM Plex Sans KR": 428
-          },
-          "passed": true,
-          "performed": true
-        },
-        "slide_count": 14,
-        "slide_size_in": [
-          13.3333,
-          7.5
-        ],
-        "warning_count": 0,
-        "warnings": [],
-        "exitCode": 0,
-        "findingCount": 0,
-        "fontPolicy": {
-          "checked_text_script_count": 428,
-          "native_font_rendering_verified": false,
-          "observed_font_families": [
-            "IBM Plex Sans KR"
-          ],
-          "observed_font_use_counts": {
-            "IBM Plex Sans KR": 428
-          },
-          "passed": true,
-          "performed": true
-        }
-      },
-      "fontSelection": {
-        "basis": "reference",
-        "approvedFamilies": [
-          "IBM Plex Sans KR"
-        ],
-        "scriptFonts": {},
-        "referenceSha256": "5b5dc9770d3d035fabaac0204d49c29a1d3b8d39d05bd97a81d53691c50719ad",
-        "referenceFontsVerifiedInEncodedText": true,
-        "checked_text_script_count": 428,
-        "native_font_rendering_verified": false,
-        "observed_font_families": [
-          "IBM Plex Sans KR"
-        ],
-        "observed_font_use_counts": {
-          "IBM Plex Sans KR": 428
-        },
-        "passed": true,
-        "performed": true
-      },
-      "firstPartyImport": {
-        "performed": true,
-        "passed": true,
-        "slideCount": 14,
-        "sha256": "eda64213de9db07857030afee9a1689a4b81d521caa6e86300e4a3df14751709",
-        "runtimeNodeModules": "<LOCAL_DOCUMENT_RUNTIME_NODE_MODULES>",
-        "nodeExecutable": "<LOCAL_DOCUMENT_RUNTIME_NODE_EXECUTABLE>"
-      },
-      "nativeTableArithmetic": {
-        "performed": true,
-        "checked_column_count": 0,
-        "checks": [],
-        "claim_boundary": "Displayed-value arithmetic with rounding tolerance; not source-data verification.",
-        "eligible_table_count": 0,
-        "finding_count": 0,
-        "findings": [],
-        "native_table_count": 5,
-        "passed": true,
-        "schema_version": "presentation-native-table-arithmetic.v1",
-        "skipped_tables": [
-          {
-            "reason": "no_numeric_amounts",
-            "slide": 2,
-            "table": 1
-          },
-          {
-            "reason": "no_numeric_amounts",
-            "slide": 8,
-            "table": 1
-          },
-          {
-            "reason": "no_numeric_amounts",
-            "slide": 10,
-            "table": 1
-          },
-          {
-            "reason": "no_numeric_amounts",
-            "slide": 11,
-            "table": 1
-          },
-          {
-            "reason": "no_numeric_amounts",
-            "slide": 13,
-            "table": 1
-          }
-        ],
-        "slide_count": 14,
-        "warning_count": 0,
-        "warnings": []
-      },
-      "nativeChartTitles": {
-        "performed": true,
-        "checks": [],
-        "finding_count": 0,
-        "findings": [],
-        "native_chart_count": 0,
-        "native_powerpoint_verified": false,
-        "passed": true,
-        "presentation_sha256": "eda64213de9db07857030afee9a1689a4b81d521caa6e86300e4a3df14751709",
-        "schema_version": "presentation-native-chart-titles.v1",
-        "slide_count": 14,
-        "source_text_emitted": false,
-        "unresolved_linked_title_count": 0
-      },
-      "sourceDerivedPolicyFlags": [
-        "--expected-slide-size-emu",
-        "12192000,6858000",
-        "--validate-bullet-geometry",
-        "--validate-heading-fit",
-        "--require-native-table-slide",
-        "2",
-        "--require-native-table-slide",
-        "8",
-        "--require-native-table-slide",
-        "10",
-        "--require-native-table-slide",
-        "11",
-        "--require-native-table-slide",
-        "13",
-        "--cover-role",
-        "none",
-        "--expected-slide-count",
-        "14",
-        "--approved-font-family",
-        "IBM Plex Sans KR"
-      ],
-      "nativeChartValidation": {
-        "detectedOwnerSlides": [],
-        "detectedChartCount": 0,
-        "targetApplication": null,
-        "sourceChartOwnersExplicitlyDeclared": false,
-        "validatorRan": false,
-        "passed": true
-      }
-    },
-    "scope": "Professor template copied; native editable shapes and5tables; all14slides rendered; no native PowerPoint run",
-    "artifact_role": "Final result presentation after supplied practice code review; teammate artifact integration pending",
-    "source_sha256": "48ac959bb7c16d67c8aab3091add2c62100d1052cf05afb5eca6528b1846dc28",
-    "public_copy_note": "Only docProps/core.xml creator and lastModifiedBy generalized. All slide, notes, media and other ZIP members byte-identical to reviewed original; package/layout/import rechecked."
-  },
   "scope": {
     "student": "2024 entry, computer engineering, major intensive track, 2026 second semester, fictional profile/transcript, engineering accreditation excluded",
     "excluded_by_user": [
@@ -1757,9 +339,8 @@
       "new security and performance objectives"
     ],
     "future_input_dependent": [
-      "teammate artifacts integration",
-      "unconfirmed Day3-5 availability",
-      "actual future course offerings and personal approvals"
+      "Missing Jumi rag/ implementation for additional comparison",
+      "Actual future offerings and personal approvals"
     ],
     "not_guaranteed": [
       "All possible questions or transcript combinations are correct",
@@ -1775,91 +356,6 @@
       "status": "theory and practice code compared; targeted improvements implemented"
     }
   },
-  "previous_measurements": [
-    {
-      "date": "2026-10-23",
-      "measured_at": "20261023_135657_356346",
-      "tests": {
-        "status": "passed",
-        "exit_code": 0,
-        "total": 653,
-        "passed": 653,
-        "failed": 0,
-        "errors": 0,
-        "skipped": 0
-      },
-      "coverage": {
-        "statements_covered": 3874,
-        "statements_total": 3874,
-        "statement_percent": 100.0,
-        "branches_covered": 1354,
-        "branches_total": 1354,
-        "branch_percent": 100.0,
-        "combined_percent": 100.0,
-        "full_100_percent": true,
-        "excluded_source_lines": 0,
-        "scope": "Unchanged: app.py, jolup/*.py, scripts/*.py; tests and teaching replay examples excluded; no source-line exclusions",
-        "source_unchanged": true,
-        "xml_sha256": "4cc9eefa3b99ca7480d59fd5fb758debdf2e447369dbcf427359acbe0d84c500"
-      },
-      "scope": "Before token chunking, fact selection and latest correctness improvements; not current results."
-    },
-    {
-      "measured_at": "20261023_120544_804412",
-      "tests": {
-        "status": "passed",
-        "exit_code": 0,
-        "total": 403,
-        "passed": 403,
-        "failed": 0,
-        "errors": 0,
-        "skipped": 0
-      },
-      "coverage": {
-        "statements_covered": 3220,
-        "statements_total": 3830,
-        "statement_percent": 84.07,
-        "branches_covered": 1041,
-        "branches_total": 1352,
-        "branch_percent": 77.0,
-        "combined_percent": 82.23,
-        "full_100_percent": false,
-        "scope": "app.py, jolup/*.py, scripts/*.py; tests and learning examples excluded; no source-line exclusions"
-      }
-    },
-    {
-      "measured_at": "20261025_224715_116805",
-      "tests": {
-        "status": "passed",
-        "exit_code": 0,
-        "total": 722,
-        "passed": 722,
-        "failed": 0,
-        "errors": 0,
-        "skipped": 0
-      },
-      "coverage": {
-        "statements_covered": 4445,
-        "statements_total": 4445,
-        "statement_percent": 100.0,
-        "branches_covered": 1498,
-        "branches_total": 1498,
-        "branch_percent": 100.0,
-        "combined_percent": 100.0,
-        "full_100_percent": true,
-        "excluded_source_lines": 0,
-        "scope": "Unchanged: app.py, jolup/*.py, scripts/*.py; tests, teaching examples and external libraries excluded; no product source-line exclusions",
-        "source_unchanged_during_measurement": true,
-        "changed_inputs_during_measurement": [],
-        "changed_inputs_at_summary": [],
-        "xml_sha256": "df39ed9fc07939cd2a23ef1b50559605ddcd607823fe4b3aac2e41c8ee298b08",
-        "actual_local_vector_and_mcp_processes": true,
-        "report": "reports/quality/manifest.json"
-      }
-    }
-  ],
-  "evidence_policy": "Local reports are not included in the standard team ZIP. This summary retains counts, hashes and limitations; source files and tests remain reproducible. Missing or blocked checks are not filled with old results.",
-  "baseline_scope": "Current frozen implementation after supplied professor theory/practice comparison, mixed-question memory and HTTP UI/API integration.",
   "course_material_review": {
     "status": "theory_practice_and_templates_reviewed",
     "pdf_files": 10,
@@ -1873,1146 +369,925 @@
     "pdf_titles": 8,
     "practice_report": "docs/실습코드_비교보고서.md"
   },
-  "public_release": {
-    "file_count": 155,
-    "code_tests_dependencies_data_byte_identical": 110,
-    "treeview_file_paths_matched": 155,
-    "smoke_tests_passed": 77,
-    "smoke_tests_deselected": 2,
-    "smoke_scope": "existing 6 test modules; real MCP transport excluded; no external API calls",
-    "mermaid": {
-      "generated_at": "2026-10-26T06:54:02.368361+09:00",
-      "mermaid_version": "11.14.0",
-      "block_count": 54,
-      "diagram_types": {
-        "flowchart": 19,
-        "sequenceDiagram": 13,
-        "stateDiagram-v2": 8,
-        "mindmap": 2,
-        "treeView-beta": 7,
-        "block-beta": 2,
-        "pie": 1,
-        "venn-beta": 1,
-        "xychart-beta": 1
+  "evidence_policy": "Local reports are not included in the standard team ZIP. This summary retains counts, hashes and limitations; source files and tests remain reproducible. Missing or blocked checks are not filled with old results.",
+  "schema_version": 3,
+  "created_at": "2026-10-26T14:03:48.255441+09:00",
+  "review_date": "2026-10-26",
+  "status": "team_integration_verified_with_explicit_runtime_limits",
+  "measured_at": "20261026_135444_192097",
+  "tests": {
+    "status": "passed",
+    "exit_code": 0,
+    "total": 824,
+    "passed": 824,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_hashes": {
+    "app.py": "b8207f87c0ec83845d70906b5f3c8f503e155411c5290e2a4297b4df1d9f95b6",
+    "jolup/__init__.py": "e061714474e0d981de79da74815b72639b35ca3068b8c6d52a5723c494822ab6",
+    "jolup/academic.py": "99bf5aff2e8c8639bc82fd829306aeb0556346b3ec329439433ff5733dcf1dfb",
+    "jolup/agent.py": "feafff033e10db42377d4d1d0d4aa769fb25f4092b509cef1d3c45df5f470dcc",
+    "jolup/calendar.py": "8bdb0ebdae759c328e7666c18287b9e455df8562d980be057a28ef21bc0fd853",
+    "jolup/chat_client.py": "b6c73a89577d14cd5f8e0806102b1ee8cff79bb1cf9a854a01cf63ef75a0f964",
+    "jolup/chunking.py": "e112588bbf20edfbddc9b45080dbf6abd0152d8b9452e2d33d1d98b31f018829",
+    "jolup/conversation.py": "aed072a8840db67c683c57bcd147c7c81552a7966c3f0d040de365cf15ae9c4b",
+    "jolup/course_solver.py": "f08f84bc73218d3fd112e9f32ef474110c0d0acce8cf75498baf8404d6c4a59d",
+    "jolup/env_export.py": "709a3f7a33e7384f1325a649cd3b7587e9d34ff15998c7bbbbe1d7c79fe11124",
+    "jolup/evidence.py": "ea6960a2bd5b582a541615dd5fd2759e8c4ce76c37af1eafaa7a7369c989bbc8",
+    "jolup/llm.py": "b89183aa296030b5f2417e4c12bb4f7d6e58b3f2c9cc0eda3bdacb672c947271",
+    "jolup/mcp_client.py": "d1f601753b829ce5753b7ad28b09a088dd3d5c89db8a51ecef63794577f615c5",
+    "jolup/mcp_server.py": "0856113c5862a08e676eb8303fbdf8c4f66300113c98acdfa191b81fb28e1099",
+    "jolup/observability.py": "616c37cd0aee2fcd54c6da474a7209cc2b9bfa18a052f27194ba5ce7c0fe6453",
+    "jolup/planner.py": "ebae3733603c353508a91df79d13c6f6555f732d6a6cad516fd9fda41820e54a",
+    "jolup/rag.py": "3e33119c9af88b294b7133a5be257200ed2da0edb8c09ad3d348250257e76aec",
+    "jolup/samples.py": "668f715601fc291268f0271081e1a77b01d6508d6ca81031b941fdcc2d152a40",
+    "jolup/settings.py": "92bd1ff09d4ee335cd7ec6beb5302c75923edd278b3de03f7adfce65cef855fe",
+    "jolup/source_metadata.py": "4ddf0dd21d81bb3e1cc88f1069010651568c8c0afa8e92dbeec992f0283f81dd",
+    "jolup/study_api.py": "6767ad6b0d42c4515e3ac129c33c1d9ba5798e257d16bc34465357f7622b7d3e",
+    "jolup/ui_calendar.py": "0036a991ddaf10994b81d35b86524b5b7d310173200eabf01bcb6507d98d473d",
+    "jolup/ui_design.py": "0e6826cb60f7ad787e2cd02ec8d5b7533eb488ccbc3abbe18eda0baf47ebd3cb",
+    "pytest.ini": "c809c969ec7e11b9ff37784e9c6fcc0b7c5148d168e18b05aed797e03fbd6ead",
+    "scripts/build_index.py": "dbc8fa9168d5dbeadf2d4ee79a621f50149c06549f72669664ed0ebf7b98103b",
+    "scripts/export_api_contract.py": "e97e038554cd9d72b2c7d2ebc2e8dca0791d37eb8bf3c72f4f9216f9b169f2be",
+    "scripts/export_samples.py": "762469c3eb16f67234459861fafe46a176b3f2a778e05c53d7dfb7251e853ab7",
+    "scripts/package_project.py": "8ad75595f4c7fe362c23dbdc2ccb5d2ee89f33fa3b4d24c1110f8a645afd2be2",
+    "scripts/prepare_data.py": "0538da2f1eed86ba77e0280e8ab5f1681505a89db946f104b4d82a7ec6a00c18",
+    "scripts/profile_study.py": "4bf86f86c89eda04d83d44c6bc605a193c94e50015420e9cbb37c88f08638225",
+    "scripts/quality_check.py": "922c62d3ae8fd133e360ebfce01fe8ba384cef7d1d9682604ada416c8f66ecb5",
+    "scripts/sonar_local.py": "a02754939eb1ab978c8bffb1b56095f764f904a511202051957fdde0642d06dc",
+    "scripts/tdd_study.py": "b64f976dab2b9bf9f50c74cd3e9116b571015f440e9eb6449a9f5e19b21cbad8",
+    "tests/test_academic.py": "4f2a3ef3e730e2b7237041ea4f7a0ac30812737b834af2c82fda3e42ed41f322",
+    "tests/test_academic_review.py": "ebe6490b5dbe1f60844e537560b634bdb67168da2124bc1bcf04f66b29564d64",
+    "tests/test_agent.py": "7c0dac34429a74f0167ed48a7725a796cfa7bc7b047a04d5e52e772bb08bd83f",
+    "tests/test_agent_conversation.py": "833a2f2ce861c466552607e4c3bb971a2f60beb84e42e91bdadfcbd3a03a9ce7",
+    "tests/test_api_contract_export.py": "48facd869d6a66e68c7ef79faedc2b3f4b9b135c2f182fc11b0c5d11a2279ede",
+    "tests/test_app.py": "6fb26f73a3669a6baeb405b369490cdca45c89251f4324f3ab77b368c5fb723f",
+    "tests/test_app_conversation.py": "88c7371a6e8e688bc50d9de1317c9b6ca9748ac51af9811b749b4f1a4134e12e",
+    "tests/test_app_edges.py": "e2a5ac717884375fb49ead360fcee3f9a4e4f8f7418fd01deae83e09b6c16ecf",
+    "tests/test_app_study.py": "7235d126296b0b1cb8cad424aefd186f300e9b60c5f25b78efa2c1a15ca332c8",
+    "tests/test_calendar.py": "037da0933e6fe5b3d75d781a196dad544d1cfe4504802e856f4bd3c5f2783472",
+    "tests/test_chat_api.py": "b5fe7900bac63e8a449005d5708e9cdccbea193e3556d2195e959b63d9416f9c",
+    "tests/test_chat_client.py": "d9b282f5daea1594c47513375da5149b02b71d01f1aa1900199bc2f670a180ba",
+    "tests/test_chunking.py": "f5265faba4af8b23481436aa0fd4cbd77db46352b6c48350df4e40e8041897f8",
+    "tests/test_domain_edges.py": "6cc3ac34aed673b93e0742fccfd7682a5a1fd6b6a45b7f67a3640999359df14b",
+    "tests/test_domain_guard.py": "44ec43bc56d07018d5300f683f9156e6558d1fc866274d47f80f4c30506c8f72",
+    "tests/test_domain_transport_edges.py": "8c2b4db6d0665104bcafcb8cab629c372e2fe0133290cec28a950ffeec75276f",
+    "tests/test_env_export.py": "0f52ce8fcd4db6ab48f39af90b729df5ec6c0d078378a8dccd8ddf267c6bb5b0",
+    "tests/test_explanation_facts.py": "ac44c8b58c7f836888916c955e073ad254ce90d1bb2f2ef8fdfc3f090610b387",
+    "tests/test_llm.py": "236749eb2970ba51370d5dacf5564e0d7a357c310485c81873ab63b1c25ccc77",
+    "tests/test_llm_routing.py": "d472d84d32be373bd69eb530522f205c30bef8a5cdc14a75f05b136ac21ce694",
+    "tests/test_observability.py": "bd7a120f89c7d0b1bc9329cd43b2c1fa68c5a58f0880b7e2beb33397250b1c0a",
+    "tests/test_observability_edges.py": "3305d31fe43a9453a7cb53dfc1da98f310637aedfe576ddee303a28a0ac804fc",
+    "tests/test_profile_study.py": "52b5cb50956b6a5d9cdb7f5b4378b92805a71c5fed65f924e9b5e60dabda4554",
+    "tests/test_quality_check.py": "df027fb49a616a696a581619d04fc7c54575e8be36168e795e9d6003b08f3545",
+    "tests/test_rag.py": "fc0e21adc0fe3572b31dc7d086b64441afd75961cb0d799bdde5e1bf1bd9e9ac",
+    "tests/test_rag_edges.py": "53d0e6ec614bfff85610762503581cfa66757ae16d83c58fcba860ffffb0751b",
+    "tests/test_release_scripts.py": "2fb074a6167020f53242ff5792cbb0b75443030e2de244a564dfff63ae4bc8b3",
+    "tests/test_sonar_local.py": "56dd170db8da9f85d52f17d0d6055e149c30cb2fde7a7d1b8af9b75b611b17a8",
+    "tests/test_source_metadata.py": "625cae0d9ca8fd853a91f771fff79fdc2021077dfaaa40408510f1c78c68fcb7",
+    "tests/test_study_agent.py": "bd553c7d0d6f55649e1c6145de4483f263007c950bcd2669e48c8de4240d081a",
+    "tests/test_study_api.py": "b5454862bfd43e07af5ceb72a2cec81fe150606fa4ba1096a5d2f349b8788920",
+    "tests/test_tdd_cli.py": "80f0c22bb2bf2acd1175167b779aa13d22b958cfa3e9745ba9d612d1a6b41cc7",
+    "tests/test_tdd_study.py": "0cb0242667c59e2c8f69acd7dff2dc75775aa5a7181661d4ae75f5f8bd2d19cb",
+    "tests/test_ui_design.py": "ef662ae25852470ab96abf85e6115819c8013f5eabd778080b3bdf18a1932109"
+  },
+  "input_hashes": {
+    "app.py": "b8207f87c0ec83845d70906b5f3c8f503e155411c5290e2a4297b4df1d9f95b6",
+    "jolup/__init__.py": "e061714474e0d981de79da74815b72639b35ca3068b8c6d52a5723c494822ab6",
+    "jolup/academic.py": "99bf5aff2e8c8639bc82fd829306aeb0556346b3ec329439433ff5733dcf1dfb",
+    "jolup/agent.py": "feafff033e10db42377d4d1d0d4aa769fb25f4092b509cef1d3c45df5f470dcc",
+    "jolup/calendar.py": "8bdb0ebdae759c328e7666c18287b9e455df8562d980be057a28ef21bc0fd853",
+    "jolup/chat_client.py": "b6c73a89577d14cd5f8e0806102b1ee8cff79bb1cf9a854a01cf63ef75a0f964",
+    "jolup/chunking.py": "e112588bbf20edfbddc9b45080dbf6abd0152d8b9452e2d33d1d98b31f018829",
+    "jolup/conversation.py": "aed072a8840db67c683c57bcd147c7c81552a7966c3f0d040de365cf15ae9c4b",
+    "jolup/course_solver.py": "f08f84bc73218d3fd112e9f32ef474110c0d0acce8cf75498baf8404d6c4a59d",
+    "jolup/env_export.py": "709a3f7a33e7384f1325a649cd3b7587e9d34ff15998c7bbbbe1d7c79fe11124",
+    "jolup/evidence.py": "ea6960a2bd5b582a541615dd5fd2759e8c4ce76c37af1eafaa7a7369c989bbc8",
+    "jolup/llm.py": "b89183aa296030b5f2417e4c12bb4f7d6e58b3f2c9cc0eda3bdacb672c947271",
+    "jolup/mcp_client.py": "d1f601753b829ce5753b7ad28b09a088dd3d5c89db8a51ecef63794577f615c5",
+    "jolup/mcp_server.py": "0856113c5862a08e676eb8303fbdf8c4f66300113c98acdfa191b81fb28e1099",
+    "jolup/observability.py": "616c37cd0aee2fcd54c6da474a7209cc2b9bfa18a052f27194ba5ce7c0fe6453",
+    "jolup/planner.py": "ebae3733603c353508a91df79d13c6f6555f732d6a6cad516fd9fda41820e54a",
+    "jolup/rag.py": "3e33119c9af88b294b7133a5be257200ed2da0edb8c09ad3d348250257e76aec",
+    "jolup/samples.py": "668f715601fc291268f0271081e1a77b01d6508d6ca81031b941fdcc2d152a40",
+    "jolup/settings.py": "92bd1ff09d4ee335cd7ec6beb5302c75923edd278b3de03f7adfce65cef855fe",
+    "jolup/source_metadata.py": "4ddf0dd21d81bb3e1cc88f1069010651568c8c0afa8e92dbeec992f0283f81dd",
+    "jolup/study_api.py": "6767ad6b0d42c4515e3ac129c33c1d9ba5798e257d16bc34465357f7622b7d3e",
+    "jolup/ui_calendar.py": "0036a991ddaf10994b81d35b86524b5b7d310173200eabf01bcb6507d98d473d",
+    "jolup/ui_design.py": "0e6826cb60f7ad787e2cd02ec8d5b7533eb488ccbc3abbe18eda0baf47ebd3cb",
+    "pytest.ini": "c809c969ec7e11b9ff37784e9c6fcc0b7c5148d168e18b05aed797e03fbd6ead",
+    "scripts/build_index.py": "dbc8fa9168d5dbeadf2d4ee79a621f50149c06549f72669664ed0ebf7b98103b",
+    "scripts/export_api_contract.py": "e97e038554cd9d72b2c7d2ebc2e8dca0791d37eb8bf3c72f4f9216f9b169f2be",
+    "scripts/export_samples.py": "762469c3eb16f67234459861fafe46a176b3f2a778e05c53d7dfb7251e853ab7",
+    "scripts/package_project.py": "8ad75595f4c7fe362c23dbdc2ccb5d2ee89f33fa3b4d24c1110f8a645afd2be2",
+    "scripts/prepare_data.py": "0538da2f1eed86ba77e0280e8ab5f1681505a89db946f104b4d82a7ec6a00c18",
+    "scripts/profile_study.py": "4bf86f86c89eda04d83d44c6bc605a193c94e50015420e9cbb37c88f08638225",
+    "scripts/quality_check.py": "922c62d3ae8fd133e360ebfce01fe8ba384cef7d1d9682604ada416c8f66ecb5",
+    "scripts/sonar_local.py": "a02754939eb1ab978c8bffb1b56095f764f904a511202051957fdde0642d06dc",
+    "scripts/tdd_study.py": "b64f976dab2b9bf9f50c74cd3e9116b571015f440e9eb6449a9f5e19b21cbad8",
+    "tests/test_academic.py": "4f2a3ef3e730e2b7237041ea4f7a0ac30812737b834af2c82fda3e42ed41f322",
+    "tests/test_academic_review.py": "ebe6490b5dbe1f60844e537560b634bdb67168da2124bc1bcf04f66b29564d64",
+    "tests/test_agent.py": "7c0dac34429a74f0167ed48a7725a796cfa7bc7b047a04d5e52e772bb08bd83f",
+    "tests/test_agent_conversation.py": "833a2f2ce861c466552607e4c3bb971a2f60beb84e42e91bdadfcbd3a03a9ce7",
+    "tests/test_api_contract_export.py": "48facd869d6a66e68c7ef79faedc2b3f4b9b135c2f182fc11b0c5d11a2279ede",
+    "tests/test_app.py": "6fb26f73a3669a6baeb405b369490cdca45c89251f4324f3ab77b368c5fb723f",
+    "tests/test_app_conversation.py": "88c7371a6e8e688bc50d9de1317c9b6ca9748ac51af9811b749b4f1a4134e12e",
+    "tests/test_app_edges.py": "e2a5ac717884375fb49ead360fcee3f9a4e4f8f7418fd01deae83e09b6c16ecf",
+    "tests/test_app_study.py": "7235d126296b0b1cb8cad424aefd186f300e9b60c5f25b78efa2c1a15ca332c8",
+    "tests/test_calendar.py": "037da0933e6fe5b3d75d781a196dad544d1cfe4504802e856f4bd3c5f2783472",
+    "tests/test_chat_api.py": "b5fe7900bac63e8a449005d5708e9cdccbea193e3556d2195e959b63d9416f9c",
+    "tests/test_chat_client.py": "d9b282f5daea1594c47513375da5149b02b71d01f1aa1900199bc2f670a180ba",
+    "tests/test_chunking.py": "f5265faba4af8b23481436aa0fd4cbd77db46352b6c48350df4e40e8041897f8",
+    "tests/test_domain_edges.py": "6cc3ac34aed673b93e0742fccfd7682a5a1fd6b6a45b7f67a3640999359df14b",
+    "tests/test_domain_guard.py": "44ec43bc56d07018d5300f683f9156e6558d1fc866274d47f80f4c30506c8f72",
+    "tests/test_domain_transport_edges.py": "8c2b4db6d0665104bcafcb8cab629c372e2fe0133290cec28a950ffeec75276f",
+    "tests/test_env_export.py": "0f52ce8fcd4db6ab48f39af90b729df5ec6c0d078378a8dccd8ddf267c6bb5b0",
+    "tests/test_explanation_facts.py": "ac44c8b58c7f836888916c955e073ad254ce90d1bb2f2ef8fdfc3f090610b387",
+    "tests/test_llm.py": "236749eb2970ba51370d5dacf5564e0d7a357c310485c81873ab63b1c25ccc77",
+    "tests/test_llm_routing.py": "d472d84d32be373bd69eb530522f205c30bef8a5cdc14a75f05b136ac21ce694",
+    "tests/test_observability.py": "bd7a120f89c7d0b1bc9329cd43b2c1fa68c5a58f0880b7e2beb33397250b1c0a",
+    "tests/test_observability_edges.py": "3305d31fe43a9453a7cb53dfc1da98f310637aedfe576ddee303a28a0ac804fc",
+    "tests/test_profile_study.py": "52b5cb50956b6a5d9cdb7f5b4378b92805a71c5fed65f924e9b5e60dabda4554",
+    "tests/test_quality_check.py": "df027fb49a616a696a581619d04fc7c54575e8be36168e795e9d6003b08f3545",
+    "tests/test_rag.py": "fc0e21adc0fe3572b31dc7d086b64441afd75961cb0d799bdde5e1bf1bd9e9ac",
+    "tests/test_rag_edges.py": "53d0e6ec614bfff85610762503581cfa66757ae16d83c58fcba860ffffb0751b",
+    "tests/test_release_scripts.py": "2fb074a6167020f53242ff5792cbb0b75443030e2de244a564dfff63ae4bc8b3",
+    "tests/test_sonar_local.py": "56dd170db8da9f85d52f17d0d6055e149c30cb2fde7a7d1b8af9b75b611b17a8",
+    "tests/test_source_metadata.py": "625cae0d9ca8fd853a91f771fff79fdc2021077dfaaa40408510f1c78c68fcb7",
+    "tests/test_study_agent.py": "bd553c7d0d6f55649e1c6145de4483f263007c950bcd2669e48c8de4240d081a",
+    "tests/test_study_api.py": "b5454862bfd43e07af5ceb72a2cec81fe150606fa4ba1096a5d2f349b8788920",
+    "tests/test_tdd_cli.py": "80f0c22bb2bf2acd1175167b779aa13d22b958cfa3e9745ba9d612d1a6b41cc7",
+    "tests/test_tdd_study.py": "0cb0242667c59e2c8f69acd7dff2dc75775aa5a7181661d4ae75f5f8bd2d19cb",
+    "tests/test_ui_design.py": "ef662ae25852470ab96abf85e6115819c8013f5eabd778080b3bdf18a1932109",
+    ".coveragerc": "14deb096eaecc12500ae76edcfe5606900d29c77077d8e26190153338917a5c7"
+  },
+  "coverage": {
+    "statements_covered": 4632,
+    "statements_total": 4632,
+    "statement_percent": 100,
+    "branches_covered": 1544,
+    "branches_total": 1544,
+    "branch_percent": 100,
+    "full_100_percent": true,
+    "excluded_source_lines": 0,
+    "source_unchanged_during_measurement": true,
+    "changed_inputs_at_summary": [],
+    "actual_local_vector_and_mcp_processes": true,
+    "xml_sha256": "059585878bd1cae3a07fee44de4123a4bdc6f5f7efda05e3b6462baaefe142e1",
+    "report": "reports/quality/manifest.json",
+    "scope": "app.py, jolup/, scripts/ Python; no product line exclusion; tests/ product test discovery"
+  },
+  "tdd": {
+    "report": "reports/tdd_study/20261026_015458_005907/summary.json",
+    "historical_tdd_claim": false,
+    "expected_case_count": 21,
+    "same_contract_verified": true,
+    "phases": [
+      {
+        "status": "expected_red",
+        "exit_code": 1,
+        "total": 21,
+        "passed": 0,
+        "failed": 21,
+        "errors": 0,
+        "skipped": 0,
+        "phase": "red"
       },
-      "input_hashes": {
-        "docs/API.md": "91fcbbedd6010ec7a013a0cc48902d95d7f9b5b92f6f5b1dc964180e7b0fb3d3",
-        "docs/API_EXPLORER.md": "ccc8d2707abc6bbf0eb64a3d2988115a8fdba85288c2d312ca62b07a65dd3cff",
-        "docs/APPMAP.md": "623a4572ebc2c1836d88f8541f47ee1effe3be85f84dafb83f61c3b921078940",
-        "docs/LANGSMITH.md": "387c143693c7a45a24f0113fa3273c3486963293f3d05b1e6a8eab9d40632a60",
-        "docs/RAG.md": "a0887e6fd61c516409f9855885914741502638d464395eebe7969a748b89a452",
-        "docs/SONARQUBE.md": "6511e02ba711aac28b8d9783a1a1adb0490e6b63765857b9271ea9a7378791c9",
-        "docs/SONARQUBE_코드읽기.md": "782cf2bfdc543938b384b77fcd03948e1146adbd1a2e03d1f7d5c2b66025a111",
-        "docs/TDD_학습가이드.md": "4b0360f6aa28d93d1b9844a56d3841575df84da5b7b4294a2d151ab2b49a21c8",
-        "docs/tdd/추적표.md": "a611fa156f488cae963be7f25eafba83ca85b02326702a4d73c66326320e84c1",
-        "docs/개발도구_학습지도.md": "6f0bd25c9ef06e92e3e221653b5986b9bb83ae5667d1489694f76a64ea260152",
-        "docs/아키텍처_의사결정.md": "e45ecde456ac63cb9c2116997f83af580232c93932c273108d5736b9d5e5ace8",
-        "docs/윤석현_계산로직_설명.md": "d4cac74d5c6e029b73c6ef396ba27ffb54a15665558864bdb4fcf7ecb93572ea",
-        "docs/종합_검토_20261023.md": "cef9ef44374ab05b07eda98cab2e77ff1feef766dcba30905d773d8025780cb1",
-        "docs/청크_품질점검.md": "ad55d3352933d42c60ffe361a84fdb64e75092faafa0f86be1ed95678e9bf0ff",
-        "docs/프로젝트_구조도.md": "a418e8241e5f4eb93f8c84ed07f990a06dd54d4d609f4c7ea5f50cc28664c20c",
-        "docs/학습_가이드.md": "67f1401f07e4e66b2f25958871d753a82a8d77abeba3f449123d32fbd5954313"
+      {
+        "status": "passed",
+        "exit_code": 0,
+        "total": 21,
+        "passed": 21,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "phase": "green"
       },
-      "blocks": [
+      {
+        "status": "passed",
+        "exit_code": 0,
+        "total": 21,
+        "passed": 21,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "phase": "refactor"
+      }
+    ],
+    "requirements": 26,
+    "unique_referenced_test_functions": 177,
+    "implementation_references": 123,
+    "unique_implementation_symbols": 98,
+    "referenced_symbols_exist": true,
+    "actual_integration_red_green": [
+      "NFC and source metadata:29 failing tests before implementation",
+      "School revision stale interest ID:1 failing UI test before fix;30 related tests passed after fix"
+    ]
+  },
+  "mermaid": {
+    "schema_version": 1,
+    "generated_at": "2026-10-26T13:53:56.068642+09:00",
+    "status": "render_verified",
+    "block_count": 55,
+    "total_render_attempts": 110,
+    "failures": 0,
+    "diagram_types": {
+      "flowchart": 20,
+      "sequenceDiagram": 13,
+      "stateDiagram-v2": 8,
+      "mindmap": 2,
+      "treeView-beta": 7,
+      "block-beta": 2,
+      "pie": 1,
+      "venn-beta": 1,
+      "xychart-beta": 1
+    },
+    "tree_static_audit": {
+      "expected_files": 175,
+      "represented_files": 175,
+      "missing": [],
+      "extra": [],
+      "status": "passed"
+    },
+    "screenshots": [
+      {
+        "path": "$HOME/Documents/ChatGPT/AI 황영숙 교수님 미니 프로젝트 삼인방/.build/team-integration-20261026/diagram/tree-light.png",
+        "sha256": "b3de499ba6a514493651a58e6a55d9d727df506e68b70c602645fdcadf06e206",
+        "scope": "Representative light file tree",
+        "captured_by": "root"
+      },
+      {
+        "path": "$HOME/Documents/ChatGPT/AI 황영숙 교수님 미니 프로젝트 삼인방/.build/team-integration-20261026/diagram/tree-dark.png",
+        "sha256": "361386dcf0f1dcb11e3d7e52c6c9b2b52d92daf931222d0d40c2421f76a0879c",
+        "scope": "Representative dark file tree",
+        "captured_by": "root"
+      },
+      {
+        "path": "$HOME/Documents/ChatGPT/AI 황영숙 교수님 미니 프로젝트 삼인방/.build/team-integration-20261026/diagram/flow-light.png",
+        "sha256": "3e792b63a964599bdb5d757f12cca7b0cf6f6b8e431c408e7bc379ac573abf28",
+        "scope": "Representative light team-integration decision flow (diagram-35)",
+        "captured_by": "root"
+      },
+      {
+        "path": "$HOME/Documents/ChatGPT/AI 황영숙 교수님 미니 프로젝트 삼인방/.build/team-integration-20261026/diagram/flow-dark.png",
+        "sha256": "28f86ed2ec8f0770a41dce8d8f8146a19c87eea290d0eeb42e2edae8209fcb50",
+        "scope": "Representative dark team-integration decision flow (diagram-35)",
+        "captured_by": "root"
+      }
+    ],
+    "source_hashes": {
+      "docs/API.md": "91fcbbedd6010ec7a013a0cc48902d95d7f9b5b92f6f5b1dc964180e7b0fb3d3",
+      "docs/API_EXPLORER.md": "8d43f55d9c0017cefdb6250c867bd680fb57d6268ab2a9dd17d50f780e129f89",
+      "docs/APPMAP.md": "623a4572ebc2c1836d88f8541f47ee1effe3be85f84dafb83f61c3b921078940",
+      "docs/LANGSMITH.md": "387c143693c7a45a24f0113fa3273c3486963293f3d05b1e6a8eab9d40632a60",
+      "docs/RAG.md": "27ebb730c98106072e7024c2705f1915b56b8be951bc7adaa7d002c44ee941e5",
+      "docs/SONARQUBE.md": "6511e02ba711aac28b8d9783a1a1adb0490e6b63765857b9271ea9a7378791c9",
+      "docs/SONARQUBE_코드읽기.md": "782cf2bfdc543938b384b77fcd03948e1146adbd1a2e03d1f7d5c2b66025a111",
+      "docs/TDD_학습가이드.md": "17c78e5efe59109c9e0e0106ebc0c347834c401862bcdc47a0324dc972882842",
+      "docs/tdd/추적표.md": "dffa7f955435dc909a6da1d110c7661ee8e7a026ba4af5f592566a832084c28c",
+      "docs/개발도구_학습지도.md": "6f0bd25c9ef06e92e3e221653b5986b9bb83ae5667d1489694f76a64ea260152",
+      "docs/아키텍처_의사결정.md": "58479e754986d7b6b4e67e07ff4ad122a6046876bac06e0719782ea2498e7a6e",
+      "docs/윤석현_계산로직_설명.md": "d4cac74d5c6e029b73c6ef396ba27ffb54a15665558864bdb4fcf7ecb93572ea",
+      "docs/종합_검토_20261023.md": "33f09dd34c2157aacc69d4da9e4e63ff0d42ce6ec823deeea57ec599f6eb9175",
+      "docs/청크_품질점검.md": "7e973eeee3151ca02011f269b5f8fe56810e0ae8b38e5855e1606395ef085d18",
+      "docs/팀원_통합결과.md": "36fe4ab9c0ad8c131d8de939ddc8782199d2bdd44d56a9102da6dec693e8fcc1",
+      "docs/프로젝트_구조도.md": "5a3d93d48469d77603f5407ece7927e9ce1d611a3b2c6dfab967e433fc38a558",
+      "docs/학습_가이드.md": "67f1401f07e4e66b2f25958871d753a82a8d77abeba3f449123d32fbd5954313"
+    },
+    "source_block_hashes": [
+      {
+        "id": "diagram-1",
+        "file": "docs/API.md",
+        "line": 23,
+        "heading": "두 실행 모드의 범위",
+        "type": "flowchart",
+        "sha256": "94c2b7370aa02b40ee7e4290706c8e59da1d08d6094742cdf35d8fcf154015b4"
+      },
+      {
+        "id": "diagram-2",
+        "file": "docs/API_EXPLORER.md",
+        "line": 48,
+        "heading": "2. Swagger에서 입력 → 계산 → 출력을 읽기",
+        "type": "sequenceDiagram",
+        "sha256": "fb03072fb561150708a112b80c614557bb845e164fa1b8b020abd4ddad489f33"
+      },
+      {
+        "id": "diagram-3",
+        "file": "docs/APPMAP.md",
+        "line": 16,
+        "heading": "알고 싶은 것에 맞게 도구 고르기",
+        "type": "flowchart",
+        "sha256": "a7d5b60b14eef97db058b1c64edaa3a9a36a9f9057dcd874fe8f9af76cceb187"
+      },
+      {
+        "id": "diagram-4",
+        "file": "docs/APPMAP.md",
+        "line": 68,
+        "heading": "계획 진입 누락을 해결한 방법과 남은 범위",
+        "type": "sequenceDiagram",
+        "sha256": "80c8662172db35e8b41d1f61b5c040b9161164b1521b5bb567c1da9377ef6e52"
+      },
+      {
+        "id": "diagram-5",
+        "file": "docs/LANGSMITH.md",
+        "line": 18,
+        "heading": "키 없이 먼저 공부하기",
+        "type": "sequenceDiagram",
+        "sha256": "31fd54c40da5e0787572fe472c9ec71565868b01da3efc5e3a6b80f8ce3a3e00"
+      },
+      {
+        "id": "diagram-6",
+        "file": "docs/RAG.md",
+        "line": 103,
+        "heading": "코드로 읽는 순서",
+        "type": "flowchart",
+        "sha256": "9bfbc5aad2aacdc68bd0a0ad9f59145c1cb398a5918f71f27667af3fd3ee0565"
+      },
+      {
+        "id": "diagram-7",
+        "file": "docs/SONARQUBE.md",
+        "line": 14,
+        "heading": "복잡성 분석과 테스트를 연결해 코드 읽기",
+        "type": "sequenceDiagram",
+        "sha256": "1ee209b3ad2210d231952e8e1a0c3140b794e123d2e1e944d36668c8b4b84dd5"
+      },
+      {
+        "id": "diagram-8",
+        "file": "docs/SONARQUBE_코드읽기.md",
+        "line": 13,
+        "heading": "1. 이슈를 발견하면 바로 코드를 고치지 말고 정답부터 찾는다",
+        "type": "flowchart",
+        "sha256": "9c047da55e982e8d340675e530e17bdb809599b79c37e7b761c38e0e45fab407"
+      },
+      {
+        "id": "diagram-9",
+        "file": "docs/SONARQUBE_코드읽기.md",
+        "line": 67,
+        "heading": "2.1 취득 학점과 평점 인정 상태를 따로 읽는다",
+        "type": "stateDiagram-v2",
+        "sha256": "5bc61cf25e46620333bc613efacfa4847d28337d4cacf1aab7e41f3e20ee4782"
+      },
+      {
+        "id": "diagram-10",
+        "file": "docs/SONARQUBE_코드읽기.md",
+        "line": 89,
+        "heading": "2.2 근거의 해시와 검토 목록의 완전성을 함께 확인한다",
+        "type": "flowchart",
+        "sha256": "3d9d9cccbf9fb20e6af91ed28bd7fda1e784ae4565cc59b33eb9cd27f5db42c2"
+      },
+      {
+        "id": "diagram-11",
+        "file": "docs/SONARQUBE_코드읽기.md",
+        "line": 108,
+        "heading": "3. planner: 현재 기록에서 별도 가정 장부를 만들어 학기마다 누적한다",
+        "type": "sequenceDiagram",
+        "sha256": "aac9169f83dcffe637a83de85ab490b3acd9d0ca8435aadf49414afacbafad5b"
+      },
+      {
+        "id": "diagram-12",
+        "file": "docs/SONARQUBE_코드읽기.md",
+        "line": 185,
+        "heading": "5. LLM: 사실을 계산하는 코드와 문장을 선택하는 모델을 구별한다",
+        "type": "sequenceDiagram",
+        "sha256": "9d1b66547f0e3ab9c1895632711b4f967dd619eea7927587d8490a69efcf96aa"
+      },
+      {
+        "id": "diagram-13",
+        "file": "docs/SONARQUBE_코드읽기.md",
+        "line": 218,
+        "heading": "6. observability와 UI: 기록을 보는 동작과 밖으로 보내는 동작을 구분한다",
+        "type": "stateDiagram-v2",
+        "sha256": "ba9199b2bc85f5990cad8e1a8608e72a996f1964e15496d30f4bd3d50f5e01dc"
+      },
+      {
+        "id": "diagram-14",
+        "file": "docs/TDD_학습가이드.md",
+        "line": 66,
+        "heading": "2. 첫 실습: 같은 정답으로 Red → Green → Refactor를 실행한다",
+        "type": "stateDiagram-v2",
+        "sha256": "f33fedbd8ee07212537ce79b5687f6fdf74291d0ad88a0c0a4259ece1717b4af"
+      },
+      {
+        "id": "diagram-15",
+        "file": "docs/TDD_학습가이드.md",
+        "line": 128,
+        "heading": "3. 학습 어댑터와 실제 앱의 연결을 따라간다",
+        "type": "sequenceDiagram",
+        "sha256": "f6541a6975c6ad459774114ca6f48024cf1f8acc7f28de9d6dd0d0307e8f4b19"
+      },
+      {
+        "id": "diagram-16",
+        "file": "docs/TDD_학습가이드.md",
+        "line": 384,
+        "heading": "6. 실패했을 때 정답부터 고치지 않는다",
+        "type": "flowchart",
+        "sha256": "427fc0da71ae2d2a8c4463f38267f68e61d0608530a05dd0da5d1b150c32932d"
+      },
+      {
+        "id": "diagram-17",
+        "file": "docs/tdd/추적표.md",
+        "line": 7,
+        "heading": "요구사항 → 테스트 → 구현 추적표",
+        "type": "flowchart",
+        "sha256": "6adb664ba0204b63f5090d724d20ae7c6b4c276b4df6a1a09dda9d1b8c6bdc3c"
+      },
+      {
+        "id": "diagram-18",
+        "file": "docs/tdd/추적표.md",
+        "line": 26,
+        "heading": "1. 처음 읽을 순서",
+        "type": "sequenceDiagram",
+        "sha256": "2b9dfb01606455ffd9561241885cfe5d28fb8e862dfa6bd894240fd5d8bd7d00"
+      },
+      {
+        "id": "diagram-19",
+        "file": "docs/tdd/추적표.md",
+        "line": 103,
+        "heading": "4. 경계값: 정답이 바뀌는 지점만 고립하기",
+        "type": "flowchart",
+        "sha256": "e6f342712c62fa18083db50328b8e98cc827f22dd1ad758ac6239afa21265327"
+      },
+      {
+        "id": "diagram-20",
+        "file": "docs/tdd/추적표.md",
+        "line": 138,
+        "heading": "6. 상태전이: 같은 버튼도 앞선 상태에 따라 결과가 달라진다",
+        "type": "stateDiagram-v2",
+        "sha256": "47100b929f22a038272293756171a65d5d35759b52c4e5edf03bf1fcfd2f8b89"
+      },
+      {
+        "id": "diagram-21",
+        "file": "docs/tdd/추적표.md",
+        "line": 187,
+        "heading": "8. 새 변경에서 실제 TDD로 이어가기",
+        "type": "stateDiagram-v2",
+        "sha256": "c65f59935b2fbc0a020463e52046784a2d3183156f45d3141ac62e26c3afaf0e"
+      },
+      {
+        "id": "diagram-22",
+        "file": "docs/tdd/추적표.md",
+        "line": 208,
+        "heading": "8. 혼합 질문과 HTTP 세션 실습",
+        "type": "stateDiagram-v2",
+        "sha256": "ce49df388777fecd65918ec05ecfaf64120f2a128b7172f7e62d25baa4433788"
+      },
+      {
+        "id": "diagram-23",
+        "file": "docs/개발도구_학습지도.md",
+        "line": 19,
+        "heading": "모델 출력 계약부터 읽는 순서",
+        "type": "sequenceDiagram",
+        "sha256": "10cfd36a2b03dbf8487c311db565dc7a0ebfeda4bd3c52b3e709a32440ff2244"
+      },
+      {
+        "id": "diagram-24",
+        "file": "docs/개발도구_학습지도.md",
+        "line": 70,
+        "heading": "2. 도구마다 답하는 질문을 구분한다",
+        "type": "flowchart",
+        "sha256": "1969a41fd229ae0d7b18b06d3b15834ab22d6c6fd2ca5ca0bcf1bdc42e56efd8"
+      },
+      {
+        "id": "diagram-25",
+        "file": "docs/개발도구_학습지도.md",
+        "line": 102,
+        "heading": "3. 더미 하나를 실제 함수와 연결해서 읽는다",
+        "type": "sequenceDiagram",
+        "sha256": "2ec84d968677d5e998e19eb6fd63ff2d09cc0c60b8741d6df091f7d5b441cbe2"
+      },
+      {
+        "id": "diagram-26",
+        "file": "docs/개발도구_학습지도.md",
+        "line": 191,
+        "heading": "5. PM2와 비슷한 운영 목적은 현재 Docker 설정으로 처리한다",
+        "type": "stateDiagram-v2",
+        "sha256": "a3e8fb7caa1a355cc35db8d891528e5e52f758a7d29b99cbea8fecf3f2a1d139"
+      },
+      {
+        "id": "diagram-27",
+        "file": "docs/아키텍처_의사결정.md",
+        "line": 13,
+        "heading": "1. 무엇이 어디에서 실행되는가",
+        "type": "flowchart",
+        "sha256": "a37f0f7973e92dfb0077b102c7502f791377c892582517b35da7e1aef46303bf"
+      },
+      {
+        "id": "diagram-28",
+        "file": "docs/아키텍처_의사결정.md",
+        "line": 117,
+        "heading": "4. 색인을 만드는 때와 질문하는 때",
+        "type": "sequenceDiagram",
+        "sha256": "a0bd7131b7395bfdc52c8195e545f4cca37574e10d27223790e11ab8f9f17cfa"
+      },
+      {
+        "id": "diagram-29",
+        "file": "docs/아키텍처_의사결정.md",
+        "line": 189,
+        "heading": "5. SQL·NoSQL·Redis는 지금 필요한가",
+        "type": "flowchart",
+        "sha256": "6e14affa5847e86d3b84b5f56dc0022fd99b8ad747c4b779d6ed98a180afc6cc"
+      },
+      {
+        "id": "diagram-30",
+        "file": "docs/아키텍처_의사결정.md",
+        "line": 209,
+        "heading": "6. 새 도구를 선택하는 순서",
+        "type": "flowchart",
+        "sha256": "c12b667c7387252db42477a397561f071c3418ef17e054cf7d8494bf8272e3e8"
+      },
+      {
+        "id": "diagram-31",
+        "file": "docs/윤석현_계산로직_설명.md",
+        "line": 21,
+        "heading": "2. 입력에서 답변까지 따라가기",
+        "type": "flowchart",
+        "sha256": "7fc958d0d374108faa955b12439ea588ce59a564e66c02eeb93096bd9fbacb6e"
+      },
+      {
+        "id": "diagram-32",
+        "file": "docs/종합_검토_20261023.md",
+        "line": 20,
+        "heading": "원래 요구사항을 확인하는 순서",
+        "type": "flowchart",
+        "sha256": "aa08c2bb97931a01c8b7d42af090600610c5686835fc5e35407172f1af55a19c"
+      },
+      {
+        "id": "diagram-33",
+        "file": "docs/청크_품질점검.md",
+        "line": 24,
+        "heading": "무엇을 고쳤는가",
+        "type": "flowchart",
+        "sha256": "3dd071c59a24891464bda5162191db4431a5105e79679ca7729d78e6267c499e"
+      },
+      {
+        "id": "diagram-34",
+        "file": "docs/청크_품질점검.md",
+        "line": 53,
+        "heading": "검색 성능과 답변 검사를 구분하기",
+        "type": "sequenceDiagram",
+        "sha256": "9ac39444fd0e6809ae4e1f8d72742894092d22e6ededd4f34895b2e19caac039"
+      },
+      {
+        "id": "diagram-35",
+        "file": "docs/팀원_통합결과.md",
+        "line": 38,
+        "heading": "왜 그대로 합치지 않은 부분이 있나",
+        "type": "flowchart",
+        "sha256": "2ee412cc5b8e8a511a9cfaa480f444d5a3461e261d0494020c34baa51973b10c"
+      },
+      {
+        "id": "diagram-36",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 11,
+        "heading": "1. 전체 역할 개요",
+        "type": "mindmap",
+        "sha256": "7d1eac56f804bdf1910d1c0ff365e8155a9dc5342057cfe78cbfc43441f98409"
+      },
+      {
+        "id": "diagram-37",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 57,
+        "heading": "2. 전체 시스템 아키텍처",
+        "type": "flowchart",
+        "sha256": "013a881984b86369943847af835383c3014ab272f46aa565e9bed946a899cd3c"
+      },
+      {
+        "id": "diagram-38",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 157,
+        "heading": "루트·화면 설정·디자인·기여 원본",
+        "type": "treeView-beta",
+        "sha256": "babefaa70de1a7a8bf20a5b10b9f5eca3cef9501bafaabc2097ee012439bbd86"
+      },
+      {
+        "id": "diagram-39",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 202,
+        "heading": "핵심 기능 jolup",
+        "type": "treeView-beta",
+        "sha256": "5431bd225ae69c50fdf540726c86f68ef5752ccf8f740b04c1d155cd6617b27e"
+      },
+      {
+        "id": "diagram-40",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 231,
+        "heading": "자료 data",
+        "type": "treeView-beta",
+        "sha256": "de80c06ec227bd3f7dc88cca8888027750d6eca56a1328fa93d29acb97a4a878"
+      },
+      {
+        "id": "diagram-41",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 275,
+        "heading": "검증 tests",
+        "type": "treeView-beta",
+        "sha256": "7cca0469c4c6e9534f9f01d51ccae26cdf8ce51172963d90764575c556f9af63"
+      },
+      {
+        "id": "diagram-42",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 316,
+        "heading": "실습 learning",
+        "type": "treeView-beta",
+        "sha256": "bd60ed1e4e696a9fdcbdc6b2d90c4bb7357d8e4402e2ae18c3a8c3ffe517eccc"
+      },
+      {
+        "id": "diagram-43",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 333,
+        "heading": "운영 도구 scripts",
+        "type": "treeView-beta",
+        "sha256": "787464c0c68d5e148b1943d0af985237ccb19f8c8d81ab0871bc37a39d748d8d"
+      },
+      {
+        "id": "diagram-44",
+        "file": "docs/프로젝트_구조도.md",
+        "line": 353,
+        "heading": "설명 docs",
+        "type": "treeView-beta",
+        "sha256": "6f5252c2a0656bbf3d4b943d329f56123d5b6880ed9c631a1d44cae1454c6d8b"
+      },
+      {
+        "id": "diagram-45",
+        "file": "docs/학습_가이드.md",
+        "line": 25,
+        "heading": "먼저 LangChain·LangGraph·LangSmith를 구별하기",
+        "type": "block-beta",
+        "sha256": "a79c26a159e4458ce64aa172837de598e3e9a5729cb8ba9929bad844bb06198c"
+      },
+      {
+        "id": "diagram-46",
+        "file": "docs/학습_가이드.md",
+        "line": 39,
+        "heading": "1. 담당 범위 — 마인드맵 / 개념도",
+        "type": "mindmap",
+        "sha256": "a2e5d37554fc87bd45f7a455aae1ea65b4216e9c7e6801a14b0f8e4e3609c38b"
+      },
+      {
+        "id": "diagram-47",
+        "file": "docs/학습_가이드.md",
+        "line": 76,
+        "heading": "2. 자료가 연결되는 곳 — 흐름도 / 자료 연결 개념도",
+        "type": "flowchart",
+        "sha256": "a54f4928995a929bc987ed259baee34de20caae6e994a79dcfae265ab2bcf6e7"
+      },
+      {
+        "id": "diagram-48",
+        "file": "docs/학습_가이드.md",
+        "line": 100,
+        "heading": "3. 과목 한 행의 학점 인정 — 의사결정 흐름도 / 실행도",
+        "type": "flowchart",
+        "sha256": "2f7f5d3d53d1c1d7da3001ef550ea5c42c6ef20f23a0191ba9ccb5079fba2629"
+      },
+      {
+        "id": "diagram-49",
+        "file": "docs/학습_가이드.md",
+        "line": 127,
+        "heading": "4. 현재 90학점의 구성 — 파이 차트 / 수치 비교",
+        "type": "pie",
+        "sha256": "82da7e4919b543fc60953af8e2301dabec33930b06e7dd27e7b5b6d63959ab21"
+      },
+      {
+        "id": "diagram-50",
+        "file": "docs/학습_가이드.md",
+        "line": 155,
+        "heading": "5. 모든 졸업요건의 동시 충족 — 벤다이어그램 / 집합 개념도",
+        "type": "venn-beta",
+        "sha256": "364ef5d4a45add6dc816d79a30147a64371d972f6b9dd9215c09854224de069b"
+      },
+      {
+        "id": "diagram-51",
+        "file": "docs/학습_가이드.md",
+        "line": 185,
+        "heading": "6. 현재와 미래 전망 — 막대·기준선 / 수치 비교",
+        "type": "xychart-beta",
+        "sha256": "93ada56fcb11c7d5ff97c095daee1710c5f256378d6330bb93402e08a6df25f1"
+      },
+      {
+        "id": "diagram-52",
+        "file": "docs/학습_가이드.md",
+        "line": 222,
+        "heading": "7. 과목 배치의 동시 제약 — 블록 다이어그램 / 제약 개념도",
+        "type": "block-beta",
+        "sha256": "0e9b3a91ba06d8250c2b94b3da9d10253031bf073e464aad166cdd363e91484b"
+      },
+      {
+        "id": "diagram-53",
+        "file": "docs/학습_가이드.md",
+        "line": 259,
+        "heading": "8. 질문에서 답변까지 — 시퀀스 다이어그램 / 실행도",
+        "type": "sequenceDiagram",
+        "sha256": "8cc0e1ff6ab2aeb14f4c83503bdd706c18eb90f52d354aaa4c1a9ca5b66ab498"
+      },
+      {
+        "id": "diagram-54",
+        "file": "docs/학습_가이드.md",
+        "line": 301,
+        "heading": "9. 일정 승인 — 상태 다이어그램 / 실행 상태",
+        "type": "stateDiagram-v2",
+        "sha256": "8f03acefe70da0b236b2396fe72303a00367dcbda79e3dd659b2575ac7f756d2"
+      },
+      {
+        "id": "diagram-55",
+        "file": "docs/학습_가이드.md",
+        "line": 322,
+        "heading": "10. 결과가 다를 때 — 원인 진단 흐름도 / 분석 절차",
+        "type": "flowchart",
+        "sha256": "059833d42965f666a3f45666545631939375f19e7cf5ee950a0ffad96a7a1301"
+      }
+    ],
+    "gallery_sha256": "49b61f9619e276fc3108676d7161e880d1fb1763f5da0c1712fce9f0b3e97086",
+    "url": "http://127.0.0.1:8766/artifacts/diagrams.html",
+    "claim_boundary": "110 actual Mermaid render attempts passed in the in-app browser: 55 light and 55 dark. Screenshots cover representative file trees and the team-integration decision flow (diagram-35), in both themes. Rendering does not prove semantic correctness, every viewport, or other Markdown viewers. Browser proof is preserved separately.",
+    "themes": {
+      "light": {
+        "completed_at": "2026-10-26T04:51:08.372Z",
+        "passed": 55,
+        "failed": 0
+      },
+      "dark": {
+        "completed_at": "2026-10-26T04:51:54.438Z",
+        "passed": 55,
+        "failed": 0
+      }
+    },
+    "browser_proof": {
+      "path": "$HOME/Documents/ChatGPT/AI 황영숙 교수님 미니 프로젝트 삼인방/.build/team-integration-20261026/diagram/browser-both.json",
+      "sha256": "a1581cd05be794a6def14aa78b26b470f181a71416b32be7619c8eb43c425e2f",
+      "provider": "CUA IAB browser 2",
+      "observed_by": "root",
+      "mermaid_version": "11.14.0"
+    },
+    "resolved_initial_availability_blocker": {
+      "stage": "browser_availability",
+      "message": "cua.createBrowserTab returned Browser is not available: iab; cua.getState returned browsers: [].",
+      "security_bypass_attempted": false
+    },
+    "final_source_sync": {
+      "status": "verified",
+      "checked_at": "2026-10-26T14:03:58.194373+09:00",
+      "mermaid_blocks_unchanged": true,
+      "gallery_renderer_unchanged": true,
+      "changed_document_hashes": [
         {
-          "id": "diagram-1",
-          "file": "docs/API.md",
-          "line": 23,
-          "heading": "두 실행 모드의 범위",
-          "type": "flowchart",
-          "sha256": "94c2b7370aa02b40ee7e4290706c8e59da1d08d6094742cdf35d8fcf154015b4"
-        },
-        {
-          "id": "diagram-2",
           "file": "docs/API_EXPLORER.md",
-          "line": 48,
-          "heading": "2. Swagger에서 입력 → 계산 → 출력을 읽기",
-          "type": "sequenceDiagram",
-          "sha256": "fb03072fb561150708a112b80c614557bb845e164fa1b8b020abd4ddad489f33"
+          "rendered_sha256": "ccc8d2707abc6bbf0eb64a3d2988115a8fdba85288c2d312ca62b07a65dd3cff",
+          "final_sha256": "8d43f55d9c0017cefdb6250c867bd680fb57d6268ab2a9dd17d50f780e129f89",
+          "mermaid_blocks_unchanged": true
         },
         {
-          "id": "diagram-3",
-          "file": "docs/APPMAP.md",
-          "line": 16,
-          "heading": "알고 싶은 것에 맞게 도구 고르기",
-          "type": "flowchart",
-          "sha256": "a7d5b60b14eef97db058b1c64edaa3a9a36a9f9057dcd874fe8f9af76cceb187"
-        },
-        {
-          "id": "diagram-4",
-          "file": "docs/APPMAP.md",
-          "line": 68,
-          "heading": "계획 진입 누락을 해결한 방법과 남은 범위",
-          "type": "sequenceDiagram",
-          "sha256": "80c8662172db35e8b41d1f61b5c040b9161164b1521b5bb567c1da9377ef6e52"
-        },
-        {
-          "id": "diagram-5",
-          "file": "docs/LANGSMITH.md",
-          "line": 18,
-          "heading": "키 없이 먼저 공부하기",
-          "type": "sequenceDiagram",
-          "sha256": "31fd54c40da5e0787572fe472c9ec71565868b01da3efc5e3a6b80f8ce3a3e00"
-        },
-        {
-          "id": "diagram-6",
-          "file": "docs/RAG.md",
-          "line": 86,
-          "heading": "코드로 읽는 순서",
-          "type": "flowchart",
-          "sha256": "32e753a44eb3c3f1e857f8c693aa803fc50ffe95834942a2453ab56a4cd3588a"
-        },
-        {
-          "id": "diagram-7",
-          "file": "docs/SONARQUBE.md",
-          "line": 14,
-          "heading": "복잡성 분석과 테스트를 연결해 코드 읽기",
-          "type": "sequenceDiagram",
-          "sha256": "1ee209b3ad2210d231952e8e1a0c3140b794e123d2e1e944d36668c8b4b84dd5"
-        },
-        {
-          "id": "diagram-8",
-          "file": "docs/SONARQUBE_코드읽기.md",
-          "line": 13,
-          "heading": "1. 이슈를 발견하면 바로 코드를 고치지 말고 정답부터 찾는다",
-          "type": "flowchart",
-          "sha256": "9c047da55e982e8d340675e530e17bdb809599b79c37e7b761c38e0e45fab407"
-        },
-        {
-          "id": "diagram-9",
-          "file": "docs/SONARQUBE_코드읽기.md",
-          "line": 67,
-          "heading": "2.1 취득 학점과 평점 인정 상태를 따로 읽는다",
-          "type": "stateDiagram-v2",
-          "sha256": "5bc61cf25e46620333bc613efacfa4847d28337d4cacf1aab7e41f3e20ee4782"
-        },
-        {
-          "id": "diagram-10",
-          "file": "docs/SONARQUBE_코드읽기.md",
-          "line": 89,
-          "heading": "2.2 근거의 해시와 검토 목록의 완전성을 함께 확인한다",
-          "type": "flowchart",
-          "sha256": "3d9d9cccbf9fb20e6af91ed28bd7fda1e784ae4565cc59b33eb9cd27f5db42c2"
-        },
-        {
-          "id": "diagram-11",
-          "file": "docs/SONARQUBE_코드읽기.md",
-          "line": 108,
-          "heading": "3. planner: 현재 기록에서 별도 가정 장부를 만들어 학기마다 누적한다",
-          "type": "sequenceDiagram",
-          "sha256": "aac9169f83dcffe637a83de85ab490b3acd9d0ca8435aadf49414afacbafad5b"
-        },
-        {
-          "id": "diagram-12",
-          "file": "docs/SONARQUBE_코드읽기.md",
-          "line": 185,
-          "heading": "5. LLM: 사실을 계산하는 코드와 문장을 선택하는 모델을 구별한다",
-          "type": "sequenceDiagram",
-          "sha256": "9d1b66547f0e3ab9c1895632711b4f967dd619eea7927587d8490a69efcf96aa"
-        },
-        {
-          "id": "diagram-13",
-          "file": "docs/SONARQUBE_코드읽기.md",
-          "line": 218,
-          "heading": "6. observability와 UI: 기록을 보는 동작과 밖으로 보내는 동작을 구분한다",
-          "type": "stateDiagram-v2",
-          "sha256": "ba9199b2bc85f5990cad8e1a8608e72a996f1964e15496d30f4bd3d50f5e01dc"
-        },
-        {
-          "id": "diagram-14",
           "file": "docs/TDD_학습가이드.md",
-          "line": 66,
-          "heading": "2. 첫 실습: 같은 정답으로 Red → Green → Refactor를 실행한다",
-          "type": "stateDiagram-v2",
-          "sha256": "f33fedbd8ee07212537ce79b5687f6fdf74291d0ad88a0c0a4259ece1717b4af"
+          "rendered_sha256": "43d288d66b20ecdc5f3038b39c59ccc83557811c0f39dc2d5886dd701e3dacf5",
+          "final_sha256": "17c78e5efe59109c9e0e0106ebc0c347834c401862bcdc47a0324dc972882842",
+          "mermaid_blocks_unchanged": true
         },
         {
-          "id": "diagram-15",
-          "file": "docs/TDD_학습가이드.md",
-          "line": 128,
-          "heading": "3. 학습 어댑터와 실제 앱의 연결을 따라간다",
-          "type": "sequenceDiagram",
-          "sha256": "f6541a6975c6ad459774114ca6f48024cf1f8acc7f28de9d6dd0d0307e8f4b19"
-        },
-        {
-          "id": "diagram-16",
-          "file": "docs/TDD_학습가이드.md",
-          "line": 374,
-          "heading": "6. 실패했을 때 정답부터 고치지 않는다",
-          "type": "flowchart",
-          "sha256": "427fc0da71ae2d2a8c4463f38267f68e61d0608530a05dd0da5d1b150c32932d"
-        },
-        {
-          "id": "diagram-17",
           "file": "docs/tdd/추적표.md",
-          "line": 7,
-          "heading": "요구사항 → 테스트 → 구현 추적표",
-          "type": "flowchart",
-          "sha256": "6adb664ba0204b63f5090d724d20ae7c6b4c276b4df6a1a09dda9d1b8c6bdc3c"
+          "rendered_sha256": "c8d4858eb32ad2d249e80986f6e0de147ffda5348652abc66ddd7d52d625c363",
+          "final_sha256": "dffa7f955435dc909a6da1d110c7661ee8e7a026ba4af5f592566a832084c28c",
+          "mermaid_blocks_unchanged": true
         },
         {
-          "id": "diagram-18",
-          "file": "docs/tdd/추적표.md",
-          "line": 26,
-          "heading": "1. 처음 읽을 순서",
-          "type": "sequenceDiagram",
-          "sha256": "2b9dfb01606455ffd9561241885cfe5d28fb8e862dfa6bd894240fd5d8bd7d00"
-        },
-        {
-          "id": "diagram-19",
-          "file": "docs/tdd/추적표.md",
-          "line": 101,
-          "heading": "4. 경계값: 정답이 바뀌는 지점만 고립하기",
-          "type": "flowchart",
-          "sha256": "e6f342712c62fa18083db50328b8e98cc827f22dd1ad758ac6239afa21265327"
-        },
-        {
-          "id": "diagram-20",
-          "file": "docs/tdd/추적표.md",
-          "line": 136,
-          "heading": "6. 상태전이: 같은 버튼도 앞선 상태에 따라 결과가 달라진다",
-          "type": "stateDiagram-v2",
-          "sha256": "47100b929f22a038272293756171a65d5d35759b52c4e5edf03bf1fcfd2f8b89"
-        },
-        {
-          "id": "diagram-21",
-          "file": "docs/tdd/추적표.md",
-          "line": 185,
-          "heading": "8. 새 변경에서 실제 TDD로 이어가기",
-          "type": "stateDiagram-v2",
-          "sha256": "c65f59935b2fbc0a020463e52046784a2d3183156f45d3141ac62e26c3afaf0e"
-        },
-        {
-          "id": "diagram-22",
-          "file": "docs/tdd/추적표.md",
-          "line": 206,
-          "heading": "8. 혼합 질문과 HTTP 세션 실습",
-          "type": "stateDiagram-v2",
-          "sha256": "ce49df388777fecd65918ec05ecfaf64120f2a128b7172f7e62d25baa4433788"
-        },
-        {
-          "id": "diagram-23",
-          "file": "docs/개발도구_학습지도.md",
-          "line": 19,
-          "heading": "모델 출력 계약부터 읽는 순서",
-          "type": "sequenceDiagram",
-          "sha256": "10cfd36a2b03dbf8487c311db565dc7a0ebfeda4bd3c52b3e709a32440ff2244"
-        },
-        {
-          "id": "diagram-24",
-          "file": "docs/개발도구_학습지도.md",
-          "line": 70,
-          "heading": "2. 도구마다 답하는 질문을 구분한다",
-          "type": "flowchart",
-          "sha256": "1969a41fd229ae0d7b18b06d3b15834ab22d6c6fd2ca5ca0bcf1bdc42e56efd8"
-        },
-        {
-          "id": "diagram-25",
-          "file": "docs/개발도구_학습지도.md",
-          "line": 102,
-          "heading": "3. 더미 하나를 실제 함수와 연결해서 읽는다",
-          "type": "sequenceDiagram",
-          "sha256": "2ec84d968677d5e998e19eb6fd63ff2d09cc0c60b8741d6df091f7d5b441cbe2"
-        },
-        {
-          "id": "diagram-26",
-          "file": "docs/개발도구_학습지도.md",
-          "line": 191,
-          "heading": "5. PM2와 비슷한 운영 목적은 현재 Docker 설정으로 처리한다",
-          "type": "stateDiagram-v2",
-          "sha256": "a3e8fb7caa1a355cc35db8d891528e5e52f758a7d29b99cbea8fecf3f2a1d139"
-        },
-        {
-          "id": "diagram-27",
-          "file": "docs/아키텍처_의사결정.md",
-          "line": 13,
-          "heading": "1. 무엇이 어디에서 실행되는가",
-          "type": "flowchart",
-          "sha256": "f1a3f7fe91dc8e49e304abd22444ced980b8502ac3842c650938d5276be6a28b"
-        },
-        {
-          "id": "diagram-28",
-          "file": "docs/아키텍처_의사결정.md",
-          "line": 114,
-          "heading": "4. 색인을 만드는 때와 질문하는 때",
-          "type": "sequenceDiagram",
-          "sha256": "a0bd7131b7395bfdc52c8195e545f4cca37574e10d27223790e11ab8f9f17cfa"
-        },
-        {
-          "id": "diagram-29",
-          "file": "docs/아키텍처_의사결정.md",
-          "line": 184,
-          "heading": "5. SQL·NoSQL·Redis는 지금 필요한가",
-          "type": "flowchart",
-          "sha256": "6e14affa5847e86d3b84b5f56dc0022fd99b8ad747c4b779d6ed98a180afc6cc"
-        },
-        {
-          "id": "diagram-30",
-          "file": "docs/아키텍처_의사결정.md",
-          "line": 204,
-          "heading": "6. 새 도구를 선택하는 순서",
-          "type": "flowchart",
-          "sha256": "c12b667c7387252db42477a397561f071c3418ef17e054cf7d8494bf8272e3e8"
-        },
-        {
-          "id": "diagram-31",
-          "file": "docs/윤석현_계산로직_설명.md",
-          "line": 21,
-          "heading": "2. 입력에서 답변까지 따라가기",
-          "type": "flowchart",
-          "sha256": "7fc958d0d374108faa955b12439ea588ce59a564e66c02eeb93096bd9fbacb6e"
-        },
-        {
-          "id": "diagram-32",
-          "file": "docs/종합_검토_20261023.md",
-          "line": 20,
-          "heading": "원래 요구사항을 확인하는 순서",
-          "type": "flowchart",
-          "sha256": "aa08c2bb97931a01c8b7d42af090600610c5686835fc5e35407172f1af55a19c"
-        },
-        {
-          "id": "diagram-33",
-          "file": "docs/청크_품질점검.md",
-          "line": 22,
-          "heading": "무엇을 고쳤는가",
-          "type": "flowchart",
-          "sha256": "3dd071c59a24891464bda5162191db4431a5105e79679ca7729d78e6267c499e"
-        },
-        {
-          "id": "diagram-34",
-          "file": "docs/청크_품질점검.md",
-          "line": 51,
-          "heading": "검색 성능과 답변 검사를 구분하기",
-          "type": "sequenceDiagram",
-          "sha256": "9ac39444fd0e6809ae4e1f8d72742894092d22e6ededd4f34895b2e19caac039"
-        },
-        {
-          "id": "diagram-35",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 11,
-          "heading": "1. 전체 역할 개요",
-          "type": "mindmap",
-          "sha256": "0224ee8397bf92f5fd4f4acf2d6f9a3f2eb71876ebdbdc2154505f56e1b56955"
-        },
-        {
-          "id": "diagram-36",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 52,
-          "heading": "2. 전체 시스템 아키텍처",
-          "type": "flowchart",
-          "sha256": "11c4eee63a41c0631132c6633830f1af3226a0cb22f1c47262db8459b8e13b5a"
-        },
-        {
-          "id": "diagram-37",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 147,
-          "heading": "루트와 화면 설정",
-          "type": "treeView-beta",
-          "sha256": "1ab268028cf532b84bbe69a7d8eb095f851dea6a6d5c2ee5fc0692d73d892423"
-        },
-        {
-          "id": "diagram-38",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 172,
-          "heading": "핵심 기능 jolup",
-          "type": "treeView-beta",
-          "sha256": "4031f45f0f624e3bf74bf7d37beb9cdaebab820a41ed436f6bed49986fe6bfcb"
-        },
-        {
-          "id": "diagram-39",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 198,
-          "heading": "자료 data",
-          "type": "treeView-beta",
-          "sha256": "49162bdc16a3ccfb06ad5ab913d22d0fdd6d51eddbcb1b5664a2fe4f8d68d76f"
-        },
-        {
-          "id": "diagram-40",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 242,
-          "heading": "검증 tests",
-          "type": "treeView-beta",
-          "sha256": "75be007d2dd294847844fae31c8e0cd64d93ae68c46688d7a84db712df2d9a16"
-        },
-        {
-          "id": "diagram-41",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 281,
-          "heading": "실습 learning",
-          "type": "treeView-beta",
-          "sha256": "bd60ed1e4e696a9fdcbdc6b2d90c4bb7357d8e4402e2ae18c3a8c3ffe517eccc"
-        },
-        {
-          "id": "diagram-42",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 298,
-          "heading": "운영 도구 scripts",
-          "type": "treeView-beta",
-          "sha256": "787464c0c68d5e148b1943d0af985237ccb19f8c8d81ab0871bc37a39d748d8d"
-        },
-        {
-          "id": "diagram-43",
-          "file": "docs/프로젝트_구조도.md",
-          "line": 318,
-          "heading": "설명 docs",
-          "type": "treeView-beta",
-          "sha256": "71556e4f4d5e48d0c6444401f38fa43253e005c4e83e4b555230d0332d6cdf21"
-        },
-        {
-          "id": "diagram-44",
-          "file": "docs/학습_가이드.md",
-          "line": 25,
-          "heading": "먼저 LangChain·LangGraph·LangSmith를 구별하기",
-          "type": "block-beta",
-          "sha256": "a79c26a159e4458ce64aa172837de598e3e9a5729cb8ba9929bad844bb06198c"
-        },
-        {
-          "id": "diagram-45",
-          "file": "docs/학습_가이드.md",
-          "line": 39,
-          "heading": "1. 담당 범위 — 마인드맵 / 개념도",
-          "type": "mindmap",
-          "sha256": "a2e5d37554fc87bd45f7a455aae1ea65b4216e9c7e6801a14b0f8e4e3609c38b"
-        },
-        {
-          "id": "diagram-46",
-          "file": "docs/학습_가이드.md",
-          "line": 76,
-          "heading": "2. 자료가 연결되는 곳 — 흐름도 / 자료 연결 개념도",
-          "type": "flowchart",
-          "sha256": "a54f4928995a929bc987ed259baee34de20caae6e994a79dcfae265ab2bcf6e7"
-        },
-        {
-          "id": "diagram-47",
-          "file": "docs/학습_가이드.md",
-          "line": 100,
-          "heading": "3. 과목 한 행의 학점 인정 — 의사결정 흐름도 / 실행도",
-          "type": "flowchart",
-          "sha256": "2f7f5d3d53d1c1d7da3001ef550ea5c42c6ef20f23a0191ba9ccb5079fba2629"
-        },
-        {
-          "id": "diagram-48",
-          "file": "docs/학습_가이드.md",
-          "line": 127,
-          "heading": "4. 현재 90학점의 구성 — 파이 차트 / 수치 비교",
-          "type": "pie",
-          "sha256": "82da7e4919b543fc60953af8e2301dabec33930b06e7dd27e7b5b6d63959ab21"
-        },
-        {
-          "id": "diagram-49",
-          "file": "docs/학습_가이드.md",
-          "line": 155,
-          "heading": "5. 모든 졸업요건의 동시 충족 — 벤다이어그램 / 집합 개념도",
-          "type": "venn-beta",
-          "sha256": "364ef5d4a45add6dc816d79a30147a64371d972f6b9dd9215c09854224de069b"
-        },
-        {
-          "id": "diagram-50",
-          "file": "docs/학습_가이드.md",
-          "line": 185,
-          "heading": "6. 현재와 미래 전망 — 막대·기준선 / 수치 비교",
-          "type": "xychart-beta",
-          "sha256": "93ada56fcb11c7d5ff97c095daee1710c5f256378d6330bb93402e08a6df25f1"
-        },
-        {
-          "id": "diagram-51",
-          "file": "docs/학습_가이드.md",
-          "line": 222,
-          "heading": "7. 과목 배치의 동시 제약 — 블록 다이어그램 / 제약 개념도",
-          "type": "block-beta",
-          "sha256": "0e9b3a91ba06d8250c2b94b3da9d10253031bf073e464aad166cdd363e91484b"
-        },
-        {
-          "id": "diagram-52",
-          "file": "docs/학습_가이드.md",
-          "line": 259,
-          "heading": "8. 질문에서 답변까지 — 시퀀스 다이어그램 / 실행도",
-          "type": "sequenceDiagram",
-          "sha256": "8cc0e1ff6ab2aeb14f4c83503bdd706c18eb90f52d354aaa4c1a9ca5b66ab498"
-        },
-        {
-          "id": "diagram-53",
-          "file": "docs/학습_가이드.md",
-          "line": 301,
-          "heading": "9. 일정 승인 — 상태 다이어그램 / 실행 상태",
-          "type": "stateDiagram-v2",
-          "sha256": "8f03acefe70da0b236b2396fe72303a00367dcbda79e3dd659b2575ac7f756d2"
-        },
-        {
-          "id": "diagram-54",
-          "file": "docs/학습_가이드.md",
-          "line": 322,
-          "heading": "10. 결과가 다를 때 — 원인 진단 흐름도 / 분석 절차",
-          "type": "flowchart",
-          "sha256": "059833d42965f666a3f45666545631939375f19e7cf5ee950a0ffad96a7a1301"
+          "file": "docs/팀원_통합결과.md",
+          "rendered_sha256": "a1358f217d8bfa0c18fd7f066d684c3d578dc2fe387fd9f73d5ab06d190e42df",
+          "final_sha256": "36fe4ab9c0ad8c131d8de939ddc8782199d2bdd44d56a9102da6dec693e8fcc1",
+          "mermaid_blocks_unchanged": true
         }
       ],
-      "themes": {
-        "light": {
-          "completed_at": "2026-10-25T21:56:01.539Z",
-          "passed": 54,
-          "failed": 0,
-          "results": [
-            {
-              "id": "diagram-1",
-              "status": "pass",
-              "width": 1205.2109375,
-              "height": 228
-            },
-            {
-              "id": "diagram-2",
-              "status": "pass",
-              "width": 1209,
-              "height": 735
-            },
-            {
-              "id": "diagram-3",
-              "status": "pass",
-              "width": 1058.7734375,
-              "height": 554.5703125
-            },
-            {
-              "id": "diagram-4",
-              "status": "pass",
-              "width": 1142,
-              "height": 587
-            },
-            {
-              "id": "diagram-5",
-              "status": "pass",
-              "width": 1092,
-              "height": 660
-            },
-            {
-              "id": "diagram-6",
-              "status": "pass",
-              "width": 728.953125,
-              "height": 832
-            },
-            {
-              "id": "diagram-7",
-              "status": "pass",
-              "width": 1147,
-              "height": 509
-            },
-            {
-              "id": "diagram-8",
-              "status": "pass",
-              "width": 2044.53125,
-              "height": 97
-            },
-            {
-              "id": "diagram-9",
-              "status": "pass",
-              "width": 1030,
-              "height": 315
-            },
-            {
-              "id": "diagram-10",
-              "status": "pass",
-              "width": 1015.2734375,
-              "height": 303.8984375
-            },
-            {
-              "id": "diagram-11",
-              "status": "pass",
-              "width": 1233.5,
-              "height": 1154
-            },
-            {
-              "id": "diagram-12",
-              "status": "pass",
-              "width": 1193.5,
-              "height": 657
-            },
-            {
-              "id": "diagram-13",
-              "status": "pass",
-              "width": 968.3125,
-              "height": 675.5
-            },
-            {
-              "id": "diagram-14",
-              "status": "pass",
-              "width": 615.2578125,
-              "height": 574.5
-            },
-            {
-              "id": "diagram-15",
-              "status": "pass",
-              "width": 1374,
-              "height": 907
-            },
-            {
-              "id": "diagram-16",
-              "status": "pass",
-              "width": 730.4296875,
-              "height": 1262.2421875
-            },
-            {
-              "id": "diagram-17",
-              "status": "pass",
-              "width": 1235.9453125,
-              "height": 144.75
-            },
-            {
-              "id": "diagram-18",
-              "status": "pass",
-              "width": 1097,
-              "height": 461
-            },
-            {
-              "id": "diagram-19",
-              "status": "pass",
-              "width": 658.421875,
-              "height": 228
-            },
-            {
-              "id": "diagram-20",
-              "status": "pass",
-              "width": 496.6875,
-              "height": 506.75
-            },
-            {
-              "id": "diagram-21",
-              "status": "pass",
-              "width": 490.375,
-              "height": 498
-            },
-            {
-              "id": "diagram-22",
-              "status": "pass",
-              "width": 499.59375,
-              "height": 482.1484375
-            },
-            {
-              "id": "diagram-23",
-              "status": "pass",
-              "width": 1542,
-              "height": 1194
-            },
-            {
-              "id": "diagram-24",
-              "status": "pass",
-              "width": 1442.2421875,
-              "height": 757.5
-            },
-            {
-              "id": "diagram-25",
-              "status": "pass",
-              "width": 2136,
-              "height": 1231
-            },
-            {
-              "id": "diagram-26",
-              "status": "pass",
-              "width": 712.1015625,
-              "height": 640.5
-            },
-            {
-              "id": "diagram-27",
-              "status": "pass",
-              "width": 3034.375,
-              "height": 1460.625
-            },
-            {
-              "id": "diagram-28",
-              "status": "pass",
-              "width": 1651.5,
-              "height": 1514
-            },
-            {
-              "id": "diagram-29",
-              "status": "pass",
-              "width": 1263.828125,
-              "height": 1086.5234375
-            },
-            {
-              "id": "diagram-30",
-              "status": "pass",
-              "width": 1483.328125,
-              "height": 1344.6171875
-            },
-            {
-              "id": "diagram-31",
-              "status": "pass",
-              "width": 806.796875,
-              "height": 1174
-            },
-            {
-              "id": "diagram-32",
-              "status": "pass",
-              "width": 573.7890625,
-              "height": 1065.9453125
-            },
-            {
-              "id": "diagram-33",
-              "status": "pass",
-              "width": 1920.109375,
-              "height": 189.75
-            },
-            {
-              "id": "diagram-34",
-              "status": "pass",
-              "width": 947,
-              "height": 464
-            },
-            {
-              "id": "diagram-35",
-              "status": "pass",
-              "width": 1344,
-              "height": 594.4296875
-            },
-            {
-              "id": "diagram-36",
-              "status": "pass",
-              "width": 5033.8828125,
-              "height": 1626
-            },
-            {
-              "id": "diagram-37",
-              "status": "pass",
-              "width": 375.765625,
-              "height": 710
-            },
-            {
-              "id": "diagram-38",
-              "status": "pass",
-              "width": 203.5078125,
-              "height": 745.5
-            },
-            {
-              "id": "diagram-39",
-              "status": "pass",
-              "width": 483.5703125,
-              "height": 1384.5
-            },
-            {
-              "id": "diagram-40",
-              "status": "pass",
-              "width": 334.78125,
-              "height": 1207
-            },
-            {
-              "id": "diagram-41",
-              "status": "pass",
-              "width": 231.0078125,
-              "height": 426
-            },
-            {
-              "id": "diagram-42",
-              "status": "pass",
-              "width": 254.546875,
-              "height": 532.5
-            },
-            {
-              "id": "diagram-43",
-              "status": "pass",
-              "width": 356.703125,
-              "height": 1349
-            },
-            {
-              "id": "diagram-44",
-              "status": "pass",
-              "width": 686.140625,
-              "height": 136
-            },
-            {
-              "id": "diagram-45",
-              "status": "pass",
-              "width": 967.0703125,
-              "height": 652.8125
-            },
-            {
-              "id": "diagram-46",
-              "status": "pass",
-              "width": 605.9296875,
-              "height": 439
-            },
-            {
-              "id": "diagram-47",
-              "status": "pass",
-              "width": 969.984375,
-              "height": 1139.6171875
-            },
-            {
-              "id": "diagram-48",
-              "status": "pass",
-              "width": 612.2265625,
-              "height": 450
-            },
-            {
-              "id": "diagram-49",
-              "status": "pass",
-              "width": 800,
-              "height": 450
-            },
-            {
-              "id": "diagram-50",
-              "status": "pass",
-              "width": 700,
-              "height": 500
-            },
-            {
-              "id": "diagram-51",
-              "status": "pass",
-              "width": 544.15625,
-              "height": 168
-            },
-            {
-              "id": "diagram-52",
-              "status": "pass",
-              "width": 1171,
-              "height": 943
-            },
-            {
-              "id": "diagram-53",
-              "status": "pass",
-              "width": 303.9765625,
-              "height": 445
-            },
-            {
-              "id": "diagram-54",
-              "status": "pass",
-              "width": 2323.1796875,
-              "height": 810.125
-            }
-          ]
-        },
-        "dark": {
-          "completed_at": "2026-10-25T22:03:56.574Z",
-          "passed": 54,
-          "failed": 0,
-          "results": [
-            {
-              "id": "diagram-1",
-              "status": "pass",
-              "width": 1205.2109375,
-              "height": 228
-            },
-            {
-              "id": "diagram-2",
-              "status": "pass",
-              "width": 1209,
-              "height": 735
-            },
-            {
-              "id": "diagram-3",
-              "status": "pass",
-              "width": 1058.7734375,
-              "height": 554.5703125
-            },
-            {
-              "id": "diagram-4",
-              "status": "pass",
-              "width": 1142,
-              "height": 587
-            },
-            {
-              "id": "diagram-5",
-              "status": "pass",
-              "width": 1092,
-              "height": 660
-            },
-            {
-              "id": "diagram-6",
-              "status": "pass",
-              "width": 728.953125,
-              "height": 832
-            },
-            {
-              "id": "diagram-7",
-              "status": "pass",
-              "width": 1147,
-              "height": 509
-            },
-            {
-              "id": "diagram-8",
-              "status": "pass",
-              "width": 2044.53125,
-              "height": 97
-            },
-            {
-              "id": "diagram-9",
-              "status": "pass",
-              "width": 1030,
-              "height": 315
-            },
-            {
-              "id": "diagram-10",
-              "status": "pass",
-              "width": 1015.2734375,
-              "height": 303.8984375
-            },
-            {
-              "id": "diagram-11",
-              "status": "pass",
-              "width": 1233.5,
-              "height": 1154
-            },
-            {
-              "id": "diagram-12",
-              "status": "pass",
-              "width": 1193.5,
-              "height": 657
-            },
-            {
-              "id": "diagram-13",
-              "status": "pass",
-              "width": 968.3125,
-              "height": 675.5
-            },
-            {
-              "id": "diagram-14",
-              "status": "pass",
-              "width": 615.2578125,
-              "height": 574.5
-            },
-            {
-              "id": "diagram-15",
-              "status": "pass",
-              "width": 1374,
-              "height": 907
-            },
-            {
-              "id": "diagram-16",
-              "status": "pass",
-              "width": 730.4296875,
-              "height": 1262.2421875
-            },
-            {
-              "id": "diagram-17",
-              "status": "pass",
-              "width": 1235.9453125,
-              "height": 144.75
-            },
-            {
-              "id": "diagram-18",
-              "status": "pass",
-              "width": 1097,
-              "height": 461
-            },
-            {
-              "id": "diagram-19",
-              "status": "pass",
-              "width": 658.421875,
-              "height": 228
-            },
-            {
-              "id": "diagram-20",
-              "status": "pass",
-              "width": 496.6875,
-              "height": 506.75
-            },
-            {
-              "id": "diagram-21",
-              "status": "pass",
-              "width": 490.375,
-              "height": 498
-            },
-            {
-              "id": "diagram-22",
-              "status": "pass",
-              "width": 499.59375,
-              "height": 482.1484375
-            },
-            {
-              "id": "diagram-23",
-              "status": "pass",
-              "width": 1542,
-              "height": 1194
-            },
-            {
-              "id": "diagram-24",
-              "status": "pass",
-              "width": 1442.2421875,
-              "height": 757.5
-            },
-            {
-              "id": "diagram-25",
-              "status": "pass",
-              "width": 2136,
-              "height": 1231
-            },
-            {
-              "id": "diagram-26",
-              "status": "pass",
-              "width": 712.1015625,
-              "height": 640.5
-            },
-            {
-              "id": "diagram-27",
-              "status": "pass",
-              "width": 3034.375,
-              "height": 1460.625
-            },
-            {
-              "id": "diagram-28",
-              "status": "pass",
-              "width": 1651.5,
-              "height": 1514
-            },
-            {
-              "id": "diagram-29",
-              "status": "pass",
-              "width": 1263.828125,
-              "height": 1086.5234375
-            },
-            {
-              "id": "diagram-30",
-              "status": "pass",
-              "width": 1483.328125,
-              "height": 1344.6171875
-            },
-            {
-              "id": "diagram-31",
-              "status": "pass",
-              "width": 806.796875,
-              "height": 1174
-            },
-            {
-              "id": "diagram-32",
-              "status": "pass",
-              "width": 573.7890625,
-              "height": 1065.9453125
-            },
-            {
-              "id": "diagram-33",
-              "status": "pass",
-              "width": 1920.109375,
-              "height": 189.75
-            },
-            {
-              "id": "diagram-34",
-              "status": "pass",
-              "width": 947,
-              "height": 464
-            },
-            {
-              "id": "diagram-35",
-              "status": "pass",
-              "width": 1344,
-              "height": 594.4296875
-            },
-            {
-              "id": "diagram-36",
-              "status": "pass",
-              "width": 5033.8828125,
-              "height": 1626
-            },
-            {
-              "id": "diagram-37",
-              "status": "pass",
-              "width": 375.765625,
-              "height": 710
-            },
-            {
-              "id": "diagram-38",
-              "status": "pass",
-              "width": 203.5078125,
-              "height": 745.5
-            },
-            {
-              "id": "diagram-39",
-              "status": "pass",
-              "width": 483.5703125,
-              "height": 1384.5
-            },
-            {
-              "id": "diagram-40",
-              "status": "pass",
-              "width": 334.78125,
-              "height": 1207
-            },
-            {
-              "id": "diagram-41",
-              "status": "pass",
-              "width": 231.0078125,
-              "height": 426
-            },
-            {
-              "id": "diagram-42",
-              "status": "pass",
-              "width": 254.546875,
-              "height": 532.5
-            },
-            {
-              "id": "diagram-43",
-              "status": "pass",
-              "width": 356.703125,
-              "height": 1349
-            },
-            {
-              "id": "diagram-44",
-              "status": "pass",
-              "width": 686.140625,
-              "height": 136
-            },
-            {
-              "id": "diagram-45",
-              "status": "pass",
-              "width": 967.0703125,
-              "height": 652.8125
-            },
-            {
-              "id": "diagram-46",
-              "status": "pass",
-              "width": 605.9296875,
-              "height": 439
-            },
-            {
-              "id": "diagram-47",
-              "status": "pass",
-              "width": 969.984375,
-              "height": 1139.6171875
-            },
-            {
-              "id": "diagram-48",
-              "status": "pass",
-              "width": 612.2265625,
-              "height": 450
-            },
-            {
-              "id": "diagram-49",
-              "status": "pass",
-              "width": 800,
-              "height": 450
-            },
-            {
-              "id": "diagram-50",
-              "status": "pass",
-              "width": 700,
-              "height": 500
-            },
-            {
-              "id": "diagram-51",
-              "status": "pass",
-              "width": 544.15625,
-              "height": 168
-            },
-            {
-              "id": "diagram-52",
-              "status": "pass",
-              "width": 1171,
-              "height": 943
-            },
-            {
-              "id": "diagram-53",
-              "status": "pass",
-              "width": 303.9765625,
-              "height": 445
-            },
-            {
-              "id": "diagram-54",
-              "status": "pass",
-              "width": 2323.1796875,
-              "height": 810.125
-            }
-          ]
-        }
-      },
-      "claim_boundary": "Theme counts describe completed attempts only. A missing or blocked theme is not a pass. Representative visual review, semantic correctness and other viewers require separate evidence."
+      "note": "Only Markdown outside Mermaid blocks, line locations or embedded provenance changed; actual 110 render results remain tied to matching block hashes. No new render is claimed."
     },
-    "ppt_metadata_only_changed": true
-  }
+    "rendered_source_hashes": {
+      "docs/API.md": "91fcbbedd6010ec7a013a0cc48902d95d7f9b5b92f6f5b1dc964180e7b0fb3d3",
+      "docs/API_EXPLORER.md": "ccc8d2707abc6bbf0eb64a3d2988115a8fdba85288c2d312ca62b07a65dd3cff",
+      "docs/APPMAP.md": "623a4572ebc2c1836d88f8541f47ee1effe3be85f84dafb83f61c3b921078940",
+      "docs/LANGSMITH.md": "387c143693c7a45a24f0113fa3273c3486963293f3d05b1e6a8eab9d40632a60",
+      "docs/RAG.md": "27ebb730c98106072e7024c2705f1915b56b8be951bc7adaa7d002c44ee941e5",
+      "docs/SONARQUBE.md": "6511e02ba711aac28b8d9783a1a1adb0490e6b63765857b9271ea9a7378791c9",
+      "docs/SONARQUBE_코드읽기.md": "782cf2bfdc543938b384b77fcd03948e1146adbd1a2e03d1f7d5c2b66025a111",
+      "docs/TDD_학습가이드.md": "43d288d66b20ecdc5f3038b39c59ccc83557811c0f39dc2d5886dd701e3dacf5",
+      "docs/tdd/추적표.md": "c8d4858eb32ad2d249e80986f6e0de147ffda5348652abc66ddd7d52d625c363",
+      "docs/개발도구_학습지도.md": "6f0bd25c9ef06e92e3e221653b5986b9bb83ae5667d1489694f76a64ea260152",
+      "docs/아키텍처_의사결정.md": "58479e754986d7b6b4e67e07ff4ad122a6046876bac06e0719782ea2498e7a6e",
+      "docs/윤석현_계산로직_설명.md": "d4cac74d5c6e029b73c6ef396ba27ffb54a15665558864bdb4fcf7ecb93572ea",
+      "docs/종합_검토_20261023.md": "33f09dd34c2157aacc69d4da9e4e63ff0d42ce6ec823deeea57ec599f6eb9175",
+      "docs/청크_품질점검.md": "7e973eeee3151ca02011f269b5f8fe56810e0ae8b38e5855e1606395ef085d18",
+      "docs/팀원_통합결과.md": "a1358f217d8bfa0c18fd7f066d684c3d578dc2fe387fd9f73d5ab06d190e42df",
+      "docs/프로젝트_구조도.md": "5a3d93d48469d77603f5407ece7927e9ce1d611a3b2c6dfab967e433fc38a558",
+      "docs/학습_가이드.md": "67f1401f07e4e66b2f25958871d753a82a8d77abeba3f449123d32fbd5954313"
+    }
+  },
+  "sonarqube": {
+    "status": "current_scan_unverified",
+    "reason": "Current scan exceeded the 120-second Docker invocation limit; a compute task was submitted after timeout but current results are unverified.",
+    "prepared_current_inputs_verified": true,
+    "current_coverage_tests": 824,
+    "profile_or_gate_changed": false,
+    "attempt_report": "reports/quality/sonar-team-integration-20261026.json",
+    "prior_analysis": {
+      "recorded_at": "2026-10-26T02:00:32+09:00",
+      "analysis_id": "bb766df6-27aa-40b1-8585-0f6eeba19368",
+      "quality_gate": {
+        "status": "ERROR",
+        "conditions": [
+          {
+            "status": "OK",
+            "metricKey": "new_coverage",
+            "comparator": "LT",
+            "errorThreshold": "80",
+            "actualValue": "100.0"
+          },
+          {
+            "status": "OK",
+            "metricKey": "new_duplicated_lines_density",
+            "comparator": "GT",
+            "errorThreshold": "3",
+            "actualValue": "0.0"
+          },
+          {
+            "status": "ERROR",
+            "metricKey": "new_violations",
+            "comparator": "GT",
+            "errorThreshold": "0",
+            "actualValue": "12"
+          }
+        ],
+        "ignoredConditions": false,
+        "period": {
+          "mode": "PREVIOUS_VERSION",
+          "date": "2026-10-23T01:04:17+0000"
+        },
+        "caycStatus": "compliant"
+      },
+      "metrics": {
+        "cognitive_complexity": "1514",
+        "complexity": "1681",
+        "ncloc": "5214",
+        "coverage": "100.0",
+        "branch_coverage": "100.0",
+        "duplicated_lines_density": "0.0",
+        "bugs": "0",
+        "vulnerabilities": "1",
+        "code_smells": "38"
+      },
+      "open_issue_count": 39,
+      "open_rule_counts": {
+        "python:S1192": 28,
+        "python:S8415": 5,
+        "python:S8786": 3,
+        "python:S7519": 2,
+        "python:S2068": 1
+      },
+      "new_open_issue_count": 12,
+      "complexity_rule": {
+        "key": "python:S3776",
+        "threshold": 15
+      }
+    }
+  },
+  "presentation": {
+    "path": "artifacts/jolup-presentation-20261026.pptx",
+    "local_output": "output/졸업각_최종통합_결과발표_20261026.pptx",
+    "sha256": "339656686c3a981edbd009aea40699b9266227cdc47beee6208c33edc1053ee3",
+    "slides": 14,
+    "native_tables": 5,
+    "notes": 14,
+    "package_findings": 0,
+    "layout_findings": 0,
+    "all_slides_rendered": true,
+    "native_powerpoint_execution_verified": false,
+    "artifact_role": "Final teammate integration result presentation"
+  },
+  "team_integration": {
+    "status": "implemented_and_current_regression_passed",
+    "sujin": [
+      "cream/yellow rabbit design",
+      "month calendar and Seoul date states",
+      "course interests separate from earned credits",
+      "chat dashboard and FAQ"
+    ],
+    "jumi": [
+      "NFC query matching",
+      "document type and source section",
+      "filename date hint kept distinct from registration date",
+      "per-document hash/chunk manifest"
+    ],
+    "preserved_originals": "team_contributions/",
+    "missing_original_implementation": "Jumi rag/ absent in submitted archive",
+    "not_implemented": [
+      "PDF/XLSX transcript parsers from filename-only prototype"
+    ],
+    "ui_visual_review": ".build/team-integration-20261026/ui/visual-review.json",
+    "initial_full_attempt": "818/819 passed; sandbox prevented actual MCP socket. Later full824 passed outside sandbox."
+  },
+  "previous_measurements": [
+    {
+      "measured_at": "20261026_015233_848799",
+      "tests": 777,
+      "statements": 4445,
+      "branches": 1498,
+      "role": "before teammate integration; not current"
+    }
+  ]
 }
